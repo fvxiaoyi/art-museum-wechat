@@ -9,8 +9,8 @@ const wx = require('weixin-js-sdk')
 
 const url = require('url'),
 	appid = 'wxaf22660af129589f',
-	redirect_uri = 'http%3a%2f%2fsbwxac.natappfree.cc%2fvail',
-  server_uri = 'http://sbwxac.natappfree.cc'
+	redirect_uri = 'http%3a%2f%2fthy8k9.natappfree.cc%2fvail',
+  server_uri = 'http://127.0.0.1'/*'http://thy8k9.natappfree.cc'*/
 
 Vue.config.productionTip = false
 
@@ -53,7 +53,7 @@ wx.ready(function(){
           components: { App },
           template: '<App/>',
           beforeCreate() {
-            if(this.$route.path.indexOf('/login') === -1) {
+            /*if(this.$route.path.indexOf('/login') === -1) {
               let openId = sessionStorage.getItem('openid')
               if(!openId) {
                 const myURL = url.parse(window.location.href)
@@ -67,7 +67,7 @@ wx.ready(function(){
                 Vue.prototype.$openId = openId
                 console.log(openId)
               }
-            }
+            }*/
           
           }
         })

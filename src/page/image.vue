@@ -1,8 +1,10 @@
 <template>
   <div>
-    <span>{{res}}</span>
-    <div class="upload" @click="onUploadClick" >上传图片</div>
-    <input type="file" id="file" multiple accept="image/*" /> 
+    <a class="upload_warp">
+      <input class="upload" type="file" accept="image/*" @change="getFile" />
+      <span>+</span>
+    </a>
+    <button @click="onUploadClick"></button>
   </div>
 </template>
 
@@ -11,7 +13,9 @@
 export default {
   data() {
     return {
+      imgSrc: null,
       res: null,
+      file: null,
       localId: [],
       serverId: []
     }
@@ -19,34 +23,16 @@ export default {
   methods: {
     onUploadClick() {
       let me = this
-      me.$wx.chooseImage({
-        count: 1, // 默认9
-        success: function (res) {
-          console.log(res)
-          if(res.localIds.length > 0) {
-            me.$wx.getLocalImgData({
-              localId: res.localIds[0], // 图片的localID
-              success: function (res1) {
-                alert(JSON.stringify(res1))
-                me.res = JSON.stringify(res1)
-              }
-            });
 
+      const formData = new FormData()
+      formData.append('file', me.file)
 
+      me.$http.post(`${me.$server_uri}/upload`, formData)
 
-            /*me.$wx.uploadImage({
-              localId: res.localIds[0], // 需要上传的图片的本地ID，由chooseImage接口获得
-              isShowProgressTips: 1, // 默认为1，显示进度提示
-              success: function (res1) {
-                let url = me.$http.get(`${me.$server_uri}/upload/${res1.serverId}`)
-              }
-            })*/
-
-
-          }
-
-        }
-      });
+      
+    },
+    getFile($event){  
+      this.file = $event.target.files[0] //获取要上传的文件
     }
   }
   
@@ -54,9 +40,35 @@ export default {
 </script>
 
 <style>
+  .upload_warp {
+    display: block;
+    width: 200px;
+    height: 200px;
+    background-color: #EFEFEF;
+    border-radius: 10px;
+    margin: 0 auto;
+    position: relative;
+  }
+
   .upload {
-    height: 100px;
-    background-color: orange;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    z-index: 2;
+  }
+
+  .upload_warp span {
+    font-size: 60px;
+    display: block;
+    text-align: center;
+    width: 100%;
+    color: #fff;
+    position: absolute;
+    left: 0;
+    top: 60px;
+    z-index: 1;
   }
 
 </style>
