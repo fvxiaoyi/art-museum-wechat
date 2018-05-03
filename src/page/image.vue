@@ -1,10 +1,10 @@
 <template>
   <div>
     <a class="upload_warp">
+      <img v-if="imgSrc" :src="imgSrc">
       <input class="upload" type="file" accept="image/*" @change="getFile" />
       <span>+</span>
     </a>
-    <button @click="onUploadClick"></button>
   </div>
 </template>
 
@@ -22,17 +22,36 @@ export default {
   },
   methods: {
     onUploadClick() {
+      /*let me = this
+
+      const formData = new FormData()
+      formData.append('file', me.file)
+
+      me.$http.post(`${me.$server_uri}/upload`, formData).then((resp) => {
+        if(resp.data.Location) {
+          me.imgSrc = resp.data.Location
+        } else {
+          alert('error')
+        }
+      })*/
+
+      
+    },
+    getFile($event) {  
+      this.file = $event.target.files[0] //获取要上传的文件
+
       let me = this
 
       const formData = new FormData()
       formData.append('file', me.file)
 
-      me.$http.post(`${me.$server_uri}/upload`, formData)
-
-      
-    },
-    getFile($event){  
-      this.file = $event.target.files[0] //获取要上传的文件
+      me.$http.post(`${me.$server_uri}/upload`, formData).then((resp) => {
+        if(resp.data.Location) {
+          me.imgSrc = resp.data.Location
+        } else {
+          alert('error')
+        }
+      })
     }
   }
   
@@ -57,6 +76,14 @@ export default {
     position: absolute;
     left: 0;
     z-index: 2;
+  }
+
+  .upload_warp img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    z-index: 3;
   }
 
   .upload_warp span {
