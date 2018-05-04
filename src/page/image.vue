@@ -1,7 +1,7 @@
 <template>
   <div>
     <a class="upload_warp">
-      <img v-if="imgSrc" :src="imgSrc">
+      <img v-if="imgSrc" :src="imgSrc200">
       <input class="upload" type="file" accept="image/*" @change="getFile" />
       <span>+</span>
     </a>
@@ -13,11 +13,16 @@
 export default {
   data() {
     return {
-      imgSrc: null,
+      imgSrc: 'http://store-1256528427.picgz.myqcloud.com/18-5/20321be0-4f46-11e8-aff3-37e8478b3099',
       res: null,
       file: null,
       localId: [],
       serverId: []
+    }
+  },
+  computed: {
+    imgSrc200() {
+      return this.imgSrc + '?imageView2/2/w/200'
     }
   },
   methods: {
@@ -46,8 +51,8 @@ export default {
       formData.append('file', me.file)
 
       me.$http.post(`${me.$server_uri}/upload`, formData).then((resp) => {
-        if(resp.data.Location) {
-          me.imgSrc = resp.data.Location
+        if(resp.data.url) {
+          me.imgSrc = resp.data.url
         } else {
           alert('error')
         }
