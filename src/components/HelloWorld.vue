@@ -90,6 +90,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
   name: 'HelloWorld',
   data () {
@@ -101,7 +103,11 @@ export default {
   methods: {
     close() {
       this.visible = !this.visible
-    }
+     
+    },
+    ...mapMutations({
+      changeMaskVisible: 'changeMaskVisible'
+    })
   }
 }
 </script>

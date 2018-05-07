@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <div id="mask"></div>
+    <div id="mask" v-if="maskVisible" ></div>
+
     <div id="contentWrap">
-      <div id="nav-top"></div>
+      <div id="nav-top">{{maskVisible}}</div>
       <router-view id="content" />
       <div id="nav-bottom"></div>
     </div>
@@ -10,8 +11,13 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
+
   export default {
-    name: 'App'
+    name: 'App',
+    computed: {
+      ...mapState(['maskVisible'])
+    }
   }
 </script>
 
