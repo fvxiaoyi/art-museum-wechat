@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import axios from 'axios'
 import router from './router'
+import dialog from './components/dialog'
 
 const wx = require('weixin-js-sdk')
 
@@ -17,9 +18,18 @@ Vue.config.productionTip = false
 Vue.prototype.$http = axios
 Vue.prototype.$server_uri = server_uri
 
+Vue.component('v-dialog', dialog)
+
 let current_url = window.location.href.split('#')[0]
 
-axios.post(`${server_uri}/getJsAPITicket`, { url: current_url }).then(function (response) {
+new Vue({
+  el: '#app',
+  router,
+  components: { App },
+  template: '<App/>'
+})
+
+/*axios.post(`${server_uri}/getJsAPITicket`, { url: current_url }).then(function (response) {
   wx.config({
     debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
     appId: appid, // 必填，公众号的唯一标识
@@ -82,4 +92,4 @@ wx.ready(function(){
 wx.error(function(res){
   // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
   alert(res)
-});
+});*/

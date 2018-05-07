@@ -2,8 +2,16 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,inital-scale=1.0,minimum-scale=1.0,maximum-scake=1.0,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="fromat-detecition" content="telephone=no" />
+    <meta name="apple-mobile-web-status-bar-style" content="block" />
     <title>hi,美学</title>
+    <script type="text/javascript">
+      let html = document.getElementsByTagName('html')[0];
+      let pageWidth = html.getBoundingClientRect().width;
+      html.style.fontSize = pageWidth / 10 + 'px';
+    </script>
   </head>
   <body>
     <div id="app"></div>

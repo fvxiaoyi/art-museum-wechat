@@ -1,5 +1,11 @@
 <template>
   <div class="hello">
+    <input type="submit" @click="close"/>
+    <v-dialog :width="8" :height="4" :visible="visible" >
+      <div class="content">
+        <input type="submit" @click="close"/>
+      </div>
+    </v-dialog>
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <ul>
@@ -88,7 +94,13 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      visible: true
+    }
+  },
+  methods: {
+    close() {
+      this.visible = !this.visible
     }
   }
 }
@@ -109,5 +121,8 @@ li {
 }
 a {
   color: #42b983;
+}
+.content {
+  padding: 0.26rem;
 }
 </style>
