@@ -1,5 +1,6 @@
 const state = {
-  maskVisible: true
+  maskVisible: false,
+  authorization: false
 }
 
 // getters
@@ -13,7 +14,6 @@ const actions = {
 // mutations
 const mutations = {
   changeMaskVisible(state, payload) {
-    alert(1)
     state.maskVisible = payload.visible
   }
 }

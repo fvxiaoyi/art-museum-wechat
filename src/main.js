@@ -6,7 +6,7 @@ import axios from 'axios'
 import router from './router'
 import Vuex from 'vuex'
 
-import commonStore from './store/common'
+import storeConfig from './store/index'
 
 import dialog from './components/dialog'
 
@@ -15,7 +15,7 @@ const wx = require('weixin-js-sdk')
 const url = require('url'),
 	appid = 'wxaf22660af129589f',
 	redirect_uri = 'http%3a%2f%2fthy8k9.natappfree.cc%2fvail',
-  server_uri = /*'http://127.0.0.1'*/ 'http://thy8k9.natappfree.cc'
+  server_uri = 'http://127.0.0.1:8088' /*'http://thy8k9.natappfree.cc'*/
 
 Vue.use(Vuex)
 
@@ -28,13 +28,7 @@ Vue.component('v-dialog', dialog)
 
 let current_url = window.location.href.split('#')[0]
 
-const store = new Vuex.Store({
-  modules: {
-    common: commonStore
-  }
-})
-
-console.log(store)
+const store = new Vuex.Store(storeConfig)
 
 new Vue({
   el: '#app',

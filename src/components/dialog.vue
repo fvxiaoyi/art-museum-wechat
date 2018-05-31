@@ -1,9 +1,11 @@
 <template>
 	<div id="dialog" >
-		<div v-if="visible" class="pop" :style="{height: heightWithRem, width: widthWithRem, 
-			top: '50%', left: '50%', marginTop: marginTop, marginLeft: marginLeft}" >
-			<slot></slot>
-		</div>
+		<transition name="fade">
+			<div v-if="visible" class="pop" :style="{height: heightWithRem, width: widthWithRem, 
+				top: '50%', left: '50%', marginTop: marginTop, marginLeft: marginLeft}" >
+				<slot></slot>
+			</div>
+		</transition>
 	</div>
 </template>
 
@@ -54,5 +56,13 @@
 	.tbar {
 		height: 1rem;
 		border-bottom: 0.02rem solid #E4E4E4;
+	}
+
+	.fade-enter-active, .fade-leave-active {
+	  transition: opacity .2s;
+	}
+
+	.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+	  opacity: 0;
 	}
 </style>

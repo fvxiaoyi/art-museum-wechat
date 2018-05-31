@@ -86,6 +86,33 @@
         </a>
       </li>
     </ul>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p><p>1</p>
+    <p>1</p>
+    <p>1</p>
+
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    <p>1</p>
+    
   </div>
 </template>
 
@@ -103,7 +130,7 @@ export default {
   methods: {
     close() {
       this.visible = !this.visible
-     
+      this.changeMaskVisible({ visible: this.visible })
     },
     ...mapMutations({
       changeMaskVisible: 'changeMaskVisible'

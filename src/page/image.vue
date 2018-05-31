@@ -13,7 +13,7 @@
 export default {
   data() {
     return {
-      imgSrc: 'http://store-1256528427.picgz.myqcloud.com/18-5/20321be0-4f46-11e8-aff3-37e8478b3099',
+      imgSrc: null,
       res: null,
       file: null,
       localId: [],
@@ -50,7 +50,7 @@ export default {
       const formData = new FormData()
       formData.append('file', me.file)
 
-      me.$http.post(`${me.$server_uri}/upload`, formData).then((resp) => {
+      me.$http.post(`${me.$server_uri}/store/upload`, formData).then((resp) => {
         if(resp.data.url) {
           me.imgSrc = resp.data.url
         } else {

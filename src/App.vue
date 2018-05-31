@@ -3,10 +3,16 @@
     <div id="mask" v-if="maskVisible" ></div>
 
     <div id="contentWrap">
-      <div id="nav-top">{{maskVisible}}</div>
       <router-view id="content" />
-      <div id="nav-bottom"></div>
+      <div id="nav-bottom">
+        <div class="btn" v-if="authorization">我的作品</div>
+        <div class="btn" v-else>试听码</div>
+        <div class="middle-btn" v-if="authorization">+</div>
+        <div class="middle-btn"v-else>logo</div>
+        <div class="btn">美学艺术馆</div>
+      </div>
     </div>
+
   </div>
 </template>
 
@@ -15,8 +21,13 @@
 
   export default {
     name: 'App',
+    data() {
+      return {
+
+      }
+    },
     computed: {
-      ...mapState(['maskVisible'])
+      ...mapState(['maskVisible', 'authorization'])
     }
   }
 </script>
@@ -28,7 +39,32 @@
     margin: 0;
     height: 100%;
     width: 100%;
-    font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+    color: #303133;
+  }
+
+  ul { 
+    list-style: none; 
+    padding: 0;
+    margin: 0;
+  } 
+
+  .clear:after{
+    content: '';
+    display: block;
+    clear: both;
+  }
+
+  .clear{
+    zoom:1;
+  }
+
+  .left {
+    float: left;
+  }
+
+  .right {
+    float: right;
   }
 
   #app {
@@ -51,28 +87,32 @@
     height: 100%;
     width: 100%;
     display: flex;
-    background-color: orange;
-  }
-
-  #nav-top {
-    height: 0.8rem;
-    background-color: #fff;
-    position: absolute;
-    width: 100%;
-    top: 0;
-  }
-
-  #nav-bottom {
-    height: 0.8rem;
-    background-color: #fff;
-    position: absolute;
-    width: 100%;
-    bottom: 0;
+    flex-direction: column;
   }
 
   #content {
-    margin: 0.8rem 0;
     flex: 1;
-    overflow: scroll;
   }
+
+  /** 导航栏 **/
+  #nav-bottom {
+    height: 1.2rem;
+    background-color: #fff;
+    display: flex;
+    border-top: 0.02rem solid #DCDFE6;
+  }
+
+  #nav-bottom .middle-btn, #nav-bottom .btn {
+    text-align: center;
+    line-height: 1.2rem;
+  }
+
+  #nav-bottom .btn {
+    flex: 1;
+  }
+
+  #nav-bottom .middle-btn {
+    width: 0.8rem;
+  }
+
 </style>
