@@ -6,7 +6,10 @@ import image from '@/page/image'
 
 const index = () => import('@/page/index')
 const preview = () => import('@/page/preview')
+const self = () => import('@/page/self')
 const detail = () => import('@/page/detail')
+const coupon = () => import('@/page/coupon')
+
 
 Vue.use(Router)
 
@@ -14,22 +17,23 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: HelloWorld
+      component: index,
+      children:[{
+        path: '/preview', 
+        component: preview
+      },{
+        path: '/self', 
+        component: self
+      }]
     }, {
       path: '/login/:openid/:url',
       component: login
     }, {
-      path: '/image',
-      component: image
-    }, {
-      path: '/preview',
-      component: preview
-    }, {
-      path: '/index',
-      component: index
-    }, {
       path: '/art/:id',
       component: detail
+    }, {
+      path: '/coupon',
+      component: coupon
     }
   ]
 })

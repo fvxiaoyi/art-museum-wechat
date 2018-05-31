@@ -15,6 +15,9 @@ const actions = {
 const mutations = {
   changeMaskVisible(state, payload) {
     state.maskVisible = payload.visible
+  },
+  changeAuthorization(state, payload) {
+    state.authorization = payload.authorization
   }
 }
 

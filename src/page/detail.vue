@@ -1,5 +1,6 @@
 <template>
 	<div class="detail">
+		<div class="top-bar"><span @click="back">返回</span></div>
 		<div class="detail-wrap">
 			<div class="art">
 				<img src="https://mailimg.teambition.com/logos/cover-demo.jpg">
@@ -17,28 +18,12 @@
 						<div class="left local">校区</div>
 					</div>
 				</div>
-				<div class="right btn">
-					<div class="left">点赞</div>
+				<div class="right btn-wrap">
+					<div class="left">点赞201</div>
 					<div class="left">分享</div>
 				</div>
 			</div>
-			<div class="star-wrap">
-				<div class="star-list">
-					<div class="star"></div>
-					<div class="star"></div>
-					<div class="star"></div>
-					<div class="star"></div>
-					<div class="star"></div>
-					<div class="star"></div>
-					<div class="star"></div>
-					<div class="star"></div>
-					<div class="star"></div>
-					<div class="star"></div>
-					<div class="star"></div>
-					<div class="star"></div>
-					<div class="star"></div>
-				</div>
-			</div>
+		
 			<div class="comment-list">
 				<div class="comment clear" v-for="item in comments" :key="item.id">
 					<div class="photo left"></div>
@@ -51,11 +36,24 @@
 				
 			</div>
 			<div class="send-wrap">
-				<input class="weui-input" type="text" placeholder="添加评论">
-				<a href="javascript:;" class="send-btn">发送</a>
+				<input type="text" placeholder="添加评论">
+				<a href="javascript:;" class="send-btn btn">发送</a>
 			</div>
 			<div class="more">
-				<div class="title">更多作品</div>
+				<div class="title">相似作品</div>
+				<div class="same-list">
+					<div class="art">
+						<div class="img-wrap">
+							<img src="https://mailimg.teambition.com/logos/cover-demo.jpg">
+						</div>
+						
+					</div>
+					<div class="art">
+						<div class="img-wrap">
+							<img src="https://mailimg.teambition.com/logos/cover-demo.jpg">
+						</div>
+					</div>
+				</div>
 			</div>
 		
 		</div>
@@ -93,6 +91,11 @@
   				content: '这是一条留言'
   			}]
   		}
+  	},
+  	methods: {
+  		back() {
+  			this.$router.push('/');
+  		}
   	}
   }
 
@@ -101,8 +104,13 @@
 <style scoped>
 	.detail {
 		height: 100%;
-		padding: 0.26rem;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.detail-wrap {
 		overflow: scroll;
+		flex: 1;
 	}
 
 	.detail .top-bar {
@@ -112,11 +120,11 @@
 	}
 
 	.detail .art {
-		height: 9rem;
+		height: 10rem;
 		margin-bottom: 0.26rem;
 	}
 
-	.detail .art img {
+	.detail .art img, .detail .more .img-wrap img {
 		width: 100%;
     height: 100%;
     object-fit:cover;
@@ -125,8 +133,9 @@
 	/** 学员信息 **/
 
 	.detail .info {
+		margin: 0.26rem;
 		height: 2rem;
-		margin-bottom: 0.4rem;
+		border-bottom: 0.02rem solid #DCDFE6;
 	}
 
 	.detail .info .photo {
@@ -154,42 +163,14 @@
 		text-align: center;
 	}
 
-	.detail .btn {
+	.detail .btn-wrap {
 		line-height: 2rem;
 	}
 
-	/** 点赞 **/
-
-	.detail .star-wrap {
-		min-height: 1rem;
-		padding-bottom: 0.16rem;
-		margin-bottom: 0.6rem;
-		border-bottom: 0.02rem solid #DCDFE6;
-		display: flex;
-	}
-
-	.detail .star-btn {
-		margin-right: 0.26rem;
-	}
-
-	.detail .star-list {
-		flex: 1;
-		display: flex;
-		flex-flow: row wrap;
-	}
-
-	.detail .star {
-		width: 0.6rem;
-		height: 0.6rem;
-		background-color: orange;
-		border-radius: 50%;
-		margin-right: 0.16rem;
-		margin-bottom: 0.16rem;
-	}
+	/** 评论 **/
 
 	.detail .comment-list {
-		margin-bottom: 0.4rem;
-
+		margin: 0.6rem 0.26rem 0.26rem 0.26rem;
 	}
 
 	.detail .comment {
@@ -208,34 +189,46 @@
 
 	.detail .send-wrap {
 		height: 0.9rem;
-		margin-bottom: 0.26rem;
+		margin: 0.26rem 0.26rem 0.6rem 0.26rem;
 		display: flex;
 	}
 
 	.detail .send-btn {
+		line-height: 0.8rem;
 		height: 0.8rem;
 		width: 1.4rem;
-		border-radius: 0.16rem;
-		text-align: center;
-		line-height: 0.8rem;
-		color: #fff;
-		display: block;
-		background-color: orange;
 	}
 
-	.detail .weui-input {
+	.detail input {
 		flex: 1;
 		margin-right: 0.26rem;
-		height: 0.8rem;
-		border: 0.02rem solid #DCDFE6;
-		border-radius: 0.16rem;
 	}
 
 	/** 更多 **/
 
 	.detail .more {
+		margin: 0.26rem;
 		height: 4rem;
-		background-color: orange;
 	}
 
+	.detail .more .title {
+		height: 0.54rem;
+		margin-bottom: 0.26rem;
+	}
+
+	.detail .more .same-list {
+		height: 3.2rem;
+	}
+
+	.detail .more .art {
+		width: 50%;
+		height: 3.2rem;
+		float: left;
+	}
+
+	.detail .more .img-wrap {
+		padding: 2%;
+    height: 96%;
+	}
+		
 </style>
