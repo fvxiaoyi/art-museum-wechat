@@ -16,8 +16,9 @@
 				<div class="info clear">
 					<div class="title left">{{item.title}}</div>
 					<div class="right">
-						<div class="left fav">点赞{{item.star}}</div>
-						<div class="left">分享</div>
+						<i class="iconfont icon-good left"></i>
+						<span class="left">{{item.star}}</span>
+						<i class="iconfont icon-share left"></i>
 					</div>
 				</div>
 			</div>
@@ -114,15 +115,40 @@ export default {
 	}
 
 	.self .info {
-		line-height: 1.5rem;
-		height: 1.3rem;
-		margin-bottom: 0.15rem;
-		padding-bottom: 0.2rem;
+		height: 1.4rem;
+		margin-bottom: 0.14rem;
 		border-bottom: 0.02rem solid #DCDFE6;
 	}
 
-	.self .info .fav {
-		margin-right: 0.15rem;
+	.self .info .title {
+		line-height: 1.4rem;
+		font-size: 0.5rem;
+		font-weight: bold;
+	}
+	
+
+	.self .info .icon-good {
+		text-align: center;
+		margin-top: 0.34rem;
+		font-size: 0.56rem;
+		font-weight: bold;
+	}
+
+	.self .info span {
+		margin: 0.28rem 0.4rem 0 0.26rem;
+		height: 0.76rem;
+		width: 1.2rem;
+		line-height: 0.76rem;
+		text-align: center;
+		display: inline-block;
+		background-color: #B5B5B5;
+		color: #F5F5F5;
+		border-radius: 0.16rem;
+	}
+
+	.self .info .icon-share {
+		font-size: 0.9rem;
+		margin-top: 0.16rem;
 	}
 
 	.self .list-warp .no-more {
@@ -130,5 +156,7 @@ export default {
 		color: #909399;
 		margin-bottom: 0.26rem;
 	}
+
+
 
 </style>

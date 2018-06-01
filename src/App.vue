@@ -31,8 +31,8 @@
     margin: 0;
     height: 100%;
     width: 100%;
-    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
-    color: #303133;
+    font-family: '-apple-system', "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+    color: #B5B5B5;
   }
 
   ul, li{ 
@@ -47,6 +47,7 @@
     border-radius: 0.16rem;
     outline:none;
     padding-left: 0.26rem;
+    -webkit-appearance:none;
   }
 
   .btn {
@@ -92,7 +93,7 @@
   }
 
   .maskFade-enter-active, .maskFade-leave-active {
-    transition: opacity .3s;
+    transition: opacity .2s;
   }
 
   #app {

@@ -53,6 +53,15 @@ export default {
       },{
         id: "6",
         src: "https://mailimg.teambition.com/logos/cover-demo.jpg"
+      },{
+        id: "7",
+        src: "https://mailimg.teambition.com/logos/cover-demo.jpg"
+      },{
+        id: "8",
+        src: "https://mailimg.teambition.com/logos/cover-demo.jpg"
+      },{
+        id: "9",
+        src: "https://mailimg.teambition.com/logos/cover-demo.jpg"
       }]
     }
   },
@@ -128,12 +137,11 @@ export default {
   .pv .login {
     width: 100%;
     height: 3.2rem;
-    background-color: #C0C4CC;
-    margin-bottom: 0.26rem;
+    border-bottom: 0.02rem solid #DCDFE6;
   }
 
   .pv .login .remark {
-    margin-bottom: 1rem;
+    margin-bottom: 1.4rem;
   }
 
   .pv .btn-wrap {
