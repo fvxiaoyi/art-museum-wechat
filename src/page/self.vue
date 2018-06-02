@@ -6,7 +6,7 @@
 			<div class="left age">12岁</div>
 			<div class="right">当月赞: 500</div>
 		</div>
-		<div class="list-warp">
+		<div class="list-warp" @scroll="loadMore($event)">
 
 			<div class="art-wrap" v-for="item in list" :key="item.id" >
 				<div class="art" @click="view(item.id)">
@@ -23,7 +23,7 @@
 				</div>
 			</div>
 
-			<div v-if="list.length>0" class="no-more">没有更多了</div>
+			<div v-if="list.length>0" class="end">没有更多了</div>
 
 		</div>
 
@@ -34,6 +34,7 @@
 export default {
 	data() {
 		return {
+			loadMoreFinish: false,
 			list: [{
 				id: 1,
 				src: "https://mailimg.teambition.com/logos/cover-demo.jpg",
@@ -56,6 +57,30 @@ export default {
 		}
 	},
 	methods: {
+		loadMore(e) {
+      if(!this.loadMoreFinish) {
+        let totalHeight = e.target.scrollHeight,
+          warpHeight = e.target.clientHeight,
+          scrollTop = e.target.scrollTop
+        if(totalHeight - (warpHeight + scrollTop) <= 1) {
+        	
+          if(this.list.length < 5) {
+            for(let i=4;i<6;i++) {
+              this.list.push({
+								id: i,
+								src: "https://mailimg.teambition.com/logos/cover-demo.jpg",
+								date: "2018-6-01",
+								title: "《认真工作》",
+								star: 201
+							})
+            }
+          } else {
+            this.loadMoreFinish = true
+          }
+        }
+      }
+      
+    },
 		view(id) {
       this.$router.push(`/art/${id}`)
     }
@@ -92,12 +117,11 @@ export default {
 	}
 
 	.self .art-wrap {
-		height: 10.2rem;
+		height: 9.8rem;
 	}
 
 	.self .art {
 		height: 8rem;
-		margin-bottom: 0.15rem;
 		position: relative;
 	}
 
@@ -117,7 +141,6 @@ export default {
 
 	.self .info {
 		height: 1.4rem;
-		margin-bottom: 0.14rem;
 		border-bottom: 0.02rem solid #DCDFE6;
 	}
 
@@ -152,10 +175,11 @@ export default {
 		margin-top: 0.3rem;
 	}
 
-	.self .list-warp .no-more {
+	.self .list-warp .end {
 		text-align: center;
-		color: #909399;
-		margin-bottom: 0.26rem;
+    font-size: 0.3rem;
+    height: 0.6rem;
+    line-height: 0.6rem;
 	}
 
 

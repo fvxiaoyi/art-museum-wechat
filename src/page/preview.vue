@@ -7,14 +7,18 @@
       </div>
     </div>
 
-    <ul class="art-list" >
-      <li v-for="item in list" :key="item.id" >
-        <div class="img-wrap" @click="view(item.id)">
-          <img :src="item.src">
+    <div class="art-wrap" @scroll="loadMore($event)">
+      <div class="art-list">
+        <div class="item-wrap" v-for="item in list" :key="item.id" >
+          <div class="img-wrap" @click="view(item.id)">
+            <img :src="item.src">
+          </div>
         </div>
-      </li>
-    </ul>
-    
+      </div>
+      
+      <div class="end" v-if="loadMoreFinish">没有更多了</div>
+    </div>
+
     <v-dialog :width="8" :height="5.6" :visible="loginDialogVisible" >
       <div class="dialog-content">
         <input type="text" placeholder="请输入手机号进行激活" />
@@ -35,6 +39,7 @@ export default {
   data () {
     return {
       loginDialogVisible: false,
+      loadMoreFinish: false,
       list: [{
         id: "1",
         src: "https://mailimg.teambition.com/logos/cover-demo.jpg"
@@ -66,6 +71,27 @@ export default {
     }
   },
   methods: {
+    loadMore(e) {
+      if(!this.loadMoreFinish) {
+        let totalHeight = e.target.scrollHeight,
+          warpHeight = e.target.clientHeight,
+          scrollTop = e.target.scrollTop
+        if(totalHeight - (warpHeight + scrollTop) <= 1) {
+          if(this.list.length < 19) {
+            for(let i=0;i<10;i++) {
+              this.list.push({
+                id: "1" + i,
+                src: "https://mailimg.teambition.com/logos/cover-demo.jpg"
+              })
+            }
+          } else {
+            this.loadMoreFinish = true
+          }
+          
+        }
+      }
+      
+    },
     view(id) {
       this.$router.push(`/art/${id}`)
     },
@@ -161,17 +187,20 @@ export default {
 
   /** 列表 **/
 
-  .pv .art-list {
-    flex: 1;
-    overflow: scroll;
+  .art-wrap {
     width: 100%;
     height: 100%;
+    flex: 1;
+    overflow: scroll;
+  }
+
+  .pv .art-list {
     display: flex;
     flex-flow: row wrap;
     margin-bottom: 0.26rem 0 0.26rem 0;
   }
 
-  .pv .art-list li {
+  .pv .art-list .item-wrap {
     width: 50%;
     height: 5rem;
   }
@@ -185,6 +214,13 @@ export default {
     width: 100%;
     height: 100%;
     object-fit:cover;
+  }
+
+  .pv .end {
+    text-align: center;
+    font-size: 0.3rem;
+    height: 0.6rem;
+    line-height: 0.6rem;
   }
 
 </style>
