@@ -3,7 +3,7 @@
     <transition name="maskFade">
       <div id="mask" v-if="maskVisible" ></div>
     </transition>
-    <transition name="slide-left">
+    <transition :name="transitionName">
       <router-view id="app"></router-view>
     </transition>
   </div>
@@ -16,10 +16,16 @@
     name: 'App',
     data() {
       return {
+        transitionName: ''
       }
     },
     computed: {
       ...mapState(['maskVisible'])
+    },
+    watch: {
+      $route(to, from) {
+        this.transitionName = to.path === '/' ? '' : 'slide-left'
+      }
     }
   }
 </script>
