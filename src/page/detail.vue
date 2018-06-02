@@ -16,8 +16,8 @@
 				<i class="left iconfont icon-map" ></i>
 				<div class="left local">校区</div>
 				<div class="right">
-					<i :class="['iconfont', 'left', 'icon-good', isStar ? 'activeStar' : '']" @click="star"></i>
-					<div class="left">500</div>
+					<i class="left iconfont icon-good"></i>
+					<div :class="['left', isStar ? 'activeStar' : '']" @click="star">{{startCount}}</div>
 					<i class="iconfont icon-share left" ></i>
 				</div>
 			</div>
@@ -39,7 +39,7 @@
 			</div>
 			<div class="more">
 				<div class="title">
-					<div class="left">相似作品</div>
+					<span class="left">相似作品</span>
 					<i class="iconfont icon-office left" ></i>
 			  </div>
 				<div class="same-list">
@@ -67,6 +67,7 @@
   	data () {
   		return {
   			isStar: false,
+  			startCount: 500,
   			comments: [{
   				id: 1,
   				photo: '',
@@ -96,10 +97,15 @@
   	},
   	methods: {
   		back() {
-  			this.$router.push('/');
+  			this.$router.go(-1);
   		},
   		star() {
   			this.isStar = !this.isStar
+  			if(this.isStar) {
+  				this.startCount ++
+  			} else {
+  				this.startCount --
+  			}
   		}
   	}
   }
@@ -186,10 +192,7 @@
 	.detail .info .icon-map {
 		line-height: 1.4rem;
 		margin-right: 0.1rem;
-	}
-
-	.detail .right {
-		line-height: 1.4rem;
+		font-size: 0.5rem;
 	}
 
 	.detail .right div {
@@ -206,18 +209,20 @@
 
 	.detail .icon-good {
 		display: block;
-		width: 1.2rem;
+		margin-top: 0.28rem;
+		margin-right: 0.26rem;
 		text-align: center;
-		font-size: 0.64rem;
+		font-size: 0.6rem;
 		font-weight: bold;
 	}
 
-	.detail .activeStar{
-		color: #E6A23C;
+	.detail .right .activeStar {
+		background-color: #E6A23C;
 	}
 
 	.detail .icon-share {
-		font-size: 0.8rem;
+		margin-top: 0.28rem;
+		font-size: 0.7rem;
 	}
 
 	/** 评论 **/
@@ -275,8 +280,14 @@
 	}
 
 	.detail .more .title {
-		height: 0.54rem;
+		height: 0.6rem;
 		margin-bottom: 0.26rem;
+		font-size: 0.43rem;
+	}
+
+	.detail .more .iconfont {
+		margin-left: 0.26rem ;
+		font-size: 0.54rem;
 	}
 
 	.detail .more .title div {

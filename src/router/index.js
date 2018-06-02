@@ -18,7 +18,10 @@ export default new Router({
     {
       path: '/',
       component: index,
-      children:[{
+      children:[{ 
+        path: '', 
+        component: preview 
+      },{
         path: '/preview', 
         component: preview
       },{

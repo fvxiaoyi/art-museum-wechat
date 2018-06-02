@@ -1,7 +1,9 @@
 <template>
   <div class="index">
     <div id="content">
-      <router-view></router-view>
+      <transition :name="transitionName">
+        <router-view></router-view>
+      </transition>
     </div>
     
     <div id="nav-bottom">
@@ -16,7 +18,7 @@
       <div class="middle-btn" v-if="authorization">+</div>
       <div class="middle-btn"v-else>logo{{path}}</div>
       <div class="nav-btn" @click="linkPreview">
-        <i :class="['iconfont', path == '/preview' ? ['icon-color-filling', 'active'] : 'icon-color']"></i>
+        <i :class="['iconfont', path == '/preview' || path == '/' ? ['icon-color-filling', 'active'] : 'icon-color']"></i>
         <span class="nav-text">美学艺术馆</span>
       </div>
     </div>
@@ -29,13 +31,13 @@ export default {
   created() {
     if(this.authorization) {
       this.$router.push('self');
-    } else {
+    } else if(!this.authorization && this.path === '/self') {
       this.$router.push('preview');
     }
   },
   data() {
     return {
-      
+      transitionName: ''
     }
   },
   methods: {
@@ -54,6 +56,11 @@ export default {
       return this.$route.path
     },
     ...mapState(['authorization'])
+  },
+  watch: {
+    $route(to, from) {
+      this.transitionName = to.path === '/self' ? 'slide-right' : 'slide-left'
+    }
   }
 }
 </script>
@@ -73,6 +80,7 @@ export default {
 
   /** 导航栏 **/
   #nav-bottom {
+    z-index: 1;
     height: 1.2rem;
     background-color: #fff;
     display: flex;

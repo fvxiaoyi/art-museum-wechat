@@ -7,7 +7,7 @@
       </div>
     </div>
 
-    <ul class="art-list">
+    <ul class="art-list" >
       <li v-for="item in list" :key="item.id" >
         <div class="img-wrap" @click="view(item.id)">
           <img :src="item.src">

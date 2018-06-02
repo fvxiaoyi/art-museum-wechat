@@ -3,8 +3,9 @@
     <transition name="maskFade">
       <div id="mask" v-if="maskVisible" ></div>
     </transition>
-    <router-view id="app"></router-view>
-
+    <transition name="slide-left">
+      <router-view id="app"></router-view>
+    </transition>
   </div>
 </template>
 
@@ -15,7 +16,6 @@
     name: 'App',
     data() {
       return {
-
       }
     },
     computed: {
@@ -101,5 +101,22 @@
     width: 100%;
   }
 
+  .slide-right-enter-active, .slide-right-leave-active, .slide-left-enter-active, .slide-left-leave-active {
+    will-change: transform;
+    transition: all 500ms;
+    position: absolute;
+  }
+  .slide-right-enter {
+    transform: translate3d(-100%, 0, 0);
+  }
+  .slide-right-leave-active {
+    transform: translate3d(100%, 0, 0);
+  }
+  .slide-left-enter {
+    transform: translate3d(100%, 0, 0);
+  }
+  .slide-left-leave-active {
+    transform: translate3d(-100%, 0, 0);
+  }
 
 </style>

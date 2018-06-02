@@ -106,6 +106,7 @@ export default {
 		bottom: 0.16rem;
 		right: 0.26rem;
 		font-weight: bold;
+		color: #000;
 	}
 
 	.self .art img {
@@ -147,8 +148,8 @@ export default {
 	}
 
 	.self .info .icon-share {
-		font-size: 0.9rem;
-		margin-top: 0.16rem;
+		font-size: 0.7rem;
+		margin-top: 0.3rem;
 	}
 
 	.self .list-warp .no-more {
