@@ -1,22 +1,44 @@
 <template>
 	<div class="self">
 		<div class="top-bar clear">
-			<div class="photo left">头像</div>
-			<div class="left name">名字</div>
-			<div class="left age">12岁</div>
-			<div class="right">当月赞: 500</div>
+			<div class="base left">
+				<div class="photo left">
+					<img src="../../static/boy-pic.jpg">
+				</div>
+				<div class="text left">
+					<div class="name">名字{{pageWidth}}</div>
+					<div class="age">12岁</div>
+				</div>
+			</div>
+			<div class="total right">
+				<div class="artTotal left">
+					<div class="num">40</div>
+					<div class="label">作品</div>
+				</div>
+				<div class="starTotal left">
+					<div class="num">500</div>
+					<div class="label">当月赞</div>
+				</div>
+			</div>
+			
+			
+			
 		</div>
-		<div class="list-warp" @scroll="loadMore($event)">
+		<div class="list-warp" @scroll="loadMore($event)" >
 
-			<div class="art-wrap" v-for="item in list" :key="item.id" >
-				<div class="art" @click="view(item.id)">
+			<div class="art-wrap" v-for="(item, index) in list" :key="item.id">
+				<div v-if="index===0" class="art" @click="view(item.id)" ref="artRef">
+					<img :src="item.src">
+					<div class="date">{{item.date}}</div>
+				</div>
+				<div v-else class="art" @click="view(item.id)" >
 					<img :src="item.src">
 					<div class="date">{{item.date}}</div>
 				</div>
 				<div class="info clear">
 					<div class="title left">{{item.title}}</div>
 					<div class="right">
-						<i class="iconfont icon-good left"></i>
+						<i class="iconfont icon-icon left"></i>
 						<span class="left">{{item.star}}</span>
 						<i class="iconfont icon-share left"></i>
 					</div>
@@ -34,22 +56,23 @@
 export default {
 	data() {
 		return {
+			url: '../static/boy-pic.png',
 			loadMoreFinish: false,
 			list: [{
 				id: 1,
-				src: "https://mailimg.teambition.com/logos/cover-demo.jpg",
+				src: "../../static/art2.jpg",
 				date: "2018-6-01",
 				title: "《认真工作》",
 				star: 201
 			},{
 				id: 2,
-				src: "https://mailimg.teambition.com/logos/cover-demo.jpg",
+				src: "../../static/art1.jpg",
 				date: "2018-6-01",
 				title: "《认真工作》",
 				star: 201
 			},{
 				id: 3,
-				src: "https://mailimg.teambition.com/logos/cover-demo.jpg",
+				src: "../../static/art2.jpg",
 				date: "2018-6-01",
 				title: "《认真工作》",
 				star: 201
@@ -68,7 +91,7 @@ export default {
             for(let i=4;i<6;i++) {
               this.list.push({
 								id: i,
-								src: "https://mailimg.teambition.com/logos/cover-demo.jpg",
+								src: "../../static/art1.jpg",
 								date: "2018-6-01",
 								title: "《认真工作》",
 								star: 201
@@ -84,6 +107,11 @@ export default {
 		view(id) {
       this.$router.push(`/art/${id}`)
     }
+	},
+	computed: {
+		pageWidth() {
+			return 1
+		}
 	}
 }
 </script>
@@ -97,16 +125,63 @@ export default {
 	}
 
 	.self .top-bar {
-		height: 1.2rem;
+		height: 1.6rem;
 		line-height: 1.2rem;
-		padding: 0 0.26rem;
+		padding: 0 0.26rem 0.26rem 0.26rem;
 		border-bottom: 0.02rem solid #DCDFE6;
 		margin-bottom: 0.26rem;
 	}
 
-	.self .top-bar .photo, .self .top-bar .name, .self .top-bar .age {
-		margin-right: 0.26rem;
+	.self .top-bar .photo {
+		margin-top: 0.26rem;
+		width: 1.4rem;
+		height: 1.4rem;
+		border-radius: 50%;
+		overflow: hidden;
 	}
+
+	.self .top-bar .photo img {
+		width: 100%;
+    height: 100%;
+    object-fit:cover;
+	}
+
+	.self .top-bar .text {
+		height: 1.4rem;
+		margin: 0.3rem 0 0 0.3rem;
+	}
+
+	.self .top-bar .text .name, .self .top-bar .text .age {
+		height: 0.7rem;
+		line-height: 0.7rem;
+		font-size: 0.3rem;
+		text-align: center;
+	}
+
+	.self .top-bar .total {
+		margin-top: 0.5rem;
+	}
+
+	.self .top-bar .artTotal {
+		margin-right: 0.6rem;
+	}
+
+	.self .top-bar .num {
+		font-weight: bold;
+		font-size: 0.4rem;
+		color: #000;
+	}
+
+	.self .top-bar .label {
+		font-size: 0.3rem;
+	}
+
+	.self .top-bar .num, .self .top-bar .label {
+		height: 0.5rem;
+		line-height: 0.5rem;
+		text-align: center;
+	}
+	
 
 	/** 列表 **/
 
@@ -117,11 +192,10 @@ export default {
 	}
 
 	.self .art-wrap {
-		height: 9.8rem;
+		margin-bottom: 0.26rem;
 	}
 
 	.self .art {
-		height: 8rem;
 		position: relative;
 	}
 
@@ -151,7 +225,7 @@ export default {
 	}
 	
 
-	.self .info .icon-good {
+	.self .info .icon-icon {
 		text-align: center;
 		margin-top: 0.34rem;
 		font-size: 0.56rem;

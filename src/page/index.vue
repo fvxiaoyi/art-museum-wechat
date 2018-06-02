@@ -7,18 +7,20 @@
     </div>
     
     <div id="nav-bottom">
-      <div class="nav-btn" v-if="authorization" @click="linkSelf">
-        <i :class="['iconfont', path == '/self' ? ['icon-accountfilling', 'active'] : 'icon-account']"></i>
+      <div :class="['nav-btn', path == '/self' ? 'active' : '' ]" v-if="authorization" @click="linkSelf">
+        <i class="iconfont icon-shouye"></i>
         <span class="nav-text">我的作品</span>
       </div>
       <div class="nav-btn" v-else @click="linkCoupon">
-        <i class="iconfont icon-phone"></i>
+        <i class="iconfont icon-shouye3"></i>
         <span class="nav-text">我要试听</span>
       </div>
-      <div class="middle-btn" v-if="authorization">+</div>
+      <div class="middle-btn" v-if="authorization">
+        <i class="iconfont icon-shouye2"></i>
+      </div>
       <div class="middle-btn"v-else>logo{{path}}</div>
-      <div class="nav-btn" @click="linkPreview">
-        <i :class="['iconfont', path == '/preview' || path == '/' ? ['icon-color-filling', 'active'] : 'icon-color']"></i>
+      <div :class="['nav-btn', path == '/preview' ? 'active' : '' ]" @click="linkPreview">
+        <i class="iconfont icon-color"></i>
         <span class="nav-text">美学艺术馆</span>
       </div>
     </div>
@@ -66,6 +68,7 @@ export default {
 </script>
 
 <style scoped>
+
   .index {
     width: 100%;
     height: 100%;
@@ -98,9 +101,9 @@ export default {
   }
 
   #nav-bottom .middle-btn {
+    height: 1.2rem;
+    line-height: 1.2rem;
     width: 2rem;
-    border-left: 0.02rem solid #DCDFE6;
-    border-right: 0.02rem solid #DCDFE6;
   }
 
   #nav-bottom .nav-btn .iconfont {
@@ -117,5 +120,14 @@ export default {
   #nav-bottom .active {
     color: #FFBD17;
   }
+
+  .icon-color {
+    font-weight: bold;
+  }
+
+  .icon-shouye2 {
+    font-size: 1rem;
+  }
+
 
 </style>

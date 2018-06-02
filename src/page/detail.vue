@@ -7,16 +7,18 @@
 		<div class="detail-wrap">
 			<div class="art">
 				<div class="date">2018-6-1</div>
-				<img src="https://mailimg.teambition.com/logos/cover-demo.jpg">
+				<img src="../../static/art1.jpg">
 			</div>
 			<div class="info clear">
-				<div class="left photo"></div>
+				<div class="photo left">
+					<img src="../../static/boy-pic.jpg">
+				</div>
 				<div class="left name">姓名</div>
 				<div class="left age">年龄</div>
 				<i class="left iconfont icon-map" ></i>
 				<div class="left local">校区</div>
 				<div class="right">
-					<i class="left iconfont icon-good"></i>
+					<i class="left iconfont icon-icon"></i>
 					<div :class="['left', isStar ? 'activeStar' : '']" @click="star">{{startCount}}</div>
 					<i class="iconfont icon-share left" ></i>
 				</div>
@@ -24,7 +26,9 @@
 		
 			<div class="comment-list">
 				<div class="comment clear" v-for="item in comments" :key="item.id">
-					<div class="photo left"></div>
+					<div class="photo left">
+						<img src="../../static/boy-pic.jpg">
+					</div>
 					<div class="left">
 						<div class="name">{{item.name}}</div>
 						<div class="content">{{item.content}}</div>
@@ -147,7 +151,6 @@
 	}
 
 	.detail .art {
-		height: 8rem;
 		position: relative;
 	}
 
@@ -159,7 +162,7 @@
 		right: 0.26rem;
 	}
 
-	.detail .art img, .detail .more .img-wrap img {
+	.detail .art img, .detail .more .img-wrap img, .detail .info .photo img, .detail .comment .photo img {
 		width: 100%;
     height: 100%;
     object-fit:cover;
@@ -207,7 +210,7 @@
 		border-radius: 0.16rem;
 	}
 
-	.detail .icon-good {
+	.detail .icon-icon {
 		display: block;
 		margin-top: 0.28rem;
 		margin-right: 0.26rem;
@@ -242,7 +245,6 @@
 		margin-top: 0.2rem;
 		margin-right: 0.26rem;
 		border-radius: 50%;
-		background-color: orange;
 	}
 
 	.detail .comment .name {

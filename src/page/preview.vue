@@ -11,7 +11,9 @@
       <div class="art-list">
         <div class="item-wrap" v-for="item in list" :key="item.id" >
           <div class="img-wrap" @click="view(item.id)">
-            <img :src="item.src">
+            <div class="img-wrap2">
+              <img :src="item.src">
+            </div>
           </div>
         </div>
       </div>
@@ -42,31 +44,31 @@ export default {
       loadMoreFinish: false,
       list: [{
         id: "1",
-        src: "https://mailimg.teambition.com/logos/cover-demo.jpg"
+        src: "../../static/art2.jpg"
       },{
         id: "2",
-        src: "https://mailimg.teambition.com/logos/cover-demo.jpg"
+        src: "../../static/art1.jpg"
       },{
         id: "3",
-        src: "https://mailimg.teambition.com/logos/cover-demo.jpg"
+        src: "../../static/art2.jpg"
       },{
         id: "4",
-        src: "https://mailimg.teambition.com/logos/cover-demo.jpg"
+        src: "../../static/art1.jpg"
       },{
         id: "5",
-        src: "https://mailimg.teambition.com/logos/cover-demo.jpg"
+        src: "../../static/art2.jpg"
       },{
         id: "6",
-        src: "https://mailimg.teambition.com/logos/cover-demo.jpg"
+        src: "../../static/art1.jpg"
       },{
         id: "7",
-        src: "https://mailimg.teambition.com/logos/cover-demo.jpg"
+        src: "../../static/art1.jpg"
       },{
         id: "8",
-        src: "https://mailimg.teambition.com/logos/cover-demo.jpg"
+        src: "../../static/art1.jpg"
       },{
         id: "9",
-        src: "https://mailimg.teambition.com/logos/cover-demo.jpg"
+        src: "../../static/art1.jpg"
       }]
     }
   },
@@ -81,7 +83,7 @@ export default {
             for(let i=0;i<10;i++) {
               this.list.push({
                 id: "1" + i,
-                src: "https://mailimg.teambition.com/logos/cover-demo.jpg"
+                src: "../../static/art1.jpg"
               })
             }
           } else {
@@ -188,16 +190,15 @@ export default {
   /** 列表 **/
 
   .art-wrap {
-    width: 100%;
     height: 100%;
     flex: 1;
     overflow: scroll;
+    margin: 0.26rem 0;
   }
 
   .pv .art-list {
     display: flex;
     flex-flow: row wrap;
-    margin-bottom: 0.26rem 0 0.26rem 0;
   }
 
   .pv .art-list .item-wrap {
@@ -206,14 +207,19 @@ export default {
   }
 
   .pv .img-wrap {
-    padding: 2%;
+    height: 100%;
+  }
+
+  .pv .img-wrap2 {
+    margin: 0 auto;
+    width: 96%;
     height: 96%;
   }
 
   .pv .art-list img {
     width: 100%;
     height: 100%;
-    object-fit:cover;
+    object-fit: cover;
   }
 
   .pv .end {
