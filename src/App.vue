@@ -56,6 +56,12 @@
     -webkit-appearance:none;
   }
 
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   .btn {
     border-radius: 0.16rem;
     text-align: center;

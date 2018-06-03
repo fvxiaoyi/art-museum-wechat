@@ -9,12 +9,8 @@
 
     <div class="art-wrap" @scroll="loadMore($event)">
       <div class="art-list">
-        <div class="item-wrap" v-for="item in list" :key="item.id" >
-          <div class="img-wrap" @click="view(item.id)">
-            <div class="img-wrap2">
-              <img :src="item.src">
-            </div>
-          </div>
+        <div class="item-wrap" v-for="item in list" :key="item.id" @click="view(item.id)" >
+          <img :src="item.src">
         </div>
       </div>
       
@@ -189,11 +185,10 @@ export default {
 
   /** 列表 **/
 
-  .art-wrap {
-    height: 100%;
+  .pv .art-wrap {
+    margin-top: 0.26rem;
     flex: 1;
     overflow: scroll;
-    margin: 0.26rem 0;
   }
 
   .pv .art-list {
@@ -201,25 +196,17 @@ export default {
     flex-flow: row wrap;
   }
 
-  .pv .art-list .item-wrap {
-    width: 50%;
-    height: 5rem;
+  .pv .item-wrap {
+    width: 4.61rem;
+    height: 4.74rem;
   }
 
-  .pv .img-wrap {
-    height: 100%;
+  .pv .item-wrap:nth-child(odd) {
+    padding: 0 0.13rem 0.26rem 0.26rem;
   }
 
-  .pv .img-wrap2 {
-    margin: 0 auto;
-    width: 96%;
-    height: 96%;
-  }
-
-  .pv .art-list img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  .pv .item-wrap:nth-child(even) {
+    padding: 0 0.26rem 0.26rem 0.13rem;
   }
 
   .pv .end {
