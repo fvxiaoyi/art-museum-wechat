@@ -1,5 +1,5 @@
 <template>
-  <div class="index">
+  <div class="art-index">
     <div id="content">
       <transition :name="transitionName">
         <router-view></router-view>
@@ -69,7 +69,7 @@ export default {
 
 <style scoped>
 
-  .index {
+  .art-index {
     width: 100%;
     height: 100%;
     display: flex;

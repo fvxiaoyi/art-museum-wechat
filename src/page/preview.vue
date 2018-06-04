@@ -1,5 +1,5 @@
 <template>
-  <div class="pv">
+  <div id="art-preview">
     <div class="login" v-if="!authorization">
       <div class="remark">引导语</div>
       <div class="btn-wrap">
@@ -120,37 +120,39 @@ export default {
 
 <style scoped>
 
-  .dialog-content {
+  #art-preview .dialog-content {
     padding: 0.3rem 0.26rem 0.26rem 0.26rem;
   }
 
-  .dialog-content .btn {
+  #art-preview .dialog-content .btn {
     height: 1rem;
     line-height: 1rem;
     margin-bottom: 0.26rem;
   }
 
-  .dialog-content .active {
+  #art-preview .dialog-content .active {
     background-color: #67C23A;
   }
 
-  .dialog-content .close {
+  #art-preview .dialog-content .close {
     background-color: #F56C6C;
   }
 
-  .dialog-content .errMsg {
+  #art-preview .dialog-content .errMsg {
     text-align: center;
     color: #E6A23C;
+    font-size: 0.3rem;
   }
 
-  .dialog-content input {
+  #art-preview .dialog-content input {
     height: 1rem;
     line-height: 1rem;
     width: 95%;
     margin-bottom: 0.26rem;
+    font-size: 0.4rem;
   }
 
-  .pv {
+  #art-preview {
     width: 100%;
     height: 100%;
     display: flex;
@@ -158,21 +160,21 @@ export default {
   }
 
   /** 顶部登录块 **/
-  .pv .login {
+  #art-preview .login {
     width: 100%;
     height: 3.2rem;
     border-bottom: 0.02rem solid #DCDFE6;
   }
 
-  .pv .login .remark {
+  #art-preview .login .remark {
     margin-bottom: 1.4rem;
   }
 
-  .pv .btn-wrap {
+  #art-preview .btn-wrap {
     width: 100%;
   }
 
-  .pv .btn-wrap .btn {
+  #art-preview .btn-wrap .btn {
     width: 3rem;
     height: 1rem;
     background-color: orange;
@@ -185,31 +187,31 @@ export default {
 
   /** 列表 **/
 
-  .pv .art-wrap {
+  #art-preview .art-wrap {
     margin-top: 0.26rem;
     flex: 1;
     overflow: scroll;
   }
 
-  .pv .art-list {
+  #art-preview .art-list {
     display: flex;
     flex-flow: row wrap;
   }
 
-  .pv .item-wrap {
+  #art-preview .item-wrap {
     width: 4.61rem;
     height: 4.74rem;
   }
 
-  .pv .item-wrap:nth-child(odd) {
+  #art-preview .item-wrap:nth-child(odd) {
     padding: 0 0.13rem 0.26rem 0.26rem;
   }
 
-  .pv .item-wrap:nth-child(even) {
+  #art-preview .item-wrap:nth-child(even) {
     padding: 0 0.26rem 0.26rem 0.13rem;
   }
 
-  .pv .end {
+  #art-preview .end {
     text-align: center;
     font-size: 0.3rem;
     height: 0.6rem;

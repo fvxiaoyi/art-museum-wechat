@@ -30,8 +30,6 @@ let current_url = window.location.href.split('#')[0]
 
 const store = new Vuex.Store(storeConfig)
 
-console.log(document.width)
-
 new Vue({
   el: '#app',
   router,

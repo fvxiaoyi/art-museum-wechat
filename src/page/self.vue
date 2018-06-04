@@ -1,5 +1,5 @@
 <template>
-	<div class="self">
+	<div id="art-self">
 		<div class="top-bar clear">
 			<div class="base left">
 				<div class="photo left">
@@ -117,14 +117,14 @@ export default {
 </script>
 
 <style scoped>
-	.self {
+	#art-self {
 		width: 100%;
 		height: 100%;
 		display: flex;
 		flex-direction: column;
 	}
 
-	.self .top-bar {
+	#art-self .top-bar {
 		height: 1.6rem;
 		line-height: 1.2rem;
 		padding: 0 0.26rem 0.26rem 0.26rem;
@@ -132,7 +132,7 @@ export default {
 		margin-bottom: 0.26rem;
 	}
 
-	.self .top-bar .photo {
+	#art-self .top-bar .photo {
 		margin-top: 0.26rem;
 		width: 1.4rem;
 		height: 1.4rem;
@@ -140,66 +140,59 @@ export default {
 		overflow: hidden;
 	}
 
-	.self .top-bar .photo img {
-		width: 100%;
-    height: 100%;
-    object-fit:cover;
-	}
-
-	.self .top-bar .text {
+	#art-self .top-bar .text {
 		height: 1.4rem;
 		margin: 0.3rem 0 0 0.3rem;
 	}
 
-	.self .top-bar .text .name, .self .top-bar .text .age {
+	#art-self .top-bar .name, #art-self .top-bar .age {
 		height: 0.7rem;
 		line-height: 0.7rem;
 		font-size: 0.3rem;
 		text-align: center;
 	}
 
-	.self .top-bar .total {
+	#art-self .top-bar .total {
 		margin-top: 0.5rem;
 	}
 
-	.self .top-bar .artTotal {
+	#art-self .top-bar .artTotal {
 		margin-right: 0.6rem;
 	}
 
-	.self .top-bar .num {
+	#art-self .top-bar .num {
 		font-weight: bold;
 		font-size: 0.4rem;
 		color: #000;
 	}
 
-	.self .top-bar .label {
+	#art-self .top-bar .label {
 		font-size: 0.3rem;
 	}
 
-	.self .top-bar .num, .self .top-bar .label {
+	#art-self .top-bar .num, #art-self .top-bar .label {
 		height: 0.5rem;
 		line-height: 0.5rem;
 		text-align: center;
 	}
-	
 
 	/** 列表 **/
 
-	.self .list-warp {
+	#art-self .list-warp {
 		flex: 1;
 		overflow: scroll;
 		padding: 0 0.26rem;
 	}
 
-	.self .art-wrap {
+	#art-self .art-wrap {
 		margin-bottom: 0.26rem;
 	}
 
-	.self .art {
+	#art-self .art {
 		position: relative;
 	}
 
-	.self .art .date {
+	#art-self .art .date {
 		position: absolute;
 		bottom: 0.16rem;
 		right: 0.26rem;
@@ -207,32 +200,32 @@ export default {
 		color: #000;
 	}
 
-	.self .art img {
+	#art-self .art img {
 		width: 100%;
     height: 100%;
     object-fit:cover;
 	}
 
-	.self .info {
+	#art-self .info {
 		height: 1.4rem;
 		border-bottom: 0.02rem solid #DCDFE6;
 	}
 
-	.self .info .title {
+	#art-self .info .title {
 		line-height: 1.4rem;
 		font-size: 0.5rem;
 		font-weight: bold;
 	}
 	
 
-	.self .info .icon-icon {
+	#art-self .info .icon-icon {
 		text-align: center;
 		margin-top: 0.34rem;
 		font-size: 0.56rem;
 		font-weight: bold;
 	}
 
-	.self .info span {
+	#art-self .info span {
 		margin: 0.28rem 0.4rem 0 0.26rem;
 		height: 0.76rem;
 		width: 1.2rem;
@@ -244,12 +237,12 @@ export default {
 		border-radius: 0.16rem;
 	}
 
-	.self .info .icon-share {
+	#art-self .info .icon-share {
 		font-size: 0.7rem;
 		margin-top: 0.3rem;
 	}
 
-	.self .list-warp .end {
+	#art-self .list-warp .end {
 		text-align: center;
     font-size: 0.3rem;
     height: 0.6rem;
