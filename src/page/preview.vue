@@ -34,6 +34,9 @@
 <script>
 import { mapMutations, mapState } from 'vuex'
 export default {
+  created() {
+    console.log('preview created')
+  },
   data () {
     return {
       loginDialogVisible: false,

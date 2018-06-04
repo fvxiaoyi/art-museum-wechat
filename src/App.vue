@@ -4,8 +4,11 @@
       <div id="mask" v-if="maskVisible" ></div>
     </transition>
     <transition :name="transitionName">
-      <router-view id="app"></router-view>
+      <keep-alive include="index" >
+        <router-view class="app"></router-view>
+      </keep-alive>
     </transition>
+
   </div>
 </template>
 
@@ -108,7 +111,7 @@
     transition: opacity .2s;
   }
 
-  #app {
+  .app {
     height: 100%;
     width: 100%;
   }

@@ -68,6 +68,9 @@
 <script>
 
 	export default {
+		created() {
+      console.log('detail created')
+    },
   	data () {
   		return {
   			isStar: false,

@@ -37,6 +37,9 @@
 <script>
 import { mapMutations } from 'vuex'
   export default {
+    created() {
+      console.log('coupon created')
+    },
     data() {
       return {
         confirmDialogVisible: false

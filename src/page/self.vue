@@ -54,6 +54,9 @@
 
 <script>
 export default {
+	created() {
+		console.log('self created')
+	},
 	data() {
 		return {
 			url: '../static/boy-pic.png',

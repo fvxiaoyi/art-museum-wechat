@@ -3,7 +3,9 @@
     <div id="index">
       <div id="content">
         <transition :name="transitionName">
-          <router-view></router-view>
+          <keep-alive>
+            <router-view></router-view>
+          </keep-alive>
         </transition>
       </div>
       
@@ -32,10 +34,12 @@
 <script>
 import { mapState } from 'vuex'
 export default {
+  name: 'index',
   created() {
+    console.log('index created')
     if(this.authorization) {
       this.$router.push('self');
-    } else if(!this.authorization && this.path === '/self') {
+    } else {
       this.$router.push('preview');
     }
   },
