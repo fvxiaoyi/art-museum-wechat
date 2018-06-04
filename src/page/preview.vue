@@ -7,9 +7,9 @@
       </div>
     </div>
 
-    <div class="art-wrap" @scroll="loadMore($event)">
+    <div class="art-wrap" @scroll="loadMore($event)" ref="previewWrap">
       <div class="art-list">
-        <div class="item-wrap" v-for="item in list" :key="item.id" @click="view(item.id)" >
+        <div class="item-wrap" v-for="item in articleList" :key="item.id" @click="view(item.id)" >
           <img :src="item.src">
         </div>
       </div>
@@ -34,11 +34,19 @@
 <script>
 import { mapMutations, mapState } from 'vuex'
 export default {
+  activated() {
+    this.$refs.previewWrap.scrollTop = this.scrollTop
+  },
+  deactivated() {
+    this.scrollTop = this.$refs.previewWrap.scrollTop
+  },
   created() {
     console.log('preview created')
+    this.loadArticleList()
   },
   data () {
     return {
+      scrollTop: 0,
       loginDialogVisible: false,
       loadMoreFinish: false,
       list: [{
@@ -78,13 +86,8 @@ export default {
           warpHeight = e.target.clientHeight,
           scrollTop = e.target.scrollTop
         if(totalHeight - (warpHeight + scrollTop) <= 1) {
-          if(this.list.length < 19) {
-            for(let i=0;i<10;i++) {
-              this.list.push({
-                id: "1" + i,
-                src: "../../static/art1.jpg"
-              })
-            }
+          if(this.articleList.length < 19) {
+            this.loadArticleList2()
           } else {
             this.loadMoreFinish = true
           }
@@ -111,11 +114,14 @@ export default {
     },
     ...mapMutations({
       changeMaskVisible: 'changeMaskVisible',
-      changeAuthorization: 'changeAuthorization'
+      changeAuthorization: 'changeAuthorization',
+      loadArticleList: 'loadArticleList',
+      loadArticleList2: 'loadArticleList2',
+      articleListAddOne: 'articleListAddOne'
     })
   },
   computed: {
-    ...mapState(['authorization'])
+    ...mapState(['authorization', 'articleList'])
   }
 }
 

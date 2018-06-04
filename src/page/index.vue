@@ -18,10 +18,11 @@
           <i class="iconfont icon-shouye3"></i>
           <span class="nav-text">我要试听</span>
         </div>
-        <div class="middle-btn" v-if="authorization">
+        <div class="middle-btn upload-wrap" v-if="authorization">
+          <input class="upload" type="file" accept="image/*" @change="onUploadFile"  />
           <i class="iconfont icon-shouye2"></i>
         </div>
-        <div class="middle-btn"v-else>logo{{path}}</div>
+        <div class="middle-btn" v-else>logo{{path}}</div>
         <div :class="['nav-btn', path == '/preview' ? 'active' : '' ]" @click="linkPreview">
           <i class="iconfont icon-color"></i>
           <span class="nav-text">美学艺术馆</span>
@@ -32,7 +33,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 export default {
   name: 'index',
   created() {
@@ -57,7 +58,15 @@ export default {
     },
     linkCoupon() {
       this.$router.push("/coupon")
-    }
+    },
+    onUploadFile($event) {
+      let file = $event.target.files[0]
+      console.log(file)
+      this.articleListAddOne()
+    },
+    ...mapMutations({
+      articleListAddOne: 'articleListAddOne'
+    })
   },
   computed: {
     path() {
@@ -74,6 +83,8 @@ export default {
 </script>
 
 <style scoped>
+
+  
 
   #index {
     width: 100%;
@@ -112,6 +123,19 @@ export default {
     width: 2rem;
   }
 
+  .upload-wrap {
+    position: relative;
+  }
+
+  .upload {
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    z-index: 2;
+  }
+
   #nav-bottom .nav-btn .iconfont {
     font-size: 0.5rem;
     display: block;
@@ -135,5 +159,6 @@ export default {
     font-size: 1rem;
   }
 
+  
 
 </style>

@@ -24,10 +24,10 @@
 			
 			
 		</div>
-		<div class="list-warp" @scroll="loadMore($event)" >
+		<div class="list-warp" @scroll="loadMore($event)" ref="selfWrap" >
 
 			<div class="art-wrap" v-for="(item, index) in list" :key="item.id">
-				<div v-if="index===0" class="art" @click="view(item.id)" ref="artRef">
+				<div v-if="index===0" class="art" @click="view(item.id)">
 					<img :src="item.src">
 					<div class="date">{{item.date}}</div>
 				</div>
@@ -54,11 +54,18 @@
 
 <script>
 export default {
+	activated() {
+		this.$refs.selfWrap.scrollTop = this.scrollTop
+	},
+	deactivated() {
+    this.scrollTop = this.$refs.selfWrap.scrollTop
+  },
 	created() {
 		console.log('self created')
 	},
 	data() {
 		return {
+			scrollTop: 0,
 			url: '../static/boy-pic.png',
 			loadMoreFinish: false,
 			list: [{

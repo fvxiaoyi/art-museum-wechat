@@ -29,15 +29,5 @@ export default new Router({
       path: '/coupon',
       component: coupon
     }
-  ],
-  scrollBehavior (to, from, savedPosition) {
-
-    if (savedPosition) {
-      console.log(savedPosition)
-      return savedPosition
-    } else {
-      console.log(document.body)
-      return { x: 0, y: 0 }
-    }
-  }
+  ]
 })
