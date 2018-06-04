@@ -149,7 +149,7 @@ export default {
     line-height: 1rem;
     width: 95%;
     margin-bottom: 0.26rem;
-    font-size: 0.4rem;
+    font-size: 0.3rem;
   }
 
   #art-preview {

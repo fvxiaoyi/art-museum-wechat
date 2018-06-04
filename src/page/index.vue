@@ -1,27 +1,29 @@
 <template>
-  <div class="art-index">
-    <div id="content">
-      <transition :name="transitionName">
-        <router-view></router-view>
-      </transition>
-    </div>
-    
-    <div id="nav-bottom">
-      <div :class="['nav-btn', path == '/self' ? 'active' : '' ]" v-if="authorization" @click="linkSelf">
-        <i class="iconfont icon-shouye"></i>
-        <span class="nav-text">我的作品</span>
+  <div>
+    <div id="index">
+      <div id="content">
+        <transition :name="transitionName">
+          <router-view></router-view>
+        </transition>
       </div>
-      <div class="nav-btn" v-else @click="linkCoupon">
-        <i class="iconfont icon-shouye3"></i>
-        <span class="nav-text">我要试听</span>
-      </div>
-      <div class="middle-btn" v-if="authorization">
-        <i class="iconfont icon-shouye2"></i>
-      </div>
-      <div class="middle-btn"v-else>logo{{path}}</div>
-      <div :class="['nav-btn', path == '/preview' ? 'active' : '' ]" @click="linkPreview">
-        <i class="iconfont icon-color"></i>
-        <span class="nav-text">美学艺术馆</span>
+      
+      <div id="nav-bottom">
+        <div :class="['nav-btn', path == '/self' ? 'active' : '' ]" v-if="authorization" @click="linkSelf">
+          <i class="iconfont icon-shouye"></i>
+          <span class="nav-text">我的作品</span>
+        </div>
+        <div class="nav-btn" v-else @click="linkCoupon">
+          <i class="iconfont icon-shouye3"></i>
+          <span class="nav-text">我要试听</span>
+        </div>
+        <div class="middle-btn" v-if="authorization">
+          <i class="iconfont icon-shouye2"></i>
+        </div>
+        <div class="middle-btn"v-else>logo{{path}}</div>
+        <div :class="['nav-btn', path == '/preview' ? 'active' : '' ]" @click="linkPreview">
+          <i class="iconfont icon-color"></i>
+          <span class="nav-text">美学艺术馆</span>
+        </div>
       </div>
     </div>
   </div>
@@ -69,7 +71,7 @@ export default {
 
 <style scoped>
 
-  .art-index {
+  #index {
     width: 100%;
     height: 100%;
     display: flex;
