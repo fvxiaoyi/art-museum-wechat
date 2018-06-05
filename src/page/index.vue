@@ -84,8 +84,6 @@ export default {
 
 <style scoped>
 
-  
-
   #index {
     width: 100%;
     height: 100%;
@@ -129,8 +127,8 @@ export default {
 
   .upload {
     opacity: 0;
-    width: 100%;
-    height: 100%;
+    width: 2rem;
+    height: 1.1rem;
     position: absolute;
     left: 0;
     z-index: 2;
