@@ -290,6 +290,8 @@
 	#detail .more .author-more .other-art {
 		width: 2.72rem;
 		height: 2.72rem;
+
+		
 	}
 
 	#detail .more .author-more :first-child{ 
@@ -301,6 +303,7 @@
     height: 100%;
     object-fit: cover;
     border-radius: 0.2rem;
+    box-shadow: 0 0.1rem 0.1rem #888888;
 	}
 
 	#detail .ad {
