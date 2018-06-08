@@ -1,16 +1,41 @@
 <template>
   <div id="art-preview">
-    <div class="login" v-if="!authorization">
-      <div class="remark">引导语</div>
-      <div class="btn-wrap">
-        <div class="btn" @click="openLoginDialog">登录</div>
-      </div>
+    <div class="banner-wrap">
+      <mt-swipe :auto="4000">
+        <mt-swipe-item>
+          <div class="banner">
+            <img src="../../static/img/home-Banner-1.png">
+          </div>
+        </mt-swipe-item>
+        <mt-swipe-item>
+          <div class="banner">
+            <img src="../../static/img/home-Banner-2.png">
+          </div>
+        </mt-swipe-item>
+      </mt-swipe>
+    </div>
+    <div class="tab">
+      <div class="text-left active">新作</div>
+      <div class="split">|</div>
+      <div class="text-right">专题</div>
     </div>
 
     <div class="art-wrap" @scroll="loadMore($event)" ref="previewWrap">
       <div class="art-list">
-        <div class="item-wrap" v-for="item in articleList" @click="view(item.id)" >
-          <img :src="item.src">
+        <div class="item-wrap" v-for="(item, index) in articleList" @click.stop="onItemClick(item, index)" >
+            <div class="info-mask" v-if="item.click"></div>
+            <div class="info-wrap" v-if="item.click"  @click.stop="onItemCancelClick(item, index)">
+              <div class="photo">
+                <img src="../../static/boy-pic.jpg">
+              </div>
+              <div class="author">
+                <span>徐晓辉</span>
+                <span>|</span>
+                <span>20岁</span>
+              </div>
+              <div class="link" @click.stop="view(item.id)">打开查看完整作品</div>
+          </div>
+          <img :src="item.src" :class="[item.id ? '' : 'link-coupon']" >
         </div>
       </div>
       
@@ -46,42 +71,10 @@ export default {
   },
   data () {
     return {
+      preIndex: null,
       scrollTop: 0,
       loginDialogVisible: false,
-      loadMoreFinish: false,
-      linkData: {
-        src: "../../static/img/btn-home-inv.png"
-      },
-      list: [{
-        src: "../../static/img/btn-home-inv.png"
-      },{
-        id: "1",
-        src: "../../static/art2.jpg"
-      },{
-        id: "2",
-        src: "../../static/art1.jpg"
-      },{
-        id: "3",
-        src: "../../static/art2.jpg"
-      },{
-        id: "4",
-        src: "../../static/art1.jpg"
-      },{
-        id: "5",
-        src: "../../static/art2.jpg"
-      },{
-        id: "6",
-        src: "../../static/art1.jpg"
-      },{
-        id: "7",
-        src: "../../static/art1.jpg"
-      },{
-        id: "8",
-        src: "../../static/art1.jpg"
-      },{
-        id: "9",
-        src: "../../static/art1.jpg"
-      }]
+      loadMoreFinish: false
     }
   },
   methods: {
@@ -109,6 +102,20 @@ export default {
       this.closeLoginDialog()
       this.$router.push(`/self`)
     },
+    onItemClick(item, index) {
+      if(item.id) {
+        this.handleArticleListClick({ preIndex: this.preIndex, index: index})
+        this.preIndex = index
+      } else {
+        this.$router.push('/coupon')
+      }
+    },
+    onItemCancelClick(item, index) {
+      if(item.id) {
+        this.handleArticleListCancelClick({index: index})
+        this.preIndex = null
+      }
+    },
     openLoginDialog() {
       this.loginDialogVisible = true
       this.changeMaskVisible({ visible: this.loginDialogVisible })
@@ -120,9 +127,10 @@ export default {
     ...mapMutations({
       changeMaskVisible: 'changeMaskVisible',
       changeAuthorization: 'changeAuthorization',
+      handleArticleListClick: 'handleArticleListClick',
+      handleArticleListCancelClick: 'handleArticleListCancelClick',
       loadArticleList: 'loadArticleList',
       loadArticleList2: 'loadArticleList2',
-      articleListAddOne: 'articleListAddOne'
     })
   },
   computed: {
@@ -134,38 +142,6 @@ export default {
 
 <style scoped>
 
-  #art-preview .dialog-content {
-    padding: 0.3rem 0.26rem 0.26rem 0.26rem;
-  }
-
-  #art-preview .dialog-content .btn {
-    height: 1rem;
-    line-height: 1rem;
-    margin-bottom: 0.26rem;
-  }
-
-  #art-preview .dialog-content .active {
-    background-color: #67C23A;
-  }
-
-  #art-preview .dialog-content .close {
-    background-color: #F56C6C;
-  }
-
-  #art-preview .dialog-content .errMsg {
-    text-align: center;
-    color: #E6A23C;
-    font-size: 0.3rem;
-  }
-
-  #art-preview .dialog-content input {
-    height: 1rem;
-    line-height: 1rem;
-    width: 95%;
-    margin-bottom: 0.26rem;
-    font-size: 0.3rem;
-  }
-
   #art-preview {
     width: 100%;
     height: 100%;
@@ -173,31 +149,50 @@ export default {
     flex-direction: column;
   }
 
-  /** 顶部登录块 **/
-  #art-preview .login {
-    width: 100%;
-    height: 3.2rem;
-    border-bottom: 0.02rem solid #DCDFE6;
+  #art-preview .banner-wrap {
+    margin: 0.32rem 0.32rem 0 0.32rem;
+    height: 2.613rem;
+    box-shadow: 0 0.1rem 0.2rem #888888;
   }
 
-  #art-preview .login .remark {
-    margin-bottom: 1.4rem;
+  #art-preview .banner {
+    height: 100%;
   }
 
-  #art-preview .btn-wrap {
-    width: 100%;
-  }
-
-  #art-preview .btn-wrap .btn {
-    width: 3rem;
-    height: 1rem;
-    background-color: orange;
-    margin: 0 auto;
-    text-align: center;
-    color: #fff;
-    line-height: 1rem;
+  #art-preview .banner-wrap, #art-preview .banner, #art-preview .banner img {
     border-radius: 0.2rem;
+    overflow: hidden;
   }
+
+  #art-preview .tab {
+    height: 1.52rem;
+    display: flex;
+    align-items: center;
+  }
+
+  #art-preview .tab .split {
+    margin: 0 0.666rem;
+  }
+
+  #art-preview .tab .text-left, #art-preview .tab .text-right {
+    flex: 1;
+    color: #353535;
+    font-size: 0.373rem;
+  }
+
+  #art-preview .tab .text-left {
+    text-align: right;
+  }
+
+  #art-preview .tab .text-right {
+    text-align: left;
+  }
+
+  #art-preview .tab .active {
+    font-weight: bold;
+    font-size: 0.48rem;
+  }
+
 
   /** 列表 **/
 
@@ -215,6 +210,60 @@ export default {
     width: 4.52rem;
     height: 4.52rem;
     margin-bottom: 0.4rem;
+    position: relative;
+  }
+
+  #art-preview .item-wrap .info-mask {
+    border-radius: 0.2rem;
+    width: 4.52rem;
+    height: 4.52rem;
+    position: absolute;
+    z-index: 1;
+    opacity: 0.5;
+    background: #000;
+  }
+
+  #art-preview .item-wrap .info-wrap {
+    border-radius: 0.2rem;
+    width: 4.52rem;
+    height: 4.52rem;
+    position: absolute;
+    z-index: 2;
+  }
+
+  #art-preview .item-wrap .info-wrap .photo {
+    margin: 0.5rem auto 0 auto;
+    border-radius: 50%;
+    height: 1.573rem;
+    width: 1.573rem;
+    overflow: hidden;
+  }
+
+  #art-preview .item-wrap .info-wrap .author {
+    height: 0.986rem;
+    text-align: center;
+    line-height: 0.986rem;
+    color: #FDFDFD;
+  }
+
+  #art-preview .item-wrap .info-wrap .link {
+    margin: 0 auto;
+    width: 4rem;
+    height: 1.066rem;
+    border: 0.05rem solid #FDFDFD;
+    border-radius: 0.2rem;
+    text-align: center;
+    line-height: 1.066rem;
+    color: #FDFDFD;
+    z-index: 3
+  }
+
+  #art-preview .item-wrap .info-wrap .author span {
+    margin-right: 0.16rem;
+  }
+
+  #art-preview .item-wrap .link-coupon {
+    box-shadow: 0 0.1rem 0.1rem #888888;
   }
 
   #art-preview .item-wrap img {

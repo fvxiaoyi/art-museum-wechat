@@ -50,7 +50,7 @@
 	  background-color: #fff;
 	  border-radius: 0.1rem;
 	  position: absolute;
-	  z-index: 3;
+	  z-index: 11;
 	}
 
 	.tbar {

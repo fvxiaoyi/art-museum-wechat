@@ -5,10 +5,14 @@ import App from './App'
 import axios from 'axios'
 import router from './router'
 import Vuex from 'vuex'
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
 
 import storeConfig from './store/index'
 
 import dialog from './components/dialog'
+
+Vue.use(MintUI)
 
 const wx = require('weixin-js-sdk')
 

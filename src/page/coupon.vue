@@ -1,34 +1,29 @@
 <template>
   <div>
     <div id="coupon">
-      <div class="top-bar">
-        <div class="title">我要试听</div>
-        <i class="iconfont icon-back" @click="back"></i>
+      <div class="bg">
+        <div class="title">|&nbsp;信息填写&nbsp;|</div>
+        <input type="text" placeholder="宝贝姓名（选填）" /> 
+        <input type="text" placeholder="宝贝年龄（选填）" /> 
+        <input type="text" placeholder="家长手机号" style="margin-bottom:0;" />
+        <div class="label">方便接听时段 :</div>
+        <div class="time-wrap">
+          <div class="time">
+            <div class="top">早</div>
+            <div class="bottom">9:00~12:30</div>
+          </div>
+          <div class="time active">
+            <div class="top">午</div>
+            <div class="bottom">14:00~18:00</div>
+          </div>
+          <div class="time" style="margin-right:0;">
+            <div class="top">晚</div>
+            <div class="bottom">18:00~21:30</div>
+          </div>
+        </div>
+        <div class="btn" @click="handleConfirm">提交</div>
       </div>
-      <div class="content-wrap">
-        <div class="remark">
-          获取试听的流程，和注意事项
-        </div>
-        <div class="form">
-          <input type="text" placeholder="请输入手机号码" />  
-          <input type="text" placeholder="姓名（选填）" /> 
-          <input type="text" placeholder="年龄（选填）" /> 
-          <div class="btn" @click="handleConfirm">提交</div>
-        </div>
-        <div class="profile">
-          品牌简介
-        </div>
-      </div>
-
-      <v-dialog :width="8" :height="5" :visible="confirmDialogVisible" >
-        <div class="dialog-content">
-        <div class="success icon">
-          <i class="iconfont icon-success"></i>
-        </div>
-        <div class="success content">提交成功,请留意近期来电....</div>
-        <div class="btn" @click="close">好的</div>
-        </div>
-      </v-dialog>
+      
     </div>
   </div>
 </template>
@@ -50,8 +45,8 @@ import { mapMutations } from 'vuex'
         this.$router.push("/preview")
       },
       handleConfirm() {
-        this.confirmDialogVisible = true
-        this.changeMaskVisible({ visible: this.confirmDialogVisible })
+        /*this.confirmDialogVisible = true
+        this.changeMaskVisible({ visible: this.confirmDialogVisible })*/
       },
       close() {
         this.confirmDialogVisible = false
@@ -69,88 +64,97 @@ import { mapMutations } from 'vuex'
   #coupon {
     width: 100%;
     height: 100%;
+  }
+
+  #coupon .bg {
+    margin: 0.16rem auto 0 auto;
+    width: 9.06rem;
+    height: 8.837rem;
+    background-image: url("../../static/img/inv-bg.png");
+    background-size: 9.06rem 14.73rem;
+    background-repeat: no-repeat;
+    padding-top: 5.893rem;
+  }
+
+  #coupon .title {
+    text-align: center;
+    color: #FC7E7C;
+    font-size: 0.373rem;
+    margin-bottom: 0.32rem;
+  }
+
+  #coupon input {
+    margin: 0 auto;
+    display: block;
+    width: 5.973rem;
+    height: 0.96rem;
+    margin-bottom: 0.373rem;
+    border-width: 0.05rem;
+    color: #919191;
+    font-size: 0.32rem;
+    padding: 0 0.4rem;
+  }
+
+  #coupon input:focus {
+    color: #FC7E7C;
+    border-color: #FC7E7C;
+
+  }
+
+  #coupon input:focus::-webkit-input-placeholder {
+    color: #FC7E7C;
+  }
+
+  #coupon .label {
+    margin: 0 auto;
+    height: 0.853rem;
+    line-height: 0.853rem;
+    width: 6.773rem;
+    color: #FC7E7C;
+    text-align: left;
+  }
+
+  #coupon .time-wrap {
+    margin: 0 auto 0.32rem auto;
+    height: 1.44rem;
+    width: 6.773rem;
     display: flex;
-    flex-direction: column;
   }
 
-  #coupon .top-bar {
-    height: 1.4rem;
-    line-height: 1.4rem;
-    padding: 0 0.26rem;
-    border-bottom: 0.02rem solid #DCDFE6;
-    position: relative;
-  }
-
-  #coupon .top-bar .title {
-    margin: 0 auto;
+  #coupon .time {
+    border: 0.05rem solid #D9D9D9;
+    border-radius: 0.2rem;
+    height: 1.34rem;
+    width: 2.08rem;
     text-align: center;
-  }
-
-  #coupon .top-bar .icon-back {
-    position: absolute;
-    top: 0;
-  }
-
-  #coupon .content-wrap {
+    margin-right: 0.1165rem;
     flex: 1;
-    padding: 0 0.26rem;
-    overflow: scroll;
   }
 
-  #coupon .top-bar, #coupon .remark, #coupon .form input {
-    margin-bottom: 0.26rem;
+  #coupon .time .top {
+    margin-top: 0.24rem;
+    font-size: 0.4rem;
   }
 
-  #coupon .form {
-    margin-bottom: 0.6rem;
+  #coupon .time .bottom {
+    font-size: 0.293rem;
+  }
+ 
+
+  #coupon .time-wrap .active {
+    color: #FC7E7C;
+    font-weight: bold;
+    border-color: #FC7E7C;
   }
 
-  #coupon .remark {
-    height: 0.8rem;
-  }
-
-  #coupon .form input {
-    width: 95%;
-  }
-
-  #coupon .form .btn {
+  #coupon .btn {
     margin: 0 auto;
-    width: 4rem;
-    height: 1rem;
-    line-height: 1rem;
-  }
-
-  #coupon .dialog-content {
-    padding: 0.26rem;
-  }
-
-  #coupon .dialog-content .success {
-    color: #67C23A;
-  }
-
-  #coupon .dialog-content .icon, #coupon .dialog-content .content {
-    margin-bottom: 0.26rem;
-  }
-
-  #coupon .dialog-content .icon {
-    height: 2rem;
-    line-height: 2rem;
-    text-align: center;
-  }
-
-  #coupon .dialog-content .iconfont {
-    font-size: 1.4rem;
-  }
-
-  #coupon .dialog-content .content {
-    text-align: center;
-  }
-
-  #coupon .dialog-content .btn {
-    margin: 0 auto;
-    width: 2.4rem;
-    height: 0.8rem;
-    line-height: 0.8rem;
+    background-color: #FC7E7C;
+    font-weight: bold;
+    font-size: 0.373rem;
+    height: 1.066rem;
+    width: 4.133rem;
+    line-height: 1.066rem;
   }
 
 </style>

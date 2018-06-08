@@ -69,6 +69,20 @@
     object-fit: cover;
   }
 
+  .mint-swipe-indicators {
+    left: 90%;
+    bottom: 0.13rem;
+  }
+
+  .mint-swipe-indicator {
+    background: #EDEDED;
+    opacity: 1;
+  }
+
+  .mint-swipe-indicator.is-active {
+    background: #008692;
+  }
+
   .btn {
     border-radius: 0.16rem;
     text-align: center;
@@ -108,7 +122,7 @@
     position: absolute;
     background-color: #000;
     opacity: 0.4;
-    z-index: 1;
+    z-index: 10;
   }
 
   .maskFade-enter-active, .maskFade-leave-active {
