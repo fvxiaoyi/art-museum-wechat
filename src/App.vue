@@ -41,7 +41,11 @@
     height: 100%;
     width: 100%;
     font-family: '-apple-system', "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
-    color: #B5B5B5;
+    color: #BDBDBD;
+  }
+
+  div {
+    -webkit-tap-highlight-color: transparent;
   }
 
   ul, li{ 

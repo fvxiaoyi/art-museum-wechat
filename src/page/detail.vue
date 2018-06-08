@@ -1,67 +1,79 @@
 <template>
 	<div>
 		<div id="detail">
-			<div class="top-bar">
-				<i class="iconfont icon-back" @click="back"></i>
-				<div class="title">《作品名字》</div>
+			<div class="art">
+				<img src="../../static/art1.jpg">
+			</div>
+			<div class="star">
+				<div class="icon-wrap">
+					<img src="../../static/img/icon-more-like.png" />
+				</div>
+				<span class="names">中文名,ABC,ABC,中文名中文名,ABC,中文名,ABC</span>
+				<div class="icon-wrap more">
+					<img src="../../static/img/icon-more.png" />
+				</div>
+				<span class="total">32人喜欢此作品</span>
+			</div>
+			<div class="art-info">
+				<div class="top clear">
+					<div class="title left">壁画</div>
+					<div class="btn-wrap right">
+						<div class="icon left">
+							<img src="../../static/img/icon-like1.png" />
+						</div>
+						<div class="icon right">
+							<img src="../../static/img/icon_share.png" />
+						</div>
+					</div>
+				</div>
+				<div class="middle">
+					<div class="author">
+						<span>徐晓辉</span>
+						<span>|</span>
+						<span>20岁</span>
+					</div>
+					<div class="local">
+						
+					</div>
+					<div class="count">
+						
+					</div>
+				</div>
 			</div>
 
-			<div class="detail-wrap">
-				<div class="art">
-					<div class="date">2018-6-1</div>
-					<img src="../../static/art1.jpg">
-				</div>
-				<div class="info clear">
-					<div class="photo left">
-						<img src="../../static/boy-pic.jpg">
-					</div>
-					<div class="left name">姓名</div>
-					<div class="left age">年龄</div>
-					<i class="left iconfont icon-map" ></i>
-					<div class="left local">校区</div>
-					<div class="right">
-						<i class="left iconfont icon-icon"></i>
-						<div :class="['left', isStar ? 'activeStar' : '']" @click="star">{{startCount}}</div>
-						<i class="iconfont icon-share left" ></i>
-					</div>
-				</div>
-			
-				<div class="comment-list">
-					<div class="comment clear" v-for="item in comments" :key="item.id">
-						<div class="photo left">
-							<img src="../../static/boy-pic.jpg">
-						</div>
-						<div class="left">
-							<div class="name">{{item.name}}</div>
-							<div class="content">{{item.content}}</div>
-						</div>
-						<div class="date right">{{item.date}}</div>
-					</div>
-				</div>
+			<div class="comment-list">
+				
+			</div>
 
-				<div class="send-wrap">
-					<input type="text" placeholder="添加评论">
-					<div class="send-btn btn">发送</div>
+			<div class="more clear">
+				<div class="link-div left">
+					<div class="link-type">
+						<div class="icon"></div>
+						<div class="text">
+							<div>进入此作</div>
+							<div>艺术专题</div>
+						</div>
+					</div>
+					<div class="link-home">回艺术馆首页</div>
 				</div>
-
-				<div class="more">
-					<div class="title">
-						<span class="left">相似作品</span>
-						<i class="iconfont icon-office left" ></i>
-				  </div>
-					<div class="same-list">
-						<div class="art">
+				<div class="author-more right">
+					<div class="link-author">
+						<span>|</span>
+						<span>徐晓辉的其他作品</span>
+						<span class="right">>></span>
+					</div>
+					<div class="other">
+						<div class="other-art left">
 							<img src="../../static/art1.jpg">
 						</div>
-						<div class="art">
-							<img src="../../static/art2.jpg">
+						<div class="other-art left">
+							<img src="../../static/art1.jpg">
 						</div>
 					</div>
 				</div>
-			
 			</div>
+			<div class="ad"></div>
 		</div>
-		
 	</div>
 </template>
 
@@ -122,188 +134,180 @@
 <style scoped>
 	#detail {
 		height: 100%;
-		display: flex;
-		flex-direction: column;
-	}
-
-	#detail-wrap {
-		overflow: scroll;
-		flex: 1;
-	}
-
-	#detail .top-bar {
 		width: 100%;
-		height: 1.4rem;
-		line-height: 1.4rem;
-		position: relative;
-		border-bottom: 0.02rem solid #DCDFE6;
-	}
-
-	#detail .top-bar .title {
-		font-size: 0.6rem;
-		line-height: 1.4rem;
-		text-align: center;
-	}
-
-	#detail .top-bar .icon-back {
-		display: inline-block;
-		width: 1rem;
-		font-size: 0.9rem;
-		position: absolute;
-		z-index: 1;
+		overflow: scroll;
 	}
 
 	#detail .art {
-		position: relative;
-	}
-
-	#detail .art .date {
-		color: #000;
-		font-weight: bold;
-		position: absolute;
-		bottom: 0.26rem;
-		right: 0.26rem;
-	}
-
-	#detail .art img, #detail .more .img-wrap img, #detail .info .photo img, #detail .comment .photo img {
 		width: 100%;
-    height: 100%;
-    object-fit:cover;
 	}
 
-	/** 学员信息 **/
+	/** 点赞 **/
 
-	#detail .info {
-		margin: 0.26rem;
-		height: 1.4rem;
-		border-bottom: 0.02rem solid #DCDFE6;
+	#detail .star {
+		padding-left: 0.32rem;
+		min-height: 1.2rem;
+		color: #FD7D7C;
+		display: flex;
+    align-items: center;
+    border-bottom: 0.026rem solid #DCDFE6;
 	}
 
-	#detail .info .photo {
+	#detail .star .icon-wrap {
 		width: 1rem;
 		height: 1rem;
-		margin-top: 0.15rem;
-		margin-right: 0.26rem;
-		border-radius: 50%;
-		background-color: orange;
 	}
 
-	#detail .info .name, #detail .info .local, #detail .info .age {
-		text-align: center;
-		margin-right: 0.3rem;
-		line-height: 1.4rem;
+	#detail .star .icon-wrap .more {
+		margin-right: 0.26rem;
+	}
+
+	#detail .star .names {
+		flex: 1;
+		color: #353535;
+		margin: 0 0.26rem;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	#detail .star .total {
+		margin-right: 0.48rem;
+	}
+
+	#detail .star span {
 		font-size: 0.4rem;
 	}
+		
+	/** 作品信息 **/
 
-	#detail .info .icon-map {
-		line-height: 1.4rem;
-		margin-right: 0.1rem;
-		font-size: 0.5rem;
+	#detail .art-info {
+		background-color: #FAFAFA;
+		padding: 0 0.32rem;
 	}
 
-	#detail .right div {
-		margin: 0.28rem 0.4rem 0 0;
-		height: 0.76rem;
-		width: 1.2rem;
-		line-height: 0.76rem;
-		text-align: center;
-		display: inline-block;
-		background-color: #B5B5B5;
-		color: #F5F5F5;
-		border-radius: 0.16rem;
+	#detail .art-info .top {
+		height: 1.6rem;
 	}
 
-	#detail .icon-icon {
-		display: block;
-		margin-top: 0.28rem;
-		margin-right: 0.26rem;
-		text-align: center;
-		font-size: 0.6rem;
+	#detail .art-info .title {
+		margin-top: 0.5rem;
+		font-size: 0.64rem;
+		font-weight: bold;
+		color: #353535;
+	}
+
+	#detail .art-info .btn-wrap {
+		margin-top: 0.26rem;
+		height: 1.3rem;
+		width: 3.226rem;
+		border-radius: 0.2rem;
+		background-image: url("../../static/img/board-like.png");
+		background-size: 3.226rem 1.3rem ;
+		overflow: hidden;
+	}
+
+	#detail .art-info .btn-wrap .icon {
+		margin-top: 0.05rem;
+		height: 1.2rem;
+		width: 1.6rem;
+	}
+
+	#detail .art-info .btn-wrap .icon img {
+		width: 100%;
+    height: 100%;
+    object-fit: contain;
+	}
+
+	#comment-list {
+		border-top: 0.026rem solid #DCDFE6;
+		border-bottom: 0.026rem solid #DCDFE6;
+	}
+
+	#detail .more {
+		height: 5.333rem;
+		background-color: #FAFAFA;
+		padding: 0 0.373rem;
+	}
+
+	#detail .more .link-div {
+		width: 2.986rem;
+		margin-right: 0.426rem;
+	}
+
+	#detail .more .link-type {
+		margin-top: 0.693rem;
+		width: 2.986rem;
+		height: 2.186rem;
+		background-color: #2A808A;
+		border-radius: 0.2rem;
+		display: flex;
+    justify-content: center;
+    align-items: center;
+	}
+
+	#detail .more .link-type .icon {
+		width: 0.906rem;
+		height: 0.906rem;
+		background-image: url("../../static/img/icon-arttopic.png");
+		background-size: 0.906rem 0.906rem;
+		background-repeat: no-repeat;
+	}
+
+	#detail .more .link-type .text {
+		margin-left: 0.26rem;
+		color: #fff;
+		font-size: 0.346rem;
 		font-weight: bold;
 	}
 
-	#detail .right .activeStar {
-		background-color: #E6A23C;
+	#detail .more .link-home {
+		margin-top: 0.346rem;
+		height: 1.28rem;
+		background-color: #2A808A;
+		border-radius: 0.2rem;
+		text-align: center;
+		line-height: 1.28rem;
+		color: #fff;
+		font-size: 0.346rem;
+		font-weight: bold;
 	}
 
-	#detail .icon-share {
-		margin-top: 0.28rem;
-		font-size: 0.7rem;
+	#detail .more .author-more {
+		width: 5.8rem;
 	}
 
-	/** 评论 **/
-
-	#detail .comment-list {
-		margin: 0.26rem;
+	#detail .more .author-more .link-author {
+		margin-top: 0.98rem;
+		color: #2B7F8B;
+		font-size: 0.426rem;
 	}
 
-	#detail .comment {
-		height: 1.4rem;
-		margin-bottom: 0.26rem;
+	#detail .more .author-more .other {
+		margin-top: 0.26rem;
 	}
 
-	#detail .comment .photo {
-		width: 1rem;
-		height: 1rem;
-		margin-top: 0.2rem;
-		margin-right: 0.26rem;
-		border-radius: 50%;
+	#detail .more .author-more .other-art {
+		width: 2.72rem;
+		height: 2.72rem;
 	}
 
-	#detail .comment .name {
-		margin: 0.2rem 0;
+	#detail .more .author-more :first-child{ 
+		margin-right: 0.18rem;
 	}
 
-	#detail .comment .date {
-		line-height: 1.4rem;
+	#detail .more .author-more .other-art img {
+		width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.2rem;
 	}
 
-	/** 发送评论 **/
-
-	#detail .send-wrap {
-		height: 0.9rem;
-		margin: 0.26rem 0.26rem 0.6rem 0.26rem;
-		display: flex;
+	#detail .ad {
+		height: 2.32rem;
+		background-image: url("../../static/img/ad-link.png");
+		background-size: 10rem 2.32rem;
+		background-repeat: no-repeat;
 	}
 
-	#detail .send-btn {
-		line-height: 0.9rem;
-		height: 0.9rem;
-		width: 1.4rem;
-	}
-
-	#detail input {
-		flex: 1;
-		margin-right: 0.26rem;
-		font-size: 0.3rem;
-	}
-
-	/** 更多 **/
-
-	#detail .more .title {
-		height: 0.6rem;
-		padding-left: 0.26rem;
-		margin-bottom: 0.26rem;
-		font-size: 0.43rem;
-	}
-
-	#detail .more .iconfont {
-		margin-left: 0.26rem ;
-		font-size: 0.54rem;
-	}
-
-	#detail .more .art {
-		width: 4.61rem;
-    height: 4.74rem;
-		float: left;
-	}
-
-	#detail .more .art:nth-child(odd) {
-    padding: 0 0.13rem 0.26rem 0.26rem;
-  }
-
-  #detail .more .art:nth-child(even) {
-    padding: 0 0.26rem 0.26rem 0.13rem;
-  }
-		
 </style>

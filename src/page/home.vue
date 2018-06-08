@@ -9,7 +9,7 @@
 
     <div class="art-wrap" @scroll="loadMore($event)" ref="previewWrap">
       <div class="art-list">
-        <div class="item-wrap" v-for="item in articleList" :key="item.id" @click="view(item.id)" >
+        <div class="item-wrap" v-for="item in articleList" @click="view(item.id)" >
           <img :src="item.src">
         </div>
       </div>
@@ -49,7 +49,12 @@ export default {
       scrollTop: 0,
       loginDialogVisible: false,
       loadMoreFinish: false,
+      linkData: {
+        src: "../../static/img/btn-home-inv.png"
+      },
       list: [{
+        src: "../../static/img/btn-home-inv.png"
+      },{
         id: "1",
         src: "../../static/art2.jpg"
       },{
@@ -197,7 +202,6 @@ export default {
   /** 列表 **/
 
   #art-preview .art-wrap {
-    margin-top: 0.26rem;
     flex: 1;
     overflow: scroll;
   }
@@ -208,16 +212,24 @@ export default {
   }
 
   #art-preview .item-wrap {
-    width: 4.61rem;
-    height: 4.74rem;
+    width: 4.52rem;
+    height: 4.52rem;
+    margin-bottom: 0.4rem;
+  }
+
+  #art-preview .item-wrap img {
+    border-radius: 0.2rem;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   #art-preview .item-wrap:nth-child(odd) {
-    padding: 0 0.13rem 0.26rem 0.26rem;
+    padding: 0 0.16rem 0 0.32rem;
   }
 
   #art-preview .item-wrap:nth-child(even) {
-    padding: 0 0.26rem 0.26rem 0.13rem;
+    padding: 0 0.32rem 0 0.16rem;
   }
 
   #art-preview .end {

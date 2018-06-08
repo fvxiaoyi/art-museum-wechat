@@ -10,22 +10,22 @@
       </div>
       
       <div id="nav-bottom">
-        <div :class="['nav-btn', path == '/self' ? 'active' : '' ]" v-if="authorization" @click="linkSelf">
-          <i class="iconfont icon-shouye"></i>
-          <span class="nav-text">我的作品</span>
+        <div class="nav-btn" @click="linkHome">
+          <div class="icon-wrap">
+            <img src="../../static/img/icon-home-a.png" v-if="path === '/'" />
+            <img src="../../static/img/icon-home-b.png" v-else />
+          </div>
+          <span :class="['nav-text', path === '/' ? 'active' : '' ]">首页</span>
         </div>
-        <div class="nav-btn" v-else @click="linkCoupon">
-          <i class="iconfont icon-shouye3"></i>
-          <span class="nav-text">我要试听</span>
+        <div class="middle-btn" @click="onUploadFile">
+          <img src="../../static/img/icon-upload.png">
         </div>
-        <div class="middle-btn upload-wrap" v-if="authorization">
-          <input class="upload" type="file" accept="image/*" @change="onUploadFile"  />
-          <i class="iconfont icon-shouye2"></i>
-        </div>
-        <div class="middle-btn" v-else>logo{{path}}</div>
-        <div :class="['nav-btn', path == '/preview' ? 'active' : '' ]" @click="linkPreview">
-          <i class="iconfont icon-color"></i>
-          <span class="nav-text">美学艺术馆</span>
+        <div class="nav-btn" @click="linkMe">
+          <div class="icon-wrap">
+            <img src="../../static/img/icon-me-a.png" v-if="path === '/me'" />
+            <img src="../../static/img/icon-me-b.png" v-else />
+          </div>
+          <span :class="['nav-text', path === '/me' ? 'active' : '' ]" >我</span>
         </div>
       </div>
     </div>
@@ -37,12 +37,12 @@ import { mapMutations, mapState } from 'vuex'
 export default {
   name: 'index',
   created() {
-    console.log('index created')
+    /*console.log('index created')
     if(this.authorization) {
-      this.$router.push('self');
+      this.$router.push('me');
     } else {
-      this.$router.push('preview');
-    }
+      this.$router.push('home');
+    }*/
   },
   data() {
     return {
@@ -50,19 +50,19 @@ export default {
     }
   },
   methods: {
-    linkPreview() {
-      this.$router.push("/preview");
+    linkHome() {
+      this.$router.push("/");
     },
-    linkSelf() {
-      this.$router.push("/self");
+    linkMe() {
+      this.$router.push("/me");
     },
     linkCoupon() {
       this.$router.push("/coupon")
     },
     onUploadFile($event) {
-      let file = $event.target.files[0]
+      /*let file = $event.target.files[0]
       console.log(file)
-      this.articleListAddOne()
+      this.articleListAddOne()*/
     },
     ...mapMutations({
       articleListAddOne: 'articleListAddOne'
@@ -99,64 +99,41 @@ export default {
   /** 导航栏 **/
   #nav-bottom {
     z-index: 1;
-    height: 1.2rem;
+    height: 1.44rem;
     background-color: #fff;
     display: flex;
-    border-top: 0.02rem solid #DCDFE6;
-    border-bottom: 0.02rem solid #DCDFE6;
-  }
-
-  #nav-bottom .middle-btn, #nav-bottom .nav-btn {
-    text-align: center;
-    
+    border-top: 0.026rem solid #D9D9D9;
   }
 
   #nav-bottom .nav-btn {
+    margin: 0.1rem 0;
+    height: 1.24rem;
     flex: 1;
   }
 
+  #nav-bottom .nav-btn .active {
+    color: #353535;
+  }
+
+  #nav-bottom .icon-wrap {
+    margin: 0 auto;
+    height: 0.9rem;
+    width: 0.9rem;
+  }
+
   #nav-bottom .middle-btn {
-    height: 1.2rem;
-    line-height: 1.2rem;
-    width: 2rem;
+    margin: 0.1rem 0;
+    height: 1.24rem;
+    width: 1.44rem;
   }
 
-  .upload-wrap {
-    position: relative;
-  }
-
-  .upload {
-    opacity: 0;
-    width: 2rem;
-    height: 1.1rem;
-    position: absolute;
-    left: 0;
-    z-index: 2;
-  }
-
-  #nav-bottom .nav-btn .iconfont {
-    font-size: 0.5rem;
-    display: block;
-    margin: 0.12rem 0 0.02rem 0;
-  }
-
-  #nav-bottom .nav-text {
-    font-size: 0.3rem;
-    margin-left: 0.26rem;
-  }
-
-  #nav-bottom .active {
-    color: #FFBD17;
-  }
-
-  .icon-color {
+  #nav-bottom .nav-btn span {
+    margin: 0 auto;
+    width: 1.44rem;
+    font-size: 0.24rem;
     font-weight: bold;
+    text-align: center;
+    display: block;
   }
-
-  .icon-shouye2 {
-    font-size: 1rem;
-  }
-
-  
 
 </style>
