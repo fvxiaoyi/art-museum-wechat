@@ -44,12 +44,8 @@
 						</div>
 					</div>
 					<div class="btn-wrap right">
-						<div class="icon left">
-							<img src="../../static/img/icon-like1.png" />
-						</div>
-						<div class="icon right">
-							<img src="../../static/img/icon_share.png" />
-						</div>
+	          <div class="icon-no-fav left"></div>
+	          <div class="icon-share right"></div>
 					</div>
 				</div>
 			</div>
@@ -265,25 +261,36 @@ export default {
 
 	#art-self .info .btn-wrap {
 		margin: 0.8rem 0.08rem 0 0;
-		height: 1.3rem;
-		width: 3.226rem;
-		border-radius: 0.2rem;
-		background-image: url("../../static/img/board-like.png");
-		background-size: 3.226rem 1.3rem ;
-		overflow: hidden;
+    height: 1.3rem;
+    width: 3.226rem;
+    border-radius: 0.2rem;
+    background-image: url("../../static/img/board-like.png");
+    background-size: 3.226rem 1.3rem ;
+    overflow: hidden;
 	}
 
-	#art-self .info .btn-wrap .icon {
-		margin-top: 0.05rem;
-		height: 1.2rem;
-		width: 1.6rem;
-	}
+	#art-self .info .btn-wrap .icon-share, #art-self .info .btn-wrap .icon-no-fav, #art-self .info .btn-wrap .icon-fav {
+    height: 1.066rem;
+    width: 1.066rem;
+    background-size:  1.066rem 1.066rem;
+    background-repeat: no-repeat;
+    margin-top: 0.117rem;
+  }
 
-	#art-self .info .btn-wrap .icon img {
-		width: 100%;
-    height: 100%;
-    object-fit: contain;
-	}
+  #art-self .info .btn-wrap .icon-share {
+    background-image: url("../../static/img/icon_share.png");
+    margin-right: 0.2735rem;
+  }
+
+	#art-self .info .btn-wrap .icon-no-fav {
+    background-image: url("../../static/img/icon-like1.png");
+    margin-left: 0.2735rem;
+  }
+
+  #art-self .info .btn-wrap .icon-fav {
+    background-image: url("../../static/img/icon-like2.png");
+    margin-left: 0.2735rem;
+  }
 
 	
 </style>

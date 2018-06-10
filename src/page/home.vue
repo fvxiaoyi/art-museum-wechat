@@ -152,7 +152,7 @@ export default {
   #art-preview .banner-wrap {
     margin: 0.32rem 0.32rem 0 0.32rem;
     height: 2.613rem;
-    box-shadow: 0 0.1rem 0.2rem #888888;
+    box-shadow: 0 0.1rem 0.2rem #DBDBDB;
   }
 
   #art-preview .banner {
@@ -263,7 +263,7 @@ export default {
   }
 
   #art-preview .item-wrap .link-coupon {
-    box-shadow: 0 0.1rem 0.1rem #888888;
+    box-shadow: 0 0.1rem 0.1rem #DBDBDB;
   }
 
   #art-preview .item-wrap img {

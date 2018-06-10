@@ -5,44 +5,72 @@
 				<img src="../../static/art1.jpg">
 			</div>
 			<div class="star">
-				<div class="icon-wrap">
-					<img src="../../static/img/icon-more-like.png" />
-				</div>
+				<div class="icon-like"></div>
 				<span class="names">中文名,ABC,ABC,中文名中文名,ABC,中文名,ABC</span>
-				<div class="icon-wrap more">
-					<img src="../../static/img/icon-more.png" />
-				</div>
-				<span class="total">32人喜欢此作品</span>
+				<div class="icon-more"></div>
+				<span class="total">{{startCount}}人喜欢此作品</span>
 			</div>
-			<div class="art-info">
-				<div class="top clear">
-					<div class="title left">壁画</div>
-					<div class="btn-wrap right">
-						<div class="icon left">
-							<img src="../../static/img/icon-like1.png" />
-						</div>
-						<div class="icon right">
-							<img src="../../static/img/icon_share.png" />
-						</div>
-					</div>
-				</div>
-				<div class="middle">
-					<div class="author">
-						<span>徐晓辉</span>
-						<span>|</span>
-						<span>20岁</span>
-					</div>
-					<div class="local">
-						
-					</div>
-					<div class="count">
-						
-					</div>
-				</div>
-			</div>
+      <div class="title-wrap clear">
+        <div class="title left">壁画</div>
+        <div class="btn-wrap right">
+          <div :class="[ isStar ? 'icon-fav' : 'icon-no-fav', 'left']" @click="star"></div>
+          <div class="icon-share right"></div>
+        </div>
+      </div>
+      <div class="author-wrap">
+        <div class="author">
+          <span>徐晓辉</span>
+          <span>|</span>
+          <span>20岁</span>
+        </div>
+        <div class="local">
+          <div class="icon-local"></div>
+          <span>和祥东校区</span>
+        </div>
+        <div class="count">
+          <div class="icon-count"></div>
+          <span>1083浏览</span>
+        </div>
+      </div>
+      <div class="size">
+        <span>综合材料</span>
+        <span>|</span>
+        <span>57x57 cm</span>
+        <span>|</span>
+        <span>2018</span>
+      </div>
+      <div class="remark">作品描述: xxxxxxxxxxxxx</div>
+      <div class="banner-wrap">
+        <div class="banner clear">
+          <div class="photo left">
+            <img src="../../static/boy-pic.jpg" />
+          </div>
+          <div class="author left">
+            <div class="name">徐晓辉</div>
+            <div>共28件作品</div>
+          </div>
+          <div class="fav-total left">488个喜欢</div>
+          <div class="link-me-btn right" @click="linkMe">作品主页</div>
+        </div>
+      </div>
+      <div class="comment-input-wrap">
+        <textarea class="content" placeholder="写下一句鼓励宝宝的话, 支持TA快乐成长 :) "></textarea>
+        <div class="submit-btn">确认</div>
+      </div>
 
 			<div class="comment-list">
-				
+				<div class="comment">
+          <div class="author clear">
+            <div class="photo left">
+              <img src="../../static/art1.jpg">
+            </div>
+            <div class="left">
+              <div class="name">游客001</div>
+              <div class="time">一个月前</div>
+            </div>
+          </div>  
+          <div class="content">这是评论。。</div>     
+        </div>
 			</div>
 
 			<div class="more clear">
@@ -54,10 +82,10 @@
 							<div>艺术专题</div>
 						</div>
 					</div>
-					<div class="link-home">回艺术馆首页</div>
+					<div class="link-home" @click="linkHome">回艺术馆首页</div>
 				</div>
 				<div class="author-more right">
-					<div class="link-author">
+					<div class="link-author" @click="linkMe">
 						<span>|</span>
 						<span>徐晓辉的其他作品</span>
 						<span class="right">>></span>
@@ -78,7 +106,6 @@
 </template>
 
 <script>
-
 	export default {
 		created() {
       console.log('detail created')
@@ -93,31 +120,19 @@
   				name: '张三',
   				date: '2018-6-1',
   				content: '这是一条留言'
-  			},{
-  				id: 2,
-  				photo: '',
-  				name: '张三',
-  				date: '2018-6-1',
-  				content: '这是一条留言'
-  			},{
-  				id: 3,
-  				photo: '',
-  				name: '张三',
-  				date: '2018-6-1',
-  				content: '这是一条留言'
-  			},{
-  				id: 4,
-  				photo: '',
-  				name: '张三',
-  				date: '2018-6-1',
-  				content: '这是一条留言'
   			}]
   		}
   	},
   	methods: {
   		back() {
-  			this.$router.go(-1);
+  			this.$router.go(-1)
   		},
+      linkHome() {
+        this.$router.push('/')
+      },
+      linkMe() {
+        this.$router.push('/me')
+      },
   		star() {
   			this.isStar = !this.isStar
   			if(this.isStar) {
@@ -148,19 +163,25 @@
 		padding-left: 0.32rem;
 		min-height: 1.2rem;
 		color: #FD7D7C;
-		display: flex;
+    display: flex;
     align-items: center;
     border-bottom: 0.026rem solid #DCDFE6;
 	}
 
-	#detail .star .icon-wrap {
-		width: 1rem;
-		height: 1rem;
-	}
+  #detail .star .icon-like, #detail .star .icon-more {
+    width: 0.8rem;
+    height: 0.8rem;
+    background-size: 0.8rem 0.8rem;
+    background-repeat: no-repeat;
+  }
 
-	#detail .star .icon-wrap .more {
-		margin-right: 0.26rem;
-	}
+  #detail .star .icon-like {
+    background-image: url("../../static/img/icon-more-like.png");
+  }
+
+  #detail .star .icon-more {
+    background-image: url("../../static/img/icon-more.png");
+  }
 
 	#detail .star .names {
 		flex: 1;
@@ -178,51 +199,228 @@
 	#detail .star span {
 		font-size: 0.4rem;
 	}
+
+  /** 标题 **/
+
+  #detail .title-wrap, #detail .author-wrap, #detail .size, #detail .remark {
+    background-color: #FAFAFA;
+    padding: 0 0.346rem;
+  }
+
+  #detail .title-wrap {
+    height: 1.86rem;
+  }
+
+  #detail .title-wrap .title {
+    margin-top: 0.5rem;
+    font-size: 0.64rem;
+    font-weight: bold;
+    color: #353535;
+  }
+
+  #detail .title-wrap .icon-share, #detail .title-wrap .icon-no-fav, #detail .title-wrap .icon-fav {
+    height: 1.066rem;
+    width: 1.066rem;
+    background-size:  1.066rem 1.066rem;
+    background-repeat: no-repeat;
+    margin-top: 0.117rem;
+  }
+
+  #detail .title-wrap .icon-share {
+    background-image: url("../../static/img/icon_share.png");
+    margin-right: 0.2735rem;
+  }
+
+  #detail .title-wrap .icon-no-fav {
+    background-image: url("../../static/img/icon-like1.png");
+    margin-left: 0.2735rem;
+  }
+
+  #detail .title-wrap .icon-fav {
+    background-image: url("../../static/img/icon-like2.png");
+    margin-left: 0.2735rem;
+  }
+
+  #detail .title-wrap .btn-wrap {
+    margin-top: 0.26rem;
+    height: 1.3rem;
+    width: 3.226rem;
+    border-radius: 0.2rem;
+    background-image: url("../../static/img/board-like.png");
+    background-size: 3.226rem 1.3rem ;
+    overflow: hidden;
+  }
 		
-	/** 作品信息 **/
+	/** 作者 **/
+  #detail .author-wrap {
+    display: flex;
+    font-size: 0.373rem;
+    color: #2B7F8B;
+  }
 
-	#detail .art-info {
-		background-color: #FAFAFA;
-		padding: 0 0.32rem;
+  #detail .author-wrap .author {
+    flex: 1;
+  }
+  
+  #detail .author-wrap .local, #detail .author-wrap .count {
+    display: flex;
+    align-items: center;
+  }
+
+  #detail .author-wrap .count {
+    margin-left: 0.26rem;
+  }
+
+  #detail .author-wrap .icon-local, #detail .author-wrap .icon-count {
+    height: 0.5333rem;
+    width: 0.5333rem;
+    background-size:  0.5333rem 0.5333rem;
+    background-repeat: no-repeat;
+  }
+
+  #detail .author-wrap .icon-local {
+    background-image: url("../../static/img/icon-more-like.png");
+  }
+
+  #detail .author-wrap .icon-count {
+    background-image: url("../../static/img/icon-more-like.png");
+  }
+
+  #detail .size {
+    font-size: 0.4rem;
+    color: #353535;
+    height: 1.413rem;
+    line-height: 1.413rem;
+  }
+
+  #detail .remark {
+    font-size: 0.373rem;
+    color: #96B4BE;
+    max-height: 1.6rem;
+  }
+
+  #detail .banner-wrap {
+    background-color: #FAFAFA;
+    padding: 0.48rem 0.346rem;
+    height: 2.666rem;
+  }
+
+  #detail .banner {
+    height: 2.666rem;
+    background-color: #fff;
+    border-radius: 0.2rem;
+    color: #2B7F8B;
+    font-size: 0.32rem;
+    padding: 0 0.4rem;
+    box-shadow: 0 0.1rem 0.3rem #DBDBDB;
+  }
+
+  #detail .banner .photo {
+    margin: 0.586rem 0.346rem 0 0;
+    width: 1.573rem;
+    height: 1.573rem;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  #detail .banner .author {
+    margin-top: 0.773rem;
+  }
+
+  #detail .banner .author .name {
+    margin-bottom: 0.388rem;
+    color: #353535;
+    font-size: 0.4rem;
+    font-weight: bold;
+  }
+
+  #detail .banner .fav-total {
+    margin: 1.68rem 0 0 0.4rem;
+  }
+
+  #detail .banner .link-me-btn {
+    width: 2.146rem;
+    height: 0.973rem;
+    border: 0.05rem solid #2B7F8B;
+    border-radius: 0.2rem;
+    line-height: 1.013rem;
+    text-align: center;
+    margin-top: 0.853rem;
+  }
+	
+  /** 留言  **/
+
+  #detail .comment-input-wrap  {
+    height: 5.06rem;
+    background-color: #fff;
+    border-top: 0.026rem solid #DCDFE6;
+    border-bottom: 0.026rem solid #DCDFE6;
+    padding: 0 0.346rem;
+  }
+
+  #detail .comment-input-wrap .content {
+    height: 2.4rem;
+    width: 8.267rem;
+    background-color: #F2F2F2;
+    border: none;
+    border-radius: 0.2rem;
+    resize: none;
+    margin: 0.266rem 0 0.32rem 0;
+    padding: 0.4rem 0.533rem;
+    font-size: 0.346rem;
+    color: #919191;
+  }
+
+  #detail .comment-input-wrap .submit-btn {
+    background-color: #FC7E7C;
+    border-radius: 0.2rem;
+    height: 0.933rem;
+    width: 2.666rem;
+    color: #fff;
+    font-weight: bold;
+    font-size: 0.373rem;
+    text-align: center;
+    line-height: 0.933rem;
+    margin-left: 6.266rem;
+  }
+
+
+	#detail .comment-list {
+    padding-top: 0.2666rem;
+    background-color: #F2F2F2;
+    color: #353535;
 	}
 
-	#detail .art-info .top {
-		height: 1.6rem;
-	}
+  #detail .comment-list .comment {
+    height: 2.0537rem;
+    background-color: #fff;
+    border-top: 0.026rem solid #DCDFE6;
+    border-bottom: 0.026rem solid #DCDFE6;
+    padding: 0.373rem 0.666rem 0.5333rem 0.666rem;
+  }
 
-	#detail .art-info .title {
-		margin-top: 0.5rem;
-		font-size: 0.64rem;
-		font-weight: bold;
-		color: #353535;
-	}
+  #detail .comment-list .comment .name {
+    font-size: 0.346rem;
+    font-weight: bold;
+    margin: 0.16rem 0 0.14rem 0;
+  }
 
-	#detail .art-info .btn-wrap {
-		margin-top: 0.26rem;
-		height: 1.3rem;
-		width: 3.226rem;
-		border-radius: 0.2rem;
-		background-image: url("../../static/img/board-like.png");
-		background-size: 3.226rem 1.3rem ;
-		overflow: hidden;
-	}
+  #detail .comment-list .comment .time {
+    font-size: 0.266rem;
+  }
 
-	#detail .art-info .btn-wrap .icon {
-		margin-top: 0.05rem;
-		height: 1.2rem;
-		width: 1.6rem;
-	}
+  #detail .comment-list .comment .photo {
+    height: 1.066rem;
+    width: 1.066rem;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 0.19rem;
+  }
 
-	#detail .art-info .btn-wrap .icon img {
-		width: 100%;
-    height: 100%;
-    object-fit: contain;
-	}
-
-	#comment-list {
-		border-top: 0.026rem solid #DCDFE6;
-		border-bottom: 0.026rem solid #DCDFE6;
-	}
+  #detail .comment-list .comment .content {
+    margin-top: 0.5333rem;
+    font-size: 0.32rem;
+  }
 
 	#detail .more {
 		height: 5.333rem;
@@ -301,7 +499,7 @@
     height: 100%;
     object-fit: cover;
     border-radius: 0.2rem;
-    box-shadow: 0 0.1rem 0.1rem #888888;
+    box-shadow: 0 0.1rem 0.1rem #DBDBDB;
 	}
 
 	#detail .ad {
