@@ -14,7 +14,7 @@
         <div class="title left">壁画</div>
         <div class="btn-wrap right">
           <div :class="[ isStar ? 'icon-fav' : 'icon-no-fav', 'left']" @click="star"></div>
-          <div class="icon-share right"></div>
+          <div class="icon-share right" @click="handleShare"></div>
         </div>
       </div>
       <div class="author-wrap">
@@ -140,7 +140,10 @@
   			} else {
   				this.startCount --
   			}
-  		}
+  		},
+      handleShare() {
+        this.wxShare(`title`, 'descXXX', window.location.href)
+      }
   	}
   }
 

@@ -45,7 +45,7 @@
 					</div>
 					<div class="btn-wrap right">
 	          <div class="icon-no-fav left"></div>
-	          <div class="icon-share right"></div>
+	          <div class="icon-share right" @click="handleShare(item)"></div>
 					</div>
 				</div>
 			</div>
@@ -121,6 +121,9 @@ export default {
     },
 		view(id) {
       this.$router.push(`/art/${id}`)
+    },
+    handleShare(item) {
+    	this.wxShare(`title ${item.id}`, 'desc', window.location.href)
     }
 	},
 	computed: {
