@@ -5,21 +5,19 @@ import App from './App'
 import axios from 'axios'
 import router from './router'
 import Vuex from 'vuex'
-import MintUI from 'mint-ui'
+import { Swipe, SwipeItem } from 'mint-ui'
 import 'mint-ui/lib/style.css'
 
 import storeConfig from './store/index'
 
 import dialog from './components/dialog'
 
-Vue.use(MintUI)
-
 const wx = require('weixin-js-sdk')
 
 const url = require('url'),
 	appid = 'wxaf22660af129589f',
 	redirect_uri = 'http%3a%2f%2fthy8k9.natappfree.cc%2fvail',
-  server_uri = 'http://dcyvzk.natappfree.cc'
+  server_uri = 'http://ricavp.natappfree.cc'
 
 Vue.use(Vuex)
 
@@ -29,6 +27,8 @@ Vue.prototype.$http = axios
 Vue.prototype.$server_uri = server_uri
 
 Vue.component('v-dialog', dialog)
+Vue.component(Swipe.name, Swipe)
+Vue.component(SwipeItem.name, SwipeItem)
 
 let current_url = window.location.href.split('#')[0]
 
