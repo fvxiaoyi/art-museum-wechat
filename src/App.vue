@@ -1,5 +1,6 @@
 <template>
   <div id="app-wrap">
+    <div v-wechat-title="$route.meta.title"></div>
     <transition name="maskFade">
       <div id="mask" v-if="maskVisible" ></div>
     </transition>

@@ -17,16 +17,28 @@ export default new Router({
       component: index,
       children:[{
         path: '/', 
+        meta: {
+          title: '美学艺术馆'
+        },
         component: home
       },{
         path: '/me', 
+        meta: {
+          title: '小画家主页'
+        },
         component: me
       }]
     }, {
       path: '/art/:id',
+      meta: {
+        title: '作品详细'
+      },
       component: detail
     }, {
       path: '/coupon',
+      meta: {
+        title: '获取试听课程'
+      },
       component: coupon
     }
   ]

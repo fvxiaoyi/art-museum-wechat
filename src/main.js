@@ -12,6 +12,8 @@ import storeConfig from './store/index'
 
 import dialog from './components/dialog'
 
+Vue.use(require('vue-wechat-title'))
+
 const wx = require('weixin-js-sdk')
 
 const url = require('url'),
