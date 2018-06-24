@@ -9,7 +9,7 @@
         </transition>
       </div>
       
-      <div id="nav-bottom">
+      <div id="nav-bottom" v-if="auth">
         <div class="nav-btn" @click="linkHome">
           <div class="icon-wrap">
             <img src="../../static/img/icon-home-a.png" v-if="path === '/'" />
@@ -59,7 +59,8 @@ export default {
     linkCoupon() {
       this.$router.push("/coupon")
     },
-    onUploadFile($event) {
+    onUploadFile() {
+      this.$router.push("/upload")
       /*let file = $event.target.files[0]
       console.log(file)
       this.articleListAddOne()*/
@@ -71,6 +72,12 @@ export default {
   computed: {
     path() {
       return this.$route.path
+    },
+    auth() {
+      if(sessionStorage.getItem('userinfo')) {
+        return JSON.parse(sessionStorage.getItem('userinfo')).auth
+      }
+      return false
     },
     ...mapState(['authorization'])
   },

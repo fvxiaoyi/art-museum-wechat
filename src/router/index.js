@@ -6,7 +6,7 @@ const home = () => import('@/page/home')
 const me = () => import('@/page/me')
 const detail = () => import('@/page/detail')
 const coupon = () => import('@/page/coupon')
-
+const upload = () => import('@/page/upload')
 
 Vue.use(Router)
 
@@ -40,6 +40,12 @@ export default new Router({
         title: '获取试听课程'
       },
       component: coupon
+    }, {
+      path: '/upload',
+      meta: {
+        title: '填写作品信息'
+      },
+      component: upload
     }
   ]
 })

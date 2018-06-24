@@ -64,6 +64,10 @@
     -webkit-appearance:none;
   }
 
+  textarea {
+    -webkit-appearance:none;
+  }
+
   img {
     width: 100%;
     height: 100%;

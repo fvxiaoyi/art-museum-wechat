@@ -2,14 +2,9 @@
   <div id="art-preview">
     <div class="banner-wrap">
       <mt-swipe :auto="4000">
-        <mt-swipe-item>
-          <div class="banner">
-            <img src="../../static/img/home-Banner-1.png">
-          </div>
-        </mt-swipe-item>
-        <mt-swipe-item>
-          <div class="banner">
-            <img src="../../static/img/home-Banner-2.png">
+        <mt-swipe-item v-for="item in banners" :key="item.id">
+          <div class="banner" @click="bannerClick(item.id)">
+            <img :src="item.displayImg">
           </div>
         </mt-swipe-item>
       </mt-swipe>
@@ -44,12 +39,10 @@
 
     <v-dialog :width="8" :height="5.6" :visible="loginDialogVisible" >
       <div class="dialog-content">
-        <input type="text" placeholder="请输入手机号进行激活" />
+        <input type="text" v-model="activePhone" placeholder="请输入手机号进行激活" />
         <div class="btn active" @click="active">激活</div>
         <div class="btn close" @click="closeLoginDialog">关闭</div>
-        <div class="errMsg">
-          输入的不是老学员的手机号
-        </div>
+        <div class="errMsg" v-if="activeErrMsg">{{activeErrMsg}}</div>
       </div>
     </v-dialog>
 
@@ -66,11 +59,23 @@ export default {
     this.scrollTop = this.$refs.previewWrap.scrollTop
   },
   created() {
-    console.log('preview created')
+    if(!this.auth) {
+      this.banners.push({
+        id: 0,
+        displayImg: '../../static/img/home-Banner-1.png'
+      })
+    }
+    let me = this
+    me.post('/wx/subject/banner', {}, (res) => {
+      res.data.forEach(b => me.banners.push(b))
+    })
     this.loadArticleList()
   },
   data () {
     return {
+      activePhone: null,
+      activeErrMsg: null,
+      banners: [],
       preIndex: null,
       scrollTop: 0,
       loginDialogVisible: false,
@@ -98,9 +103,11 @@ export default {
       this.$router.push(`/art/${id}`)
     },
     active() {
-      this.changeAuthorization({authorization: true})
-      this.closeLoginDialog()
-      this.$router.push(`/self`)
+      let me = this,
+        openid = this.openid
+      me.post('/wx/student/active', { openid, phone: me.activePhone }, (res) => {
+        location.reload()
+      }, (err) => me.activeErrMsg = err)
     },
     onItemClick(item, index) {
       if(item.id) {
@@ -124,6 +131,13 @@ export default {
       this.loginDialogVisible = false
       this.changeMaskVisible({ visible: this.loginDialogVisible })
     },
+    bannerClick(id) {
+      if(id === 0) {
+        this.openLoginDialog()
+      } else{
+        alert(id)
+      }
+    },
     ...mapMutations({
       changeMaskVisible: 'changeMaskVisible',
       changeAuthorization: 'changeAuthorization',
@@ -134,7 +148,10 @@ export default {
     })
   },
   computed: {
-    ...mapState(['authorization', 'articleList'])
+    ...mapState(['authorization', 'articleList']),
+    openid() {
+      return localStorage.getItem('openid')
+    }
   }
 }
 
@@ -286,6 +303,38 @@ export default {
     font-size: 0.3rem;
     height: 0.6rem;
     line-height: 0.6rem;
+  }
+
+  #art-preview .dialog-content {
+    padding: 0.3rem 0.26rem 0.26rem 0.26rem;
+  }
+
+  #art-preview .dialog-content .btn {
+    height: 1rem;
+    line-height: 1rem;
+    margin-bottom: 0.26rem;
+  }
+
+  #art-preview .dialog-content .active {
+    background-color: #67C23A;
+  }
+
+  #art-preview .dialog-content .close {
+    background-color: #F56C6C;
+  }
+
+  #art-preview .dialog-content .errMsg {
+    text-align: center;
+    color: #E6A23C;
+    font-size: 0.3rem;
+  }
+
+  #art-preview .dialog-content input {
+    height: 1rem;
+    line-height: 1rem;
+    width: 95%;
+    margin-bottom: 0.26rem;
+    font-size: 0.3rem;
   }
 
 </style>
