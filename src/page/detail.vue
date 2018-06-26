@@ -2,16 +2,16 @@
 	<div>
 		<div id="detail">
 			<div class="art">
-				<img src="../../static/art1.jpg">
+				<img :src="`${model.thumbnailUrl}?imageView2/2/w/768`">
 			</div>
 			<div class="star">
 				<div class="icon-like"></div>
 				<span class="names">中文名,ABC,ABC,中文名中文名,ABC,中文名,ABC</span>
-				<div class="icon-more"></div>
-				<span class="total">{{startCount}}人喜欢此作品</span>
+				<div class="icon-more" v-if="model.totalStar"></div>
+				<span class="total">{{model.totalStar}}人喜欢此作品</span>
 			</div>
       <div class="title-wrap clear">
-        <div class="title left">壁画</div>
+        <div class="title left">{{model.name}}</div>
         <div class="btn-wrap right">
           <div :class="[ isStar ? 'icon-fav' : 'icon-no-fav', 'left']" @click="star"></div>
           <div class="icon-share right" @click="handleShare"></div>
@@ -19,13 +19,13 @@
       </div>
       <div class="author-wrap">
         <div class="author">
-          <span>徐晓辉</span>
+          <span>{{model.studentName}}</span>
           <span>|</span>
-          <span>20岁</span>
+          <span>{{model.studentAge}}岁作品</span>
         </div>
         <div class="local">
           <div class="icon-local"></div>
-          <span>和祥东校区</span>
+          <span>{{model.studentLocalName}}</span>
         </div>
         <div class="count">
           <div class="icon-count"></div>
@@ -35,18 +35,16 @@
       <div class="size">
         <span>综合材料</span>
         <span>|</span>
-        <span>57x57 cm</span>
-        <span>|</span>
-        <span>2018</span>
+        <span>{{year}}</span>
       </div>
-      <div class="remark">作品描述: xxxxxxxxxxxxx</div>
+      <div class="remark" v-if="model.remark">作品描述: {{model.remark}}</div>
       <div class="banner-wrap">
         <div class="banner clear">
           <div class="photo left">
-            <img src="../../static/boy-pic.jpg" />
+            <img src="../../static/img/icon-student.png" />
           </div>
           <div class="author left">
-            <div class="name">徐晓辉</div>
+            <div class="name">{{model.studentName}}</div>
             <div>共28件作品</div>
           </div>
           <div class="fav-total left">488个喜欢</div>
@@ -108,12 +106,17 @@
 <script>
 	export default {
 		created() {
-      console.log('detail created')
+      if(this.$route.params.id) {
+        let me = this
+        this.post('/wx/art/get', { id: this.$route.params.id}, (res) => me.model = res.data)
+
+      }
     },
   	data () {
   		return {
   			isStar: false,
   			startCount: 500,
+        model: {},
   			comments: [{
   				id: 1,
   				photo: '',
@@ -144,7 +147,12 @@
       handleShare() {
         this.wxShare(`title`, 'descXXX', window.location.href)
       }
-  	}
+  	},
+    computed: {
+      year() {
+        return new Date(this.model.createTime).getFullYear()
+      }
+    }
   }
 
 </script>

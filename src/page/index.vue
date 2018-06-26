@@ -9,7 +9,7 @@
         </transition>
       </div>
       
-      <div id="nav-bottom" v-if="auth">
+      <div id="nav-bottom" v-if="userInfo.auth">
         <div class="nav-btn" @click="linkHome">
           <div class="icon-wrap">
             <img src="../../static/img/icon-home-a.png" v-if="path === '/'" />
@@ -73,13 +73,7 @@ export default {
     path() {
       return this.$route.path
     },
-    auth() {
-      if(sessionStorage.getItem('userinfo')) {
-        return JSON.parse(sessionStorage.getItem('userinfo')).auth
-      }
-      return false
-    },
-    ...mapState(['authorization'])
+    ...mapState(['userInfo'])
   },
   watch: {
     $route(to, from) {

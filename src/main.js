@@ -18,8 +18,9 @@ const wx = require('weixin-js-sdk')
 
 const url = require('url'),
 	appid = 'wxaf22660af129589f',
-	redirect_uri = encodeURIComponent('http://9ws8zz.natappfree.cc/wechat/login') ,
-  server_uri = 'http://9ws8zz.natappfree.cc'
+  server_uri = 'http://kmmt94.natappfree.cc',
+	redirect_uri = encodeURIComponent(`${server_uri}/wx/login`)
+  
 
 Vue.use(Vuex)
 
@@ -66,6 +67,28 @@ Vue.prototype.post = function(url, param, cb, errCb) {
   })
 }
 
+Vue.prototype.getListData = function(url, page, params, cb, paramCb) {
+  let me = this,
+      limit = 10,
+      start
+  if(page === 1) {
+    start = 0
+  } else {
+    start = limit * (page - 1)
+  }
+  let _params = { start, limit }
+  for(let x in params) {
+    if(!params[x]) {
+      delete params[x]
+    }
+  }
+  Object.assign(_params, params)
+  paramCb && paramCb(_params)
+  this.post(url, _params, (response) => {
+    cb(response.data, response.total)
+  })
+}
+
 Vue.prototype.wxShare = function (title, desc, link) {
   axios.post(`${server_uri}/wx/sign`, { url: current_url }).then(function (response) {
     wx.config({
@@ -105,8 +128,8 @@ new Vue({
   template: '<App/>',
   beforeCreate() {
     if(localStorage.getItem('openid')) {
-      this.post('/wx/getLoginInfo', { openid: localStorage.getItem('openid')}, (data) => {
-        sessionStorage.setItem('userinfo', JSON.stringify(data.data))
+      this.post('/wx/getLoginInfo', { openid: localStorage.getItem('openid') }, (resp) => {
+        this.$store.commit('setUserInfo', resp.data)
       })
     } else {
       const myURL = url.parse(window.location.href)
@@ -115,8 +138,8 @@ new Vue({
         if(openid.length > 0) {
           openid = openid[0].split('=')[1]
           localStorage.setItem('openid', openid)
-          this.post('/wx/getLoginInfo', { openid}, (data) => {
-            sessionStorage.setItem('userinfo', data)
+          this.post('/wx/getLoginInfo', { openid: localStorage.getItem('openid') }, (resp) => {
+            this.$store.commit('setUserInfo', resp.data)
           })
         }
       } else {

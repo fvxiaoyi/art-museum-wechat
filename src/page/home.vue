@@ -4,7 +4,7 @@
       <mt-swipe :auto="4000">
         <mt-swipe-item v-for="item in banners" :key="item.id">
           <div class="banner" @click="bannerClick(item.id)">
-            <img :src="item.displayImg">
+            <img :src="item.originalUrl">
           </div>
         </mt-swipe-item>
       </mt-swipe>
@@ -21,20 +21,21 @@
             <div class="info-mask" v-if="item.click"></div>
             <div class="info-wrap" v-if="item.click"  @click.stop="onItemCancelClick(item, index)">
               <div class="photo">
-                <img src="../../static/boy-pic.jpg">
+                <img src="../../static/img/icon-student.png">
               </div>
               <div class="author">
-                <span>徐晓辉</span>
+                <span>{{item.studentName}}</span>
                 <span>|</span>
-                <span>20岁</span>
+                <span>{{item.studentAge}}岁</span>
               </div>
               <div class="link" @click.stop="view(item.id)">打开查看完整作品</div>
           </div>
-          <img :src="item.src" :class="[item.id ? '' : 'link-coupon']" >
+          <img :src="`${item.thumbnailUrl}?imageView2/1/w/347/h/347`" v-if="item.id" />
+          <img src="../../static/img/btn-home-inv.png" class="link-coupon" v-else />
         </div>
       </div>
       
-      <div class="end" v-if="loadMoreFinish">没有更多了</div>
+      <div class="end" v-if="articleListLoadMoreEnd">没有更多了</div>
     </div>
 
     <v-dialog :width="8" :height="5.6" :visible="loginDialogVisible" >
@@ -50,7 +51,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex'
+import { mapState  } from 'vuex'
 export default {
   activated() {
     this.$refs.previewWrap.scrollTop = this.scrollTop
@@ -59,45 +60,39 @@ export default {
     this.scrollTop = this.$refs.previewWrap.scrollTop
   },
   created() {
-    if(!this.auth) {
-      this.banners.push({
-        id: 0,
-        displayImg: '../../static/img/home-Banner-1.png'
-      })
-    }
     let me = this
-    me.post('/wx/subject/banner', {}, (res) => {
-      res.data.forEach(b => me.banners.push(b))
-    })
-    this.loadArticleList()
+    me.post('/wx/subject/banner', {}, (res) => me.$store.commit('setBanner', { data: res.data }))
+    me.getData(1)
   },
   data () {
     return {
       activePhone: null,
       activeErrMsg: null,
-      banners: [],
+      list: [],
+      total: 0,
+      page: 1,
+      searchParam: {},
       preIndex: null,
       scrollTop: 0,
-      loginDialogVisible: false,
-      loadMoreFinish: false
+      loginDialogVisible: false
     }
   },
   methods: {
+    getData(page) {
+      let me = this
+      me.getListData('/wx/art/list', page, me.searchParam, (data, total) => {
+        this.$store.commit('setArticleList', { data, total, page})
+      })
+    },
     loadMore(e) {
-      if(!this.loadMoreFinish) {
+      if(!this.articleListLoadMoreEnd) {
         let totalHeight = e.target.scrollHeight,
           warpHeight = e.target.clientHeight,
           scrollTop = e.target.scrollTop
         if(totalHeight - (warpHeight + scrollTop) <= 1) {
-          if(this.articleList.length < 19) {
-            this.loadArticleList2()
-          } else {
-            this.loadMoreFinish = true
-          }
-          
+          this.getData(++ this.page)
         }
       }
-      
     },
     view(id) {
       this.$router.push(`/art/${id}`)
@@ -111,7 +106,7 @@ export default {
     },
     onItemClick(item, index) {
       if(item.id) {
-        this.handleArticleListClick({ preIndex: this.preIndex, index: index})
+        this.$store.commit('handleArticleListClick', { preIndex: this.preIndex, index: index})
         this.preIndex = index
       } else {
         this.$router.push('/coupon')
@@ -119,36 +114,30 @@ export default {
     },
     onItemCancelClick(item, index) {
       if(item.id) {
-        this.handleArticleListCancelClick({index: index})
+        this.$store.commit('handleArticleListCancelClick', { index: index})
         this.preIndex = null
       }
     },
     openLoginDialog() {
       this.loginDialogVisible = true
-      this.changeMaskVisible({ visible: this.loginDialogVisible })
+      this.$store.commit('changeMaskVisible', { visible: this.loginDialogVisible })
     },
     closeLoginDialog() {
       this.loginDialogVisible = false
-      this.changeMaskVisible({ visible: this.loginDialogVisible })
+      this.$store.commit('changeMaskVisible', { visible: this.loginDialogVisible })
     },
     bannerClick(id) {
       if(id === 0) {
         this.openLoginDialog()
-      } else{
-        alert(id)
+      } else {
+        this.page = 1
+        this.$store.commit('clearArticleList', {})
+        this.getData(this.page)
       }
-    },
-    ...mapMutations({
-      changeMaskVisible: 'changeMaskVisible',
-      changeAuthorization: 'changeAuthorization',
-      handleArticleListClick: 'handleArticleListClick',
-      handleArticleListCancelClick: 'handleArticleListCancelClick',
-      loadArticleList: 'loadArticleList',
-      loadArticleList2: 'loadArticleList2',
-    })
+    }
   },
   computed: {
-    ...mapState(['authorization', 'articleList']),
+    ...mapState(['userInfo', 'banners', 'articleList', 'totalArticleList', 'articleListLoadMoreEnd']),
     openid() {
       return localStorage.getItem('openid')
     }

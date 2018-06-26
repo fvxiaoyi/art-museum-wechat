@@ -10,59 +10,54 @@
 </template>
 
 <script>
-	export default {
-	  props: {
-	  	height: {
-      	type: Number,
-      	default: 3.47
-      },
-      width: {
-      	type: Number,
-      	default: 4.77
-      },
-      visible: Boolean
+export default {
+	props: {
+		height: {
+		type: Number,
+		default: 3.47
+	},
+	width: {
+		type: Number,
+		default: 4.77
+	},
+	visible: Boolean
+	},
+	computed: {
+		cHeight() {
+			return this.height - 0.53
+		},
+		cWidth() {
+			return this.width - 0.53
+		},
+		heightWithRem() {
+	    return this.cHeight + 'rem'
 	  },
-	  computed: {
-	  	cHeight() {
-	  		return this.height - 0.53
-	  	},
-	  	cWidth() {
-	  		return this.width - 0.53
-	  	},
-	  	heightWithRem() {
-		    return this.cHeight + 'rem'
-		  },
-		  widthWithRem() {
-		    return this.cWidth + 'rem'
-		  },
-		  marginTop() {
-		  	return (this.cHeight / 1) * -1 + 'rem'
-		  },
-		  marginLeft() {
-		  	return (this.cWidth / 2) * -1 + 'rem'
-		  }
-		}
+	  widthWithRem() {
+	    return this.cWidth + 'rem'
+	  },
+	  marginTop() {
+	  	return (this.cHeight / 1) * -1 + 'rem'
+	  },
+	  marginLeft() {
+	  	return (this.cWidth / 2) * -1 + 'rem'
+	  }
 	}
+}
 </script>
 
 <style scoped>
-	.pop {
-	  background-color: #fff;
-	  border-radius: 0.1rem;
-	  position: absolute;
-	  z-index: 11;
-	}
+.pop {
+  background-color: #fff;
+  border-radius: 0.1rem;
+  position: absolute;
+  z-index: 11;
+}
 
-	.tbar {
-		height: 1rem;
-		border-bottom: 0.02rem solid #E4E4E4;
-	}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s;
+}
 
-	.fade-enter-active, .fade-leave-active {
-	  transition: opacity .3s;
-	}
-
-	.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-	  opacity: 0;
-	}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 </style>

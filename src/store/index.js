@@ -1,7 +1,10 @@
 const state = {
+  userInfo: {},
   maskVisible: false,
-  authorization: false,
-  articleList: []
+  banners: [],
+  articleList: [],
+  articleListLoadMoreEnd: false,
+  totalArticleList: 0
 }
 
 // getters
@@ -14,55 +17,44 @@ const actions = {
 
 // mutations
 const mutations = {
+  setBanner(state, payload) {
+    if(!state.userInfo.auth) {
+      state.banners.push({
+        id: 0,
+        originalUrl: '../../static/img/home-Banner-1.png'
+      })
+    }
+    payload.data.forEach(b => state.banners.push(b))
+  },
+  setUserInfo(state, payload) {
+    state.userInfo = payload
+  },
+  setArticleList(state, payload) {
+    if(!state.userInfo.auth) {
+      state.articleList.push({
+        id: null
+      })
+    }
+    payload.data.forEach(d => state.articleList.push(d))
+    state.totalArticleList = payload.total
+    state.articleListLoadMoreEnd = payload.page * 10 >= payload.total
+  },
+  clearArticleList(state, payload) {
+    state.articleList = []
+    state.totalArticleList = 0
+    state.articleListLoadMoreEnd = false
+  },
   changeMaskVisible(state, payload) {
     state.maskVisible = payload.visible
   },
-  changeAuthorization(state, payload) {
-    state.authorization = payload.authorization
-  },
-  loadArticleList(state, payload) {
-    state.articleList.push({
-      src: "../../static/img/btn-home-inv.png",
-      click: false
-    })
-    for(let i=1;i<10;i++) {
-      state.articleList.push({
-        id: i,
-        src: "../../static/art1.jpg",
-        click: false
-      })
-    }
-  },
   handleArticleListClick(state, payload) {
-    if(payload.preIndex) {
-      state.articleList[payload.preIndex].click = false
+    if(payload.preIndex != null) {
+      state.articleList[payload.preIndex].click = 0
     }
-    state.articleList[payload.index].click = true
+    state.articleList[payload.index].click = 1
   },
   handleArticleListCancelClick(state, payload) {
-    state.articleList[payload.index].click = false
-  },
-  loadArticleList2(state, payload) {
-    state.articleList.push({
-      src: "../../static/img/btn-home-inv.png",
-      click: false
-    })
-    for(let i=0;i<10;i++) {
-      state.articleList.push({
-        id: "1" + i,
-        src: "../../static/art2.jpg",
-        click: false
-      })
-    }
-  },
-  articleListAddOne(state, payload) {
-    state.articleList = []
-    for(let i=1;i<3;i++) {
-      state.articleList.push({
-        id: i,
-        src: "../../static/art1.jpg"
-      })
-    }
+    state.articleList[payload.index].click = 0
   }
 }
 
