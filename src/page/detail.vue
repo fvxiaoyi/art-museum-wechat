@@ -4,11 +4,14 @@
 			<div class="art">
 				<img :src="`${model.thumbnailUrl}?imageView2/2/w/768`">
 			</div>
-			<div class="star">
-				<div class="icon-like"></div>
-				<span class="names">中文名,ABC,ABC,中文名中文名,ABC,中文名,ABC</span>
-				<div class="icon-more" v-if="model.totalStar"></div>
-				<span class="total">{{model.totalStar}}人喜欢此作品</span>
+			<div class="star-wrap">
+        <div class="star">
+          <div class="icon-like"></div>
+          <span class="names">{{starNames}}</span>
+          <div class="icon-more" v-if="model.totalArticleStar > 3" @click="allNamesVisible = !allNamesVisible"></div>
+          <span class="total">{{model.totalArticleStar}}人喜欢此作品</span>
+        </div>
+				<div class="all-names" v-if="allNamesVisible">{{starNames}}</div>
 			</div>
       <div class="title-wrap clear">
         <div class="title left">{{model.name}}</div>
@@ -45,29 +48,34 @@
           </div>
           <div class="author left">
             <div class="name">{{model.studentName}}</div>
-            <div>共28件作品</div>
+            <div>共{{model.totalArticle}}件作品</div>
           </div>
-          <div class="fav-total left">488个喜欢</div>
+          <div class="fav-total left">{{model.totalStar}}个喜欢</div>
           <div class="link-me-btn right" @click="linkMe">作品主页</div>
         </div>
       </div>
       <div class="comment-input-wrap">
-        <textarea class="content" placeholder="写下一句鼓励宝宝的话, 支持TA快乐成长 :) "></textarea>
-        <div class="submit-btn">确认</div>
+        <textarea class="content" v-model="comment" placeholder="写下一句鼓励宝宝的话, 支持TA快乐成长 :) "></textarea>
+        <div class="submit-btn" @click="submitComment">确认</div>
       </div>
 
 			<div class="comment-list">
-				<div class="comment">
-          <div class="author clear">
+				<div class="comment" :style="index === 0 ? 'border-top: 0.026rem solid #DCDFE6;' : ''" v-for="(item, index) in model.comments">
+          <div style="width: 1.066rem; margin-right: 0.24rem;">
             <div class="photo left">
-              <img src="../../static/art1.jpg">
+              <img src="../../static/img/icon-student.png" />
             </div>
-            <div class="left">
-              <div class="name">游客001</div>
-              <div class="time">一个月前</div>
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column;">
+            <div class="name">{{item.name}}</div>
+            <div class="content">{{item.content}}</div>
+            <div style="font-size: 0.266rem; display: flex; height: 0.426rem; line-height: 0.426rem;">
+              <span style="flex: 1;">{{item.descTime}}</span>
+              <i class="reply-icon"></i>
+              <span style="color: #2B7F8B;">回复评论</span>
             </div>
-          </div>  
-          <div class="content">这是评论。。</div>     
+          </div>
+               
         </div>
 			</div>
 
@@ -104,26 +112,23 @@
 </template>
 
 <script>
+  import { mapState  } from 'vuex'
+
 	export default {
 		created() {
       if(this.$route.params.id) {
         let me = this
         this.post('/wx/art/get', { id: this.$route.params.id}, (res) => me.model = res.data)
-
       }
     },
   	data () {
   		return {
-  			isStar: false,
-  			startCount: 500,
-        model: {},
-  			comments: [{
-  				id: 1,
-  				photo: '',
-  				name: '张三',
-  				date: '2018-6-1',
-  				content: '这是一条留言'
-  			}]
+        allNamesVisible: false,
+  			comment: '',
+        model: {
+          starInfos: [],
+          comments: []
+        }
   		}
   	},
   	methods: {
@@ -137,20 +142,54 @@
         this.$router.push('/me')
       },
   		star() {
-  			this.isStar = !this.isStar
-  			if(this.isStar) {
-  				this.startCount ++
-  			} else {
-  				this.startCount --
-  			}
+        let me = this
+        if(!this.isStar) {
+          this.post('/wx/star/mark', { 
+            openId: localStorage.getItem('openid'),
+            name: me.userInfo.name,
+            articleId: me.model.id
+          }, (res) => {
+            me.model.starInfos.push({
+              openId: localStorage.getItem('openid'),
+              name: me.userInfo.name
+            })
+            me.model.totalArticleStar ++ 
+            me.model.totalStar ++
+          })
+        }
   		},
       handleShare() {
         this.wxShare(`title`, 'descXXX', window.location.href)
+      },
+      submitComment() {
+        let me = this
+        if(this.comment && this.comment.length > 0) {
+          this.post('/wx/comment/add', { 
+            articleId: me.model.id,
+            topicId: null,
+            content: me.comment,
+            openId: localStorage.getItem('openid')
+          }, (res) => {
+            me.comment = ''
+            this.post('/wx/comment/list', { articleId: me.model.id }, (res) => me.model.comments = res.data)
+          })
+        }
       }
   	},
     computed: {
+      ...mapState(['userInfo']),
       year() {
-        return new Date(this.model.createTime).getFullYear()
+        if(this.model.createTime) {
+          return this.model.createTime.split('-')[0] 
+        } else{
+          return ''
+        }
+      },
+      starNames() {
+        return this.model.starInfos.map(m => m.name).join(" , ") 
+      },
+      isStar() {
+        return this.model.starInfos.filter(f => f.openId === localStorage.getItem('openid')).length > 0
       }
     }
   }
@@ -170,13 +209,16 @@
 
 	/** 点赞 **/
 
+  #detail .star-wrap {
+    border-bottom: 0.026rem solid #DCDFE6;
+  }
+
 	#detail .star {
 		padding-left: 0.32rem;
-		min-height: 1.2rem;
+		height: 1.2rem;
 		color: #FD7D7C;
     display: flex;
     align-items: center;
-    border-bottom: 0.026rem solid #DCDFE6;
 	}
 
   #detail .star .icon-like, #detail .star .icon-more {
@@ -199,7 +241,7 @@
 		color: #353535;
 		margin: 0 0.26rem;
 		overflow: hidden;
-		text-overflow: ellipsis;
+		text-overflow: clip;
 		white-space: nowrap;
 	}
 
@@ -210,6 +252,13 @@
 	#detail .star span {
 		font-size: 0.4rem;
 	}
+
+  #detail .all-names {
+    padding: 0 0.48rem 0 1.38rem;
+    color: #353535;
+    font-size: 0.4rem;
+    margin-bottom: 0.36rem;
+  }
 
   /** 标题 **/
 
@@ -290,11 +339,11 @@
   }
 
   #detail .author-wrap .icon-local {
-    background-image: url("../../static/img/icon-more-like.png");
+    background-image: url("../../static/img/icon-like-local.png");
   }
 
   #detail .author-wrap .icon-count {
-    background-image: url("../../static/img/icon-more-like.png");
+    background-image: url("../../static/img/icon-like-liulan.png");
   }
 
   #detail .size {
@@ -397,27 +446,31 @@
 
 
 	#detail .comment-list {
-    padding-top: 0.2666rem;
+    padding: 0.2666rem 0;
     background-color: #F2F2F2;
     color: #353535;
 	}
 
   #detail .comment-list .comment {
-    height: 2.0537rem;
+    min-height: 2.0537rem;
     background-color: #fff;
-    border-top: 0.026rem solid #DCDFE6;
     border-bottom: 0.026rem solid #DCDFE6;
-    padding: 0.373rem 0.666rem 0.5333rem 0.666rem;
+    padding: 0.373rem 0.666rem 0.373rem 0.666rem;
+    display: flex;
+  }
+
+  #detail .comment-list .comment .reply-icon {
+    width: 0.426rem;
+    height: 0.426rem;
+    display: block;
+    background-image: url("../../static/img/icon-reply.png");
+    background-size: 0.426rem 0.426rem;
   }
 
   #detail .comment-list .comment .name {
     font-size: 0.346rem;
     font-weight: bold;
-    margin: 0.16rem 0 0.14rem 0;
-  }
-
-  #detail .comment-list .comment .time {
-    font-size: 0.266rem;
+    margin-bottom: 0.02rem;
   }
 
   #detail .comment-list .comment .photo {
@@ -429,8 +482,11 @@
   }
 
   #detail .comment-list .comment .content {
-    margin-top: 0.5333rem;
     font-size: 0.32rem;
+    flex: 1;
+    word-wrap: break-word;
+    word-break: break-all;
+    margin-bottom: 0.373rem;
   }
 
 	#detail .more {

@@ -18,7 +18,7 @@ const wx = require('weixin-js-sdk')
 
 const url = require('url'),
 	appid = 'wxaf22660af129589f',
-  server_uri = 'http://kmmt94.natappfree.cc',
+  server_uri = 'http://uxhqti.natappfree.cc',
 	redirect_uri = encodeURIComponent(`${server_uri}/wx/login`)
   
 
@@ -130,22 +130,41 @@ new Vue({
     if(localStorage.getItem('openid')) {
       this.post('/wx/getLoginInfo', { openid: localStorage.getItem('openid') }, (resp) => {
         this.$store.commit('setUserInfo', resp.data)
+      }, (err) => {
+        localStorage.removeItem('openid')
+        location.reload()
       })
     } else {
       const myURL = url.parse(window.location.href)
+      //redi
       if(myURL.query) {
-        let openid = myURL.query.split('&').filter(f => f.indexOf('openid') != -1)
+        let queryParam = myURL.query.split('&'),
+          openid = queryParam.filter(f => f.indexOf('openid') != -1),
+          redirect_uri = queryParam.filter(f => f.indexOf('redirect') != -1),
+          me = this
         if(openid.length > 0) {
           openid = openid[0].split('=')[1]
           localStorage.setItem('openid', openid)
           this.post('/wx/getLoginInfo', { openid: localStorage.getItem('openid') }, (resp) => {
             this.$store.commit('setUserInfo', resp.data)
+            if(redirect_uri.length > 0) {
+              redirect_uri = redirect_uri[0].split('=')[1]
+              me.$router.push(redirect_uri)
+            }
+          }, (err) => {
+            localStorage.removeItem('openid')
+            window.location.href = '/'
           })
         }
       } else {
-        let codeUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect`
+        let hash
+        if(myURL.hash && myURL.hash.length > 1) {
+          hash = myURL.hash.substring(1, myURL.hash.length)
+        }
+        let codeUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_userinfo&state=${hash}&connect_redirect=1#wechat_redirect`
         window.location.href = codeUrl
       }
     }
+
   }
 })
