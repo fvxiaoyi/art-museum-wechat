@@ -140,7 +140,6 @@ new Vue({
       })
     } else {
       const myURL = url.parse(window.location.href)
-      //redi
       if(myURL.query) {
         let queryParam = myURL.query.split('&'),
           openid = queryParam.filter(f => f.indexOf('openid') != -1),

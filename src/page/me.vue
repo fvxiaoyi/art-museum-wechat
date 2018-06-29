@@ -2,7 +2,7 @@
 	<div id="art-self">
 		<div class="top-bar clear">
 			<div class="photo left">
-				<img src="../../static/boy-pic.jpg">
+				<img src="../../static/img/icon-student.png">
 			</div>
 			<div class="text left">
 				<span>徐晓辉</span>
@@ -26,21 +26,21 @@
 
 			<div class="art-wrap" v-for="(item, index) in list" :key="item.id">
 				<div class="art" @click="view(item.id)" >
-					<img :src="item.src">
+					<img :src="`${item.thumbnailUrl}?imageView2/1/w/696`">
 				</div>
 				<div class="info clear">
 					<div class="text-wrap left">
-						<div class="title">{{item.title}}</div>
+						<div class="title">{{item.name}}</div>
 						<div class="author">
-							<span>徐晓辉</span>
+							<span>{{item.studentName}}</span>
 							<span>|</span>
-							<span>6岁作品</span>
+							<span>{{item.studentAge}}岁作品</span>
 						</div>
 						<div class="star">
 							<div class="icon-wrap left">
 								<img src="../../static/img/icon-like-s.png" />
 							</div>
-							<div class="left">32人喜欢此作品</div>
+							<div class="left">{{item.totalArticleStar}}人喜欢此作品</div>
 						</div>
 					</div>
 					<div class="btn-wrap right">
@@ -66,58 +66,39 @@ export default {
     this.scrollTop = this.$refs.selfWrap.scrollTop
   },
 	created() {
-		console.log('self created')
+		if((this.studentId = this.$route.params.id)) {
+			this.getData( 1)
+		}
 	},
 	data() {
 		return {
+			studentId: null,
 			scrollTop: 0,
 			url: '../static/boy-pic.png',
 			loadMoreFinish: false,
-			list: [{
-				id: 1,
-				src: "../../static/art2.jpg",
-				date: "2018-6-01",
-				title: "壁画",
-				star: 201
-			},{
-				id: 2,
-				src: "../../static/art1.jpg",
-				date: "2018-6-01",
-				title: "壁画",
-				star: 201
-			},{
-				id: 3,
-				src: "../../static/art2.jpg",
-				date: "2018-6-01",
-				title: "壁画",
-				star: 201
-			}]
+			list: [],
+      total: 0,
+      page: 1
 		}
 	},
 	methods: {
+		getData(page) {
+      let me = this
+      me.getListData('/wx/art/listByStudent', page, { studentId: me.studentId }, (data, total) => {
+         data.forEach(d => me.list.push(d))
+        me.total = total
+        me.loadMoreFinish = page * 10 >= total
+      })
+    },
 		loadMore(e) {
       if(!this.loadMoreFinish) {
         let totalHeight = e.target.scrollHeight,
           warpHeight = e.target.clientHeight,
           scrollTop = e.target.scrollTop
         if(totalHeight - (warpHeight + scrollTop) <= 1) {
-        	
-          if(this.list.length < 5) {
-            for(let i=4;i<6;i++) {
-              this.list.push({
-								id: i,
-								src: "../../static/art1.jpg",
-								date: "2018-6-01",
-								title: "壁画",
-								star: 201
-							})
-            }
-          } else {
-            this.loadMoreFinish = true
-          }
+        	this.getData( ++ this.page)
         }
       }
-      
     },
 		view(id) {
       this.$router.push(`/art/${id}`)
@@ -295,5 +276,11 @@ export default {
     margin-left: 0.2735rem;
   }
 
+  .end {
+    text-align: center;
+    font-size: 0.3rem;
+    height: 0.6rem;
+    line-height: 0.6rem;
+  }
 	
 </style>

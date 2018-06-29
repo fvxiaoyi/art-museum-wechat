@@ -187,7 +187,7 @@
         this.$router.push('/')
       },
       linkMe() {
-        this.$router.push('/me')
+        this.$router.push(`/me/${this.model.studentId}`)
       },
   		star() {
         let me = this
@@ -207,7 +207,7 @@
         }
   		},
       handleShare() {
-        this.wxShare(this.model.name, this.model.remark, window.location.href)
+        this.wxShare(this.model.name, this.model.remark, window.location.href, `${this.model.thumbnailUrl}?imageView2/2/w/200`)
         this.guideVisible = true
       },
       showReplyInput(index) {

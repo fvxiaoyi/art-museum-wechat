@@ -22,7 +22,7 @@ export default new Router({
         },
         component: home
       },{
-        path: '/me', 
+        path: '/me/:id', 
         meta: {
           title: '小画家主页'
         },
