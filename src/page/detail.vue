@@ -60,23 +60,41 @@
       </div>
 
 			<div class="comment-list">
-				<div class="comment" :style="index === 0 ? 'border-top: 0.026rem solid #DCDFE6;' : ''" v-for="(item, index) in model.comments">
-          <div style="width: 1.066rem; margin-right: 0.24rem;">
-            <div class="photo left">
-              <img src="../../static/img/icon-student.png" />
+        <div class="comment-wrap" v-for="(item, index) in model.comments" :key="item.id">
+          <div class="comment" :style="index === 0 ? 'border-top: 0.026rem solid #DCDFE6;' : '', item.subComments.length == 0 ? 'border-bottom: 0.026rem solid #DCDFE6;' : ''">
+            <div class="photo">
+              <img src="../../static/img/comment-student.png" v-if="item.studentId" />
+              <img src="../../static/img/comment-other.png" v-else />
+            </div>
+            <div class="content-wrap">
+              <div class="name">{{item.name}}</div>
+              <div class="content">{{item.content}}</div>
+              <div class="content-bottom">
+                <span style="flex: 1;">{{item.descTime}}</span>
+                <i class="reply-icon"></i>
+                <span style="color: #2B7F8B;" @click="showReplyInput(index)">回复评论</span>
+              </div>
             </div>
           </div>
-          <div style="flex: 1; display: flex; flex-direction: column;">
-            <div class="name">{{item.name}}</div>
-            <div class="content">{{item.content}}</div>
-            <div style="font-size: 0.266rem; display: flex; height: 0.426rem; line-height: 0.426rem;">
-              <span style="flex: 1;">{{item.descTime}}</span>
-              <i class="reply-icon"></i>
-              <span style="color: #2B7F8B;">回复评论</span>
+          <div class="sub-comment-warp" v-for="(subItem, sIndex) in item.subComments" :key="subItem.id"  :style=" sIndex == item.subComments.length - 1 ? 'border-bottom: 0.026rem solid #DCDFE6;' : ''">
+            <div style="border-top: 0.026rem dashed #D0D4F3; display: flex; padding: 0.5rem 0">
+              <div class="content-wrap">
+                <div class="name">{{subItem.name}} 回复 : {{item.name}}</div>
+                <div class="content">{{subItem.content}}</div>
+              </div>
+              <div class="photo">
+                <img src="../../static/img/comment-student.png" v-if="item.studentId" />
+                <img src="../../static/img/comment-other.png" v-else />
+              </div>
             </div>
+            
           </div>
-               
+          <div class="reply-wrap" v-if="item.replyVisible">
+            <input class="reply-input" v-model="item.replyComment" type="text" :placeholder="`回复 : ${item.name} 的评论`" />
+            <div class="reply-btn" @click="handleReplyComment(item.id, index)">回复</div>
+          </div>
         </div>
+				
 			</div>
 
 			<div class="more clear">
@@ -93,21 +111,30 @@
 				<div class="author-more right">
 					<div class="link-author" @click="linkMe">
 						<span>|</span>
-						<span>徐晓辉的其他作品</span>
+						<span>{{model.studentName}}的其他作品</span>
 						<span class="right">>></span>
 					</div>
 					<div class="other">
-						<div class="other-art left">
-							<img src="../../static/art1.jpg">
-						</div>
-						<div class="other-art left">
-							<img src="../../static/art1.jpg">
+						<div class="other-art left" v-for="item in model.same" :key="item.id">
+              <img :src="`${item.thumbnailUrl}?imageView2/1/w/347/h/347`" v-if="item.id" @click="$router.push(`/art/${item.id}`)">
+							<img :src="item.displayImg" v-else >
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="ad"></div>
+      <div class="back">
+        <span @click="$router.go(-1)">返回上一级</span>
+        <span>|</span>
+        <span @click="$router.push('/')">回到首页</span>
+        <span>|</span>
+        <span @click="codeDialogVisible = true">关注我们</span>
+      </div>
+			<div class="ad" @click="$router.push('/coupon')"></div>
 		</div>
+
+    <v-two-code :visible="codeDialogVisible"  @close="codeDialogVisible = false"></v-two-code>
+    <v-guide :visible="guideVisible" @close="guideVisible = false"></v-guide>
+
 	</div>
 </template>
 
@@ -115,15 +142,21 @@
   import { mapState  } from 'vuex'
 
 	export default {
+    beforeRouteUpdate (to, from, next) {
+      if(to.path.indexOf('/art') != -1) {
+        this.$el.children.detail.scrollTop = 0
+        this.getData(to.params.id)
+      } 
+      next()
+    },
 		created() {
-      if(this.$route.params.id) {
-        let me = this
-        this.post('/wx/art/get', { id: this.$route.params.id}, (res) => me.model = res.data)
-      }
+      this.getData(this.$route.params.id)
     },
   	data () {
   		return {
+        guideVisible: false,
         allNamesVisible: false,
+        codeDialogVisible: false,
   			comment: '',
         model: {
           starInfos: [],
@@ -132,6 +165,21 @@
   		}
   	},
   	methods: {
+      getData(id) {
+        if(id) {
+          let me = this
+          this.post('/wx/art/get', { id }, (res) => {
+            res.data.comments.map(m => m.replyVisible = false)
+            while(res.data.same.length < 2) {
+              res.data.same.push({
+                id: null,
+                displayImg: '../../static/img/no-image.png'
+              })
+            }
+            me.model = res.data
+          })
+        }
+      },
   		back() {
   			this.$router.go(-1)
   		},
@@ -159,7 +207,12 @@
         }
   		},
       handleShare() {
-        this.wxShare(`title`, 'descXXX', window.location.href)
+        this.wxShare(this.model.name, this.model.remark, window.location.href)
+        this.guideVisible = true
+      },
+      showReplyInput(index) {
+        let x = this.model.comments[index];
+        x.replyVisible = !x.replyVisible
       },
       submitComment() {
         let me = this
@@ -171,7 +224,29 @@
             openId: localStorage.getItem('openid')
           }, (res) => {
             me.comment = ''
-            this.post('/wx/comment/list', { articleId: me.model.id }, (res) => me.model.comments = res.data)
+            me.post('/wx/comment/list', { articleId: me.model.id }, (res) => {
+              res.data.map(m => m.replyVisible = false)
+              me.model.comments = res.data
+            })
+          })
+        }
+      },
+      handleReplyComment(topicId, index) {
+        let x = this.model.comments[index],
+          cmt = x.replyComment
+        if(cmt) {
+          let me = this
+          this.post('/wx/comment/add', { 
+            articleId: me.model.id,
+            topicId: topicId,
+            content: cmt,
+            openId: localStorage.getItem('openid')
+          }, (res) => {
+            x.replyComment = ''
+            me.post('/wx/comment/list', { articleId: me.model.id }, (res) => {
+              res.data.map(m => m.replyVisible = false)
+              me.model.comments = res.data
+            })
           })
         }
       }
@@ -197,6 +272,7 @@
 </script>
 
 <style scoped>
+
 	#detail {
 		height: 100%;
 		width: 100%;
@@ -451,43 +527,111 @@
     color: #353535;
 	}
 
-  #detail .comment-list .comment {
+  #detail .comment {
     min-height: 2.0537rem;
     background-color: #fff;
-    border-bottom: 0.026rem solid #DCDFE6;
-    padding: 0.373rem 0.666rem 0.373rem 0.666rem;
+    padding: 0.373rem 0.666rem;
     display: flex;
   }
 
-  #detail .comment-list .comment .reply-icon {
+  #detail .comment .reply-icon {
     width: 0.426rem;
     height: 0.426rem;
     display: block;
     background-image: url("../../static/img/icon-reply.png");
     background-size: 0.426rem 0.426rem;
+    margin-right: 0.05rem;
   }
 
-  #detail .comment-list .comment .name {
+  #detail .comment .content-wrap {
+    flex: 1; 
+    display: flex; 
+    flex-direction: column;
+  }
+
+  #detail .content-bottom {
+    font-size: 0.266rem; 
+    display: flex; 
+    height: 0.426rem; 
+    line-height: 0.426rem;
+  }
+
+  #detail .comment-list .name {
     font-size: 0.346rem;
     font-weight: bold;
     margin-bottom: 0.02rem;
   }
 
-  #detail .comment-list .comment .photo {
+  #detail .comment-list .photo {
     height: 1.066rem;
     width: 1.066rem;
     border-radius: 50%;
     overflow: hidden;
-    margin-right: 0.19rem;
+    margin-right: 0.24rem;
   }
 
-  #detail .comment-list .comment .content {
+  #detail .comment .content {
     font-size: 0.32rem;
     flex: 1;
     word-wrap: break-word;
     word-break: break-all;
     margin-bottom: 0.373rem;
   }
+
+  #detail .reply-wrap {
+    height: 2.76rem;
+    background-color: #FFF;
+    border-bottom: 0.026rem solid #DCDFE6;
+    padding-top: 0.2rem;
+  }
+
+  #detail .reply-input {
+    display: block;
+    border: none;
+    height: 0.3rem;
+    line-height: 0.3rem;
+    width: 8.3333rem;
+    background-image: url("../../static/img/reply-input-bg.png");
+    background-size: 9.3333rem 1.4rem;
+    background-repeat: no-repeat;
+    padding: 0.65rem 0.5rem;
+    margin: 0 auto;
+    color: #353535;
+    font-size: 0.266rem;
+  }
+
+  #detail .reply-btn {
+    background-color: #FC7E7C;
+    border-radius: 0.2rem;
+    height: 0.933rem;
+    width: 2.666rem;
+    color: #fff;
+    font-weight: bold;
+    font-size: 0.373rem;
+    text-align: center;
+    line-height: 0.933rem;
+    margin-left: 7rem;
+  }
+
+  #detail .sub-comment-warp {
+    min-height: 2.346rem;
+    padding: 0 0.666rem;
+    background-color: #fff;
+  }
+
+  #detail .sub-comment-warp .content-wrap {
+    flex: 1;
+    text-align: right;
+    margin-right: 0.24rem;
+  }
+
+  #detail .sub-comment-warp .content {
+    font-size: 0.32rem;
+    word-wrap: break-word;
+    word-break: break-all;
+  }
+
+  /** **/
 
 	#detail .more {
 		height: 5.333rem;
@@ -576,4 +720,15 @@
 		background-repeat: no-repeat;
 	}
 
+  .back {
+    height: 2.4rem;
+    line-height: 2.4rem;
+    text-align: center;
+    background-color: #FAFAFA;
+    color: #2B7F8B;
+  }
+
+  .back span {
+    margin-right: 0.12rem;
+  }
 </style>

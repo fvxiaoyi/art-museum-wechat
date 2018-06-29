@@ -1,7 +1,7 @@
 <template>
-	<div id="dialog" >
+	<div v-if="visible" >
 		<transition name="fade">
-			<div v-if="visible" class="pop" :style="{height: heightWithRem, width: widthWithRem, 
+			<div class="pop" :style="{height: heightWithRem, width: widthWithRem, 
 				top: '50%', left: '50%', marginTop: marginTop, marginLeft: marginLeft}" >
 				<slot></slot>
 			</div>
@@ -15,12 +15,12 @@ export default {
 		height: {
 		type: Number,
 		default: 3.47
-	},
-	width: {
-		type: Number,
-		default: 4.77
-	},
-	visible: Boolean
+		},
+		width: {
+			type: Number,
+			default: 4.77
+		},
+		visible: Boolean
 	},
 	computed: {
 		cHeight() {

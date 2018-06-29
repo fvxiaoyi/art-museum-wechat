@@ -26,7 +26,7 @@
       <div class="back">
         <span @click="$router.push('/')">去美学艺术馆逛逛</span>
         <span style="margin: 0 0.2rem;">|</span>
-        <span @click="openCodeDialog">关注我们</span>
+        <span @click="codeDialogVisible = true">关注我们</span>
       </div>
       <v-dialog :width="8" :height="3.6" :visible="confirmDialogVisible" >
         <div class="dialog-content">
@@ -35,18 +35,7 @@
           <div class="btn" @click="closeDialog">确定</div>
         </div>
       </v-dialog>
-      <v-dialog :width="6.88" :height="7.4" :visible="codeDialogVisible" >
-        <div class="code-wrap">
-          <div class="code-tbar clear">
-            <div class="right" @click="closeCodeDialog">✖</div>
-          </div>
-          <div class="code-title">Hi美学 少儿艺术实验室</div>
-          <div class="code-img">
-            <img src="../../static/img/pop-code.png">
-          </div>
-          <div class="code-bottom">长按识别公众号二维码</div>
-        </div>
-      </v-dialog>
+      <v-two-code :visible="codeDialogVisible"  @close="codeDialogVisible = false"></v-two-code>
     </div>
   </div>
 </template>
@@ -92,14 +81,6 @@ import { mapMutations } from 'vuex'
         if(!this.errMsg) {
           this.$router.push('/')
         }
-      },
-      openCodeDialog() {
-        this.codeDialogVisible = true
-        this.$store.commit('changeMaskVisible', { visible: this.codeDialogVisible })
-      },
-      closeCodeDialog() {
-        this.codeDialogVisible = false
-        this.$store.commit('changeMaskVisible', { visible: this.codeDialogVisible })
       },
       ...mapMutations({
         changeMaskVisible: 'changeMaskVisible'
@@ -232,9 +213,6 @@ import { mapMutations } from 'vuex'
     color: #67C23A;
   }
 
-  .code-wrap {
-  }
-
   .code-tbar {
     height: 1.0666rem;
     line-height: 1.0666rem;
@@ -261,6 +239,14 @@ import { mapMutations } from 'vuex'
     color: #353535;
     font-size: 0.32rem;
     margin-top: 0.16rem;
+  }
+
+  .code-tbar i {
+    width: 0.426rem;
+    height: 0.426rem;
+    margin-top: 0.32rem;
+    background-image: url('../../static/img/close.png');
+    background-size: 0.426rem 0.426rem;
   }
 
 </style>
