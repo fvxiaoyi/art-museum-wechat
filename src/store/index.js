@@ -4,7 +4,8 @@ const state = {
   banners: [],
   articleList: [],
   articleListLoadMoreEnd: false,
-  totalArticleList: 0
+  totalArticleList: 0,
+  viewStudentId: null
 }
 
 // getters
@@ -25,6 +26,9 @@ const mutations = {
       })
     }
     payload.data.forEach(b => state.banners.push(b))
+  },
+  setViewStudentId(state, payload) {
+    state.viewStudentId = payload
   },
   setUserInfo(state, payload) {
     state.userInfo = payload

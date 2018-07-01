@@ -5,25 +5,22 @@
 				<img src="../../static/img/icon-student.png">
 			</div>
 			<div class="text left">
-				<span>徐晓辉</span>
+				<span>{{student.name}}</span>
 				<span>|</span>
-				<span>20岁</span>
+				<span>{{student.age}}岁</span>
 			</div>
 			<div class="total right">
 				<div class="artTotal left">
-					<div class="num">4000</div>
+					<div class="num">{{student.totalArticle}}</div>
 					<div class="label">作品</div>
 				</div>
 				<div class="starTotal left">
-					<div class="num">500</div>
+					<div class="num">{{student.totalStar}}</div>
 					<div class="label">喜欢</div>
 				</div>
 			</div>
-
 		</div>
-
 		<div class="list-warp" @scroll="loadMore($event)" ref="selfWrap" >
-
 			<div class="art-wrap" v-for="(item, index) in list" :key="item.id">
 				<div class="art" @click="view(item.id)" >
 					<img :src="`${item.thumbnailUrl}?imageView2/1/w/696`">
@@ -44,48 +41,84 @@
 						</div>
 					</div>
 					<div class="btn-wrap right">
-	          <div class="icon-no-fav left"></div>
+	          <div :class="[ item.isStar ? 'icon-fav' : 'icon-no-fav', 'left']" @click="star(item)"></div>
 	          <div class="icon-share right" @click="handleShare(item)"></div>
 					</div>
 				</div>
 			</div>
-
-			<div v-if="list.length>0" class="end">没有更多了</div>
-
+			<div v-if="list.length > 0" class="end">没有更多了</div>
 		</div>
-
+    <v-guide :visible="guideVisible" @close="guideVisible = false"></v-guide>
 	</div>
 </template>
 
 <script>
+import { mapState  } from 'vuex'
+import url from 'url'
+
 export default {
 	activated() {
-		this.$refs.selfWrap.scrollTop = this.scrollTop
+    if(this.viewStudentId != this.$route.params.id) {
+      this.$store.commit('setViewStudentId', this.$route.params.id)
+      this.$refs.selfWrap.scrollTop = 0
+      this.list = []
+      this.student = {}
+      this.studentId = this.$route.params.id
+      this.getStudentData(this.$route.params.id)
+      this.getData( 1)
+    } else {
+      this.$refs.selfWrap.scrollTop = this.scrollTop
+    }
 	},
 	deactivated() {
     this.scrollTop = this.$refs.selfWrap.scrollTop
   },
+  beforeRouteUpdate (to, from, next) {
+    this.$store.commit('setViewStudentId', to.params.id)
+    this.$refs.selfWrap.scrollTop = 0
+    this.list = []
+    this.student = {}
+    this.studentId = to.params.id
+    this.getStudentData(to.params.id)
+    this.getData(1)
+    next()
+  },
 	created() {
 		if((this.studentId = this.$route.params.id)) {
-			this.getData( 1)
+      this.$store.commit('setViewStudentId', this.$route.params.id)
+      this.getStudentData(this.studentId)
+			this.getData(1)
 		}
 	},
 	data() {
 		return {
+      guideVisible: false,
 			studentId: null,
 			scrollTop: 0,
-			url: '../static/boy-pic.png',
 			loadMoreFinish: false,
+      student: {},
 			list: [],
       total: 0,
       page: 1
 		}
 	},
 	methods: {
+    getStudentData(id) {
+      let me = this
+      me.post('/wx/student/getTotal', {
+        id
+      }, (res) => {
+        me.student = res.data
+      })
+    },
 		getData(page) {
       let me = this
-      me.getListData('/wx/art/listByStudent', page, { studentId: me.studentId }, (data, total) => {
-         data.forEach(d => me.list.push(d))
+      me.getListData('/wx/art/listByStudent', page, { 
+        studentId: me.studentId,
+        openId: localStorage.getItem('openid')
+      }, (data, total) => {
+        data.forEach(d => me.list.push(d))
+        
         me.total = total
         me.loadMoreFinish = page * 10 >= total
       })
@@ -100,17 +133,31 @@ export default {
         }
       }
     },
+    star(item) {
+      let me = this
+      if(!item.isStar) {
+        this.post('/wx/star/mark', { 
+          openId: localStorage.getItem('openid'),
+          name: me.userInfo.name,
+          articleId: item.id
+        }, (res) => {
+          item.isStar = true
+          item.totalArticleStar ++ 
+          me.student.totalStar ++
+        })
+      }
+    },
 		view(id) {
       this.$router.push(`/art/${id}`)
     },
     handleShare(item) {
-    	this.wxShare(`title ${item.id}`, 'desc', window.location.href)
+      const myURL = url.parse(window.location.href)
+    	this.wxShare(item.name, item.remark, `${myURL.protocol}//${myURL.host}#/art/${item.id}`, `${item.thumbnailUrl}?imageView2/2/w/200`)
+      this.guideVisible = true
     }
 	},
 	computed: {
-		pageWidth() {
-			return 1
-		}
+    ...mapState(['userInfo', 'viewStudentId'])
 	}
 }
 </script>

@@ -140,6 +140,7 @@
 
 <script>
   import { mapState  } from 'vuex'
+  import url from 'url'
 
 	export default {
     beforeRouteUpdate (to, from, next) {
@@ -207,7 +208,8 @@
         }
   		},
       handleShare() {
-        this.wxShare(this.model.name, this.model.remark, window.location.href, `${this.model.thumbnailUrl}?imageView2/2/w/200`)
+        const myURL = url.parse(window.location.href)
+        this.wxShare(this.model.name, this.model.remark, `${myURL.protocol}//${myURL.host}#/art/${this.model.id}`, `${this.model.thumbnailUrl}?imageView2/2/w/200`)
         this.guideVisible = true
       },
       showReplyInput(index) {

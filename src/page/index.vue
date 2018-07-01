@@ -22,10 +22,10 @@
         </div>
         <div class="nav-btn" @click="linkMe">
           <div class="icon-wrap">
-            <img src="../../static/img/icon-me-a.png" v-if="path === '/me'" />
+            <img src="../../static/img/icon-me-a.png" v-if="path.indexOf('/me')!=-1 && userInfo.studentId == viewStudentId" />
             <img src="../../static/img/icon-me-b.png" v-else />
           </div>
-          <span :class="['nav-text', path === '/me' ? 'active' : '' ]" >我</span>
+          <span :class="['nav-text', path.indexOf('/me')!=-1 && userInfo.studentId == viewStudentId ? 'active' : '' ]" >我</span>
         </div>
       </div>
     </div>
@@ -54,7 +54,7 @@ export default {
       this.$router.push("/");
     },
     linkMe() {
-      this.$router.push("/me");
+      this.$router.push(`/me/${this.userInfo.studentId}`)
     },
     linkCoupon() {
       this.$router.push("/coupon")
@@ -73,7 +73,7 @@ export default {
     path() {
       return this.$route.path
     },
-    ...mapState(['userInfo'])
+    ...mapState(['userInfo', 'viewStudentId'])
   },
   watch: {
     $route(to, from) {

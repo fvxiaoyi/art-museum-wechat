@@ -20,7 +20,8 @@ const wx = require('weixin-js-sdk')
 
 const url = require('url'),
 	appid = 'wxaf22660af129589f',
-  server_uri = 'http://8dj82t.natappfree.cc',
+  current_uri= 'http://hiart.natapp1.cc',
+  server_uri = 'http://wycdzw.natappfree.cc',
 	redirect_uri = encodeURIComponent(`${server_uri}/wx/login`)
   
 
@@ -36,7 +37,6 @@ Vue.component('v-guide', guide)
 Vue.component('v-two-code', code)
 Vue.component(Swipe.name, Swipe)
 Vue.component(SwipeItem.name, SwipeItem)
-Vue.component(Actionsheet.name, Actionsheet)
 
 let current_url = window.location.href.split('#')[0]
 
@@ -53,9 +53,9 @@ axios.interceptors.request.use(
     return Promise.reject(err)
 })
 
-Vue.prototype.post = function(url, param, cb, errCb) {
+let post = function(url, param, cb, errCb) {
   let me = this
-  me.$http.post(`${server_uri}${url}`, param).then(function (response) {
+  axios.post(`${server_uri}${url}`, param).then(function (response) {
     if(response.data.success) {
       cb(response.data)
     } else {
@@ -67,9 +67,10 @@ Vue.prototype.post = function(url, param, cb, errCb) {
     }
   }).catch(function(error) {
     console.log(error)
-    
   })
 }
+
+Vue.prototype.post = post
 
 Vue.prototype.getListData = function(url, page, params, cb, paramCb) {
   let me = this,
@@ -124,50 +125,46 @@ Vue.prototype.wxShare = function (title, desc, link, imgUrl) {
   });
 };
 
-new Vue({
-  el: '#app',
-  router,
-  store,
-  components: { App },
-  template: '<App/>',
-  beforeCreate() {
-    if(localStorage.getItem('openid')) {
-      this.post('/wx/getLoginInfo', { openid: localStorage.getItem('openid') }, (resp) => {
-        this.$store.commit('setUserInfo', resp.data)
+if(localStorage.getItem('openid')) {
+  post('/wx/getLoginInfo', { openid: localStorage.getItem('openid') }, (resp) => {
+    store.commit('setUserInfo', resp.data)
+    new Vue({
+      el: '#app',
+      router,
+      store,
+      components: { App },
+      template: '<App/>'
+    })
+  }, (err) => {
+    localStorage.removeItem('openid')
+    location.reload()
+  })
+} else {
+  const myURL = url.parse(window.location.href)
+  if(myURL.query) {
+    let queryParam = myURL.query.split('&'),
+      openid = queryParam.filter(f => f.indexOf('openid') != -1),
+      redirect_uri = queryParam.filter(f => f.indexOf('redirect') != -1)
+    if(openid.length > 0) {
+      openid = openid[0].split('=')[1]
+      localStorage.setItem('openid', openid)
+      post('/wx/getLoginInfo', { openid: localStorage.getItem('openid') }, (resp) => {
+        store.commit('setUserInfo', resp.data)
+        if(redirect_uri.length > 0) {
+          redirect_uri = redirect_uri[0].split('=')[1]
+          window.location.href = `${current_uri}/#${redirect_uri}`
+        }
       }, (err) => {
         localStorage.removeItem('openid')
-        location.reload()
+        window.location.href = '/'
       })
-    } else {
-      const myURL = url.parse(window.location.href)
-      if(myURL.query) {
-        let queryParam = myURL.query.split('&'),
-          openid = queryParam.filter(f => f.indexOf('openid') != -1),
-          redirect_uri = queryParam.filter(f => f.indexOf('redirect') != -1),
-          me = this
-        if(openid.length > 0) {
-          openid = openid[0].split('=')[1]
-          localStorage.setItem('openid', openid)
-          this.post('/wx/getLoginInfo', { openid: localStorage.getItem('openid') }, (resp) => {
-            this.$store.commit('setUserInfo', resp.data)
-            if(redirect_uri.length > 0) {
-              redirect_uri = redirect_uri[0].split('=')[1]
-              me.$router.push(redirect_uri)
-            }
-          }, (err) => {
-            localStorage.removeItem('openid')
-            window.location.href = '/'
-          })
-        }
-      } else {
-        let hash
-        if(myURL.hash && myURL.hash.length > 1) {
-          hash = myURL.hash.substring(1, myURL.hash.length)
-        }
-        let codeUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_userinfo&state=${hash}&connect_redirect=1#wechat_redirect`
-        window.location.href = codeUrl
-      }
     }
-
+  } else {
+    let hash
+    if(myURL.hash && myURL.hash.length > 1) {
+      hash = myURL.hash.substring(1, myURL.hash.length)
+    }
+    let codeUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_userinfo&state=${hash}&connect_redirect=1#wechat_redirect`
+    window.location.href = codeUrl
   }
-})
+}
