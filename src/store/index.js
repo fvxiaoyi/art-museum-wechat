@@ -5,7 +5,9 @@ const state = {
   articleList: [],
   articleListLoadMoreEnd: false,
   totalArticleList: 0,
-  viewStudentId: null
+  viewStudentId: null,
+  courseId: null,
+  subjectId: null
 }
 
 // getters
@@ -29,6 +31,9 @@ const mutations = {
   },
   setViewStudentId(state, payload) {
     state.viewStudentId = payload
+  },
+  setCourseId(state, payload) {
+    state.courseId = payload
   },
   setUserInfo(state, payload) {
     state.userInfo = payload

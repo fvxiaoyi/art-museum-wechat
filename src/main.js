@@ -21,7 +21,7 @@ const wx = require('weixin-js-sdk')
 const url = require('url'),
 	appid = 'wxaf22660af129589f',
   current_uri= 'http://hiart.natapp1.cc',
-  server_uri = 'http://wycdzw.natappfree.cc',
+  server_uri = 'http://hkmdrj.natappfree.cc',
 	redirect_uri = encodeURIComponent(`${server_uri}/wx/login`)
   
 

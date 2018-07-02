@@ -7,6 +7,8 @@ const me = () => import('@/page/me')
 const detail = () => import('@/page/detail')
 const coupon = () => import('@/page/coupon')
 const upload = () => import('@/page/upload')
+const subjectIndex = () => import('@/page/subjectIndex')
+const subject = () => import('@/page/subject')
 
 Vue.use(Router)
 
@@ -27,6 +29,19 @@ export default new Router({
           title: '小画家主页'
         },
         component: me
+      },{
+        path: '/subject', 
+        meta: {
+          title: '美学艺术馆'
+        },
+        component: subjectIndex,
+        children:[{
+          path: '/subject/list/:id', 
+          meta: {
+            title: '美学艺术馆'
+          },
+          component: subject
+        }]
       }]
     }, {
       path: '/art/:id',

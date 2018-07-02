@@ -3,7 +3,7 @@
     <div id="index">
       <div id="content">
         <transition :name="transitionName">
-          <keep-alive>
+          <keep-alive exclude="subject-index,subject">
             <router-view></router-view>
           </keep-alive>
         </transition>
