@@ -9,6 +9,8 @@ const coupon = () => import('@/page/coupon')
 const upload = () => import('@/page/upload')
 const subjectIndex = () => import('@/page/subjectIndex')
 const subject = () => import('@/page/subject')
+const subjectSumary = () => import('@/page/subjectSumary')
+
 
 Vue.use(Router)
 
@@ -36,11 +38,17 @@ export default new Router({
         },
         component: subjectIndex,
         children:[{
-          path: '/subject/list/:id', 
+          path: '/subject/list', 
           meta: {
             title: '美学艺术馆'
           },
           component: subject
+        },{
+          path: '/subject/sumary', 
+          meta: {
+            title: '美学艺术馆'
+          },
+          component: subjectSumary
         }]
       }]
     }, {

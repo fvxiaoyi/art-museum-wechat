@@ -266,7 +266,12 @@
         return this.model.starInfos.map(m => m.name).join(" , ") 
       },
       isStar() {
-        return this.model.starInfos.filter(f => f.openId === localStorage.getItem('openid')).length > 0
+        for(let f of this.model.starInfos) {
+          if(f.openId === localStorage.getItem('openid')) {
+            return true
+          }
+        }
+        return false
       }
     }
   }

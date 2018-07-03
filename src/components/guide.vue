@@ -44,7 +44,7 @@ export default {
     right: 0.24rem;
     z-index: 11;
     padding: 0.5rem 0.25rem 0 0.25rem;
-    font-size: 0.266rem; 
+    font-size: 0.38rem; 
     color: #FD7D7C;
   }
   

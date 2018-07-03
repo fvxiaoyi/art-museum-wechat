@@ -1,7 +1,7 @@
 <template>
   <div id="subject-index">
     <div class="tab">
-      <div class="text-left">新作</div>
+      <div class="text-left" @click="back">新作</div>
       <div class="split">|</div>
       <div class="text-right active">专题</div>
     </div>
@@ -46,7 +46,15 @@ export default {
   methods: {
     handleCourseClick(id) {
       this.$store.commit('setCourseId', id)
-      this.$router.push(`/subject/list/${id}`)
+      if(id) {
+        this.$router.push('/subject/list')
+      } else {
+        this.$router.push('/subject/sumary')
+      }
+    },
+    back() {
+      this.$store.commit('setSubjectId', null)
+      this.$router.push('/')
     }
   },
   computed: {

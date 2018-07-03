@@ -1,6 +1,6 @@
 <template>
   <div id="art-preview">
-    <div class="banner-wrap">
+    <div class="banner-wrap" v-if="subjectId == null">
       <mt-swipe :auto="4000">
         <mt-swipe-item v-for="item in banners" :key="item.id">
           <div class="banner" @click="bannerClick(item.id)">
@@ -10,14 +10,14 @@
       </mt-swipe>
     </div>
     <div class="tab">
-      <div class="text-left active">新作</div>
+      <div class="text-left active" @click="$store.commit('setSubjectId', null)">新作</div>
       <div class="split">|</div>
-      <div class="text-right">专题</div>
+      <div class="text-right" @click="handleLinkSubject">专题</div>
     </div>
 
     <div class="art-wrap" @scroll="loadMore($event)" ref="previewWrap">
       <div class="art-list">
-        <div class="item-wrap" v-for="(item, index) in articleList" @click.stop="onItemClick(item, index)" >
+        <div class="item-wrap" v-for="(item, index) in list" @click.prevent="onItemClick(item, index)" >
             <div class="info-mask" v-if="item.click"></div>
             <div class="info-wrap" v-if="item.click"  @click.stop="onItemCancelClick(item, index)">
               <div class="photo">
@@ -28,14 +28,14 @@
                 <span>|</span>
                 <span>{{item.studentAge}}岁</span>
               </div>
-              <div class="link" @click.stop="view(item.id)">打开查看完整作品</div>
+              <div class="link" @click.prevent="view(item.id)">打开查看完整作品</div>
           </div>
           <img :src="`${item.thumbnailUrl}?imageView2/1/w/347/h/347`" v-if="item.id" />
           <img src="../../static/img/btn-home-inv.png" class="link-coupon" v-else />
         </div>
       </div>
       
-      <div class="end" v-if="articleListLoadMoreEnd">没有更多了</div>
+      <div class="end" v-if="loadMoreFinish">没有更多了</div>
     </div>
 
     <v-dialog :width="8" :height="5.6" :visible="loginDialogVisible" >
@@ -54,43 +54,72 @@
 import { mapState  } from 'vuex'
 export default {
   activated() {
-    this.$refs.previewWrap.scrollTop = this.scrollTop
+    if(this.reloadHome) {
+      this.reload()
+      this.$store.commit('setReloadHome', false)
+    } else {
+      this.$refs.previewWrap.scrollTop = this.scrollTop
+    }
   },
   deactivated() {
     this.scrollTop = this.$refs.previewWrap.scrollTop
   },
   created() {
     let me = this
-    me.post('/wx/subject/banner', {}, (res) => me.$store.commit('setBanner', { data: res.data }))
-    me.getData(1)
+    me.post('/wx/subject/banner', {}, (res) => {
+      if(!me.userInfo.auth) {
+        me.banners.push({
+          id: 0,
+          originalUrl: '../../static/img/home-Banner-1.png'
+        })
+      }
+      res.data.forEach(b => me.banners.push(b))
+    })
+    me.getData()
   },
   data () {
     return {
       activePhone: null,
       activeErrMsg: null,
+      banners: [],
       list: [],
+      loadMoreFinish: false,
       total: 0,
       page: 1,
-      searchParam: {},
       preIndex: null,
       scrollTop: 0,
       loginDialogVisible: false
     }
   },
   methods: {
-    getData(page) {
-      let me = this
-      me.getListData('/wx/art/list', page, me.searchParam, (data, total) => {
-        this.$store.commit('setArticleList', { data, total, page})
+    getData() {
+      let me = this,
+        searchParam = {}
+      if(this.subjectId) {
+        searchParam.subjectId = this.subjectId
+      }
+      me.getListData('/wx/art/list', me.page, searchParam, (data, total) => {
+        if(!me.userInfo.auth) {
+          me.list.push({
+            id: null
+          })
+        }
+        data.forEach(d => {
+          d.click = false
+          me.list.push(d)
+        })
+        me.total = total
+        me.loadMoreFinish = me.page * 10 >= total
       })
     },
     loadMore(e) {
-      if(!this.articleListLoadMoreEnd) {
+      if(!this.loadMoreFinish) {
         let totalHeight = e.target.scrollHeight,
           warpHeight = e.target.clientHeight,
           scrollTop = e.target.scrollTop
         if(totalHeight - (warpHeight + scrollTop) <= 1) {
-          this.getData(++ this.page)
+          this.page ++
+          this.getData()
         }
       }
     },
@@ -99,14 +128,17 @@ export default {
     },
     active() {
       let me = this,
-        openid = this.openid
+        openid = localStorage.getItem('openid')
       me.post('/wx/student/active', { openid, phone: me.activePhone }, (res) => {
         location.reload()
       }, (err) => me.activeErrMsg = err)
     },
     onItemClick(item, index) {
       if(item.id) {
-        this.$store.commit('handleArticleListClick', { preIndex: this.preIndex, index: index})
+        if(this.preIndex != null) {
+          this.list[this.preIndex].click = false
+        }
+        this.list[index].click = true
         this.preIndex = index
       } else {
         this.$router.push('/coupon')
@@ -114,7 +146,7 @@ export default {
     },
     onItemCancelClick(item, index) {
       if(item.id) {
-        this.$store.commit('handleArticleListCancelClick', { index: index})
+        this.list[index].click = 0
         this.preIndex = null
       }
     },
@@ -130,16 +162,28 @@ export default {
       if(id === 0) {
         this.openLoginDialog()
       } else {
-        this.page = 1
-        this.$store.commit('clearArticleList', {})
-        this.getData(this.page)
+        this.$store.commit('setSubjectId', id)
       }
+    },
+    handleLinkSubject() {
+      this.$store.commit('setCourseId', null)
+      this.$router.push('/subject/sumary')
+    },
+    reload() {
+      this.$refs.previewWrap.scrollTop = 0
+      this.page = 1
+      this.loadMoreFinish = false
+      this.list = []
+      this.preIndex = null
+      this.getData()
     }
   },
   computed: {
-    ...mapState(['userInfo', 'banners', 'articleList', 'totalArticleList', 'articleListLoadMoreEnd']),
-    openid() {
-      return localStorage.getItem('openid')
+    ...mapState(['userInfo', 'subjectId', 'reloadHome'])
+  },
+  watch: {
+    subjectId() {
+      this.reload()
     }
   }
 }

@@ -84,9 +84,8 @@ export default {
       let me = this
       this.post('/wx/art/add', me.model, (response) => {
         me.getListData('/wx/art/list', 1, {}, (data, total) => {
-          me.$store.commit('clearArticleList', {})
-          me.$store.commit('setArticleList', { data, total, page: 1})
-          me.$store.commit('setViewStudentId', null)
+          me.$store.commit('setReloadHome', true)
+          me.$store.commit('setReloadMe', true)
           me.$router.push(`/me/${me.userInfo.studentId}`)
         })
       })

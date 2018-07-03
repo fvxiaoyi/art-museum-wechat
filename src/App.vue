@@ -75,7 +75,6 @@
   }
 
   .mint-swipe-indicators {
-    left: 90%;
     bottom: 0.13rem;
   }
 

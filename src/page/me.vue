@@ -22,7 +22,7 @@
 		</div>
 		<div class="list-warp" @scroll="loadMore($event)" ref="selfWrap" >
 			<div class="art-wrap" v-for="(item, index) in list" :key="item.id">
-				<div class="art" @click="view(item.id)" >
+				<div class="art" @click="$router.push(`/art/${item.id}`)" >
 					<img :src="`${item.thumbnailUrl}?imageView2/1/w/696`">
 				</div>
 				<div class="info clear">
@@ -60,14 +60,13 @@ export default {
 	activated() {
     if(this.viewStudentId != this.$route.params.id) {
       this.$store.commit('setViewStudentId', this.$route.params.id)
-      this.$refs.selfWrap.scrollTop = 0
-      this.list = []
-      this.student = {}
-      this.studentId = this.$route.params.id
-      this.getStudentData(this.$route.params.id)
-      this.getData( 1)
     } else {
-      this.$refs.selfWrap.scrollTop = this.scrollTop
+    	if(this.reloadMe) {
+    		this.reload()
+    		this.$store.commit('setReloadMe', false)
+    	} else {
+    		this.$refs.selfWrap.scrollTop = this.scrollTop
+    	}
     }
 	},
 	deactivated() {
@@ -75,25 +74,14 @@ export default {
   },
   beforeRouteUpdate (to, from, next) {
     this.$store.commit('setViewStudentId', to.params.id)
-    this.$refs.selfWrap.scrollTop = 0
-    this.list = []
-    this.student = {}
-    this.studentId = to.params.id
-    this.getStudentData(to.params.id)
-    this.getData(1)
     next()
   },
 	created() {
-		if((this.studentId = this.$route.params.id)) {
-      this.$store.commit('setViewStudentId', this.$route.params.id)
-      this.getStudentData(this.studentId)
-			this.getData(1)
-		}
+		this.$store.commit('setViewStudentId', this.$route.params.id)
 	},
 	data() {
 		return {
       guideVisible: false,
-			studentId: null,
 			scrollTop: 0,
 			loadMoreFinish: false,
       student: {},
@@ -105,22 +93,29 @@ export default {
 	methods: {
     getStudentData(id) {
       let me = this
-      me.post('/wx/student/getTotal', {
-        id
-      }, (res) => {
+      me.post('/wx/student/getTotal', {id}, (res) => {
         me.student = res.data
       })
     },
-		getData(page) {
+    reload() {
+    	this.$refs.selfWrap.scrollTop = 0
+    	this.list = []
+    	this.page = 1
+    	this.loadMoreFinish = false
+    	this.getData()
+    },
+		getData() {
       let me = this
-      me.getListData('/wx/art/listByStudent', page, { 
-        studentId: me.studentId,
+      me.post('/wx/student/getTotal', {id: me.viewStudentId}, (res) => {
+        me.student = res.data
+      })
+      me.getListData('/wx/art/listByStudent', me.page, { 
+        studentId: me.viewStudentId,
         openId: localStorage.getItem('openid')
       }, (data, total) => {
         data.forEach(d => me.list.push(d))
-        
         me.total = total
-        me.loadMoreFinish = page * 10 >= total
+        me.loadMoreFinish = me.page * 10 >= total
       })
     },
 		loadMore(e) {
@@ -129,7 +124,8 @@ export default {
           warpHeight = e.target.clientHeight,
           scrollTop = e.target.scrollTop
         if(totalHeight - (warpHeight + scrollTop) <= 1) {
-        	this.getData( ++ this.page)
+        	this.page ++
+        	this.getData()
         }
       }
     },
@@ -147,9 +143,6 @@ export default {
         })
       }
     },
-		view(id) {
-      this.$router.push(`/art/${id}`)
-    },
     handleShare(item) {
       const myURL = url.parse(window.location.href)
     	this.wxShare(item.name, item.remark, `${myURL.protocol}//${myURL.host}#/art/${item.id}`, `${item.thumbnailUrl}?imageView2/2/w/200`)
@@ -157,7 +150,12 @@ export default {
     }
 	},
 	computed: {
-    ...mapState(['userInfo', 'viewStudentId'])
+    ...mapState(['userInfo', 'viewStudentId', 'reloadMe'])
+	},
+	watch: {
+		viewStudentId(val) {
+			this.reload()
+		}
 	}
 }
 </script>

@@ -66,7 +66,7 @@ let post = function(url, param, cb, errCb) {
       }
     }
   }).catch(function(error) {
-    console.log(error)
+    console.error(error)
   })
 }
 
