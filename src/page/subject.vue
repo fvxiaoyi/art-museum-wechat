@@ -3,7 +3,7 @@
     <div class="subject-list">
       <div class="subject-wrap" v-for="item in list" :key="item.id">
         <div class="img-wrap">
-          <img :src="imgSrc" v-if="imgSrc">
+          <img :src="`${item.thumbnailUrl}?imageView2/2/w/204`" v-if="item.displayImg">
         </div>
         <div class="info-wrap">
           <div class="name">
@@ -55,7 +55,6 @@ export default {
       me.getListData('/wx/subject/list', me.page, {
         courseId: me.courseId
       }, (data, total) => {
-        console.log(data)
         data.forEach(d => me.list.push(d))
       })
     }
