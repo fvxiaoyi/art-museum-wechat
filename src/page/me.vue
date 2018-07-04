@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { mapState  } from 'vuex'
+import { mapState } from 'vuex'
 import url from 'url'
 
 export default {

@@ -42,7 +42,6 @@
 
 
 <script>
-import { mapMutations } from 'vuex'
   export default {
     beforeRouteLeave (to, from, next) {
       this.$store.commit('changeMaskVisible', { visible: false })
@@ -81,10 +80,7 @@ import { mapMutations } from 'vuex'
         if(!this.errMsg) {
           this.$router.push('/')
         }
-      },
-      ...mapMutations({
-        changeMaskVisible: 'changeMaskVisible'
-      })
+      }
     }
   }
 </script>
