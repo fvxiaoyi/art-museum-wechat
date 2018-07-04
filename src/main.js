@@ -125,7 +125,7 @@ if(localStorage.getItem('openid')) {
     })
   }, (err) => {
     localStorage.removeItem('openid')
-    location.reload()
+    window.location.href = '/'
   })
 } else {
   const myURL = url.parse(window.location.href)
