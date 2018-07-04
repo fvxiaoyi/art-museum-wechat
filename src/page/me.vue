@@ -102,12 +102,15 @@ export default {
     	this.list = []
     	this.page = 1
     	this.loadMoreFinish = false
-    	this.getData()
+    	this.getData(() => {
+    		this.wxShare(`${this.student.name}的美学艺术馆`, '我在hi美学的作品全在这哦', window.location.href, '../../static/img/icon-student.png')
+    	})
     },
-		getData() {
+		getData(shareCb) {
       let me = this
       me.post('/wx/student/getTotal', {id: me.viewStudentId}, (res) => {
         me.student = res.data
+        shareCb && shareCb()
       })
       me.getListData('/wx/art/listByStudent', me.page, { 
         studentId: me.viewStudentId,

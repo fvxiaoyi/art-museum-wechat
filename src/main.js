@@ -7,31 +7,23 @@ import router from './router'
 import Vuex from 'vuex'
 import { Swipe, SwipeItem, Actionsheet } from 'mint-ui'
 import 'mint-ui/lib/style.css'
-
 import storeConfig from './store/index'
-
 import dialog from './components/dialog'
 import guide from './components/guide'
 import code from './components/code'
 
 Vue.use(require('vue-wechat-title'))
-
 const wx = require('weixin-js-sdk')
-
 const url = require('url'),
 	appid = 'wxaf22660af129589f',
   current_uri= 'http://hiart.natapp1.cc',
   server_uri = 'http://hkmdrj.natappfree.cc',
 	redirect_uri = encodeURIComponent(`${server_uri}/wx/login`)
-  
 
 Vue.use(Vuex)
-
 Vue.config.productionTip = false
-
 Vue.prototype.$http = axios
 Vue.prototype.$server_uri = server_uri
-
 Vue.component('v-dialog', dialog)
 Vue.component('v-guide', guide)
 Vue.component('v-two-code', code)
@@ -39,7 +31,6 @@ Vue.component(Swipe.name, Swipe)
 Vue.component(SwipeItem.name, SwipeItem)
 
 let current_url = window.location.href.split('#')[0]
-
 const store = new Vuex.Store(storeConfig)
 
 axios.interceptors.request.use(
@@ -52,7 +43,6 @@ axios.interceptors.request.use(
   err => {
     return Promise.reject(err)
 })
-
 let post = function(url, param, cb, errCb) {
   let me = this
   axios.post(`${server_uri}${url}`, param).then(function (response) {
@@ -97,33 +87,31 @@ Vue.prototype.getListData = function(url, page, params, cb, paramCb) {
 Vue.prototype.wxShare = function (title, desc, link, imgUrl) {
   axios.post(`${server_uri}/wx/sign`, { url: current_url }).then(function (response) {
     wx.config({
-      debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-      appId: appid, // 必填，公众号的唯一标识
-      timestamp: response.data.timestamp, // 必填，生成签名的时间戳
-      nonceStr: response.data.nonceStr, // 必填，生成签名的随机串
-      signature: response.data.signature,// 必填，签名，见附录1
+      debug: false,
+      appId: appid,
+      timestamp: response.data.timestamp,
+      nonceStr: response.data.nonceStr,
+      signature: response.data.signature,
       jsApiList: [
         "onMenuShareTimeline",
         "onMenuShareAppMessage"
       ]
-    });
+    })
   })
-  
   wx.ready(() => {
-    wx.onMenuShareAppMessage({ // 分享给朋友
-      title: title, // 分享标题
-      desc: desc,   // 分享描述
-      link: link,   // 分享链接 默认以当前链接
-      imgUrl: imgUrl
-    });
-    //分享到朋友圈
-    wx.onMenuShareTimeline({
-      title: title, // 分享标题
+    wx.onMenuShareAppMessage({
+      title: title, 
+      desc: desc,
       link: link,
       imgUrl: imgUrl
-    });
-  });
-};
+    })
+    wx.onMenuShareTimeline({
+      title: title,
+      link: link,
+      imgUrl: imgUrl
+    })
+  })
+}
 
 if(localStorage.getItem('openid')) {
   post('/wx/getLoginInfo', { openid: localStorage.getItem('openid') }, (resp) => {

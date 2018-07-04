@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div id="detail">
-			<div class="art">
+			<div class="art" @click.prevent="detailVisible = true">
 				<img :src="`${model.thumbnailUrl}?imageView2/2/w/768`">
 			</div>
 			<div class="star-wrap">
@@ -43,9 +43,7 @@
       <div class="remark" v-if="model.remark">作品描述: {{model.remark}}</div>
       <div class="banner-wrap">
         <div class="banner clear">
-          <div class="photo left">
-            <img src="../../static/img/icon-student.png" />
-          </div>
+          <div class="photo left"></div>
           <div class="author left">
             <div class="name">{{model.studentName}}</div>
             <div>共{{model.totalArticle}}件作品</div>
@@ -87,19 +85,17 @@
                 <img src="../../static/img/comment-other.png" v-else />
               </div>
             </div>
-            
           </div>
           <div class="reply-wrap" v-if="item.replyVisible">
             <input class="reply-input" v-model="item.replyComment" type="text" :placeholder="`回复 : ${item.name} 的评论`" />
             <div class="reply-btn" @click="handleReplyComment(item.id, index)">回复</div>
           </div>
         </div>
-				
 			</div>
 
 			<div class="more clear">
 				<div class="link-div left">
-					<div class="link-type">
+					<div class="link-type" @click="linkHomeWithSubject">
 						<div class="icon"></div>
 						<div class="text">
 							<div>进入此作</div>
@@ -116,7 +112,7 @@
 					</div>
 					<div class="other">
 						<div class="other-art left" v-for="item in model.same" :key="item.id">
-              <img :src="`${item.thumbnailUrl}?imageView2/1/w/347/h/347`" v-if="item.id" @click="$router.push(`/art/${item.id}`)">
+              <img :src="`${item.thumbnailUrl}?imageView2/1/w/347/h/347`" v-if="item.id" @click.prevent="$router.push(`/art/${item.id}`)">
 							<img :src="item.displayImg" v-else >
 						</div>
 					</div>
@@ -125,7 +121,7 @@
       <div class="back">
         <span @click="$router.go(-1)">返回上一级</span>
         <span>|</span>
-        <span @click="$router.push('/')">回到首页</span>
+        <span @click="linkHome">回到首页</span>
         <span>|</span>
         <span @click="codeDialogVisible = true">关注我们</span>
       </div>
@@ -134,20 +130,19 @@
 
     <v-two-code :visible="codeDialogVisible"  @close="codeDialogVisible = false"></v-two-code>
     <v-guide :visible="guideVisible" @close="guideVisible = false"></v-guide>
-
+    <div class="full-img" v-if="detailVisible" @click.prevent="detailVisible = false">
+      <img :src="model.originalUrl">
+    </div>
 	</div>
 </template>
 
 <script>
   import { mapState  } from 'vuex'
   import url from 'url'
-
 	export default {
-    beforeRouteUpdate (to, from, next) {
-      if(to.path.indexOf('/art') != -1) {
-        this.$el.children.detail.scrollTop = 0
-        this.getData(to.params.id)
-      } 
+    beforeRouteUpdate(to, from, next) {
+      this.$el.children.detail.scrollTop = 0
+      this.getData(to.params.id)
       next()
     },
 		created() {
@@ -155,6 +150,7 @@
     },
   	data () {
   		return {
+        detailVisible: false,
         guideVisible: false,
         allNamesVisible: false,
         codeDialogVisible: false,
@@ -185,10 +181,15 @@
   			this.$router.go(-1)
   		},
       linkHome() {
+        this.$store.commit('setSubjectId', null)
         this.$router.push('/')
       },
       linkMe() {
         this.$router.push(`/me/${this.model.studentId}`)
+      },
+      linkHomeWithSubject() {
+        this.$store.commit('setSubjectId', this.model.subjectId)
+        this.$router.push('/')
       },
   		star() {
         let me = this
@@ -464,6 +465,8 @@
     height: 1.573rem;
     border-radius: 50%;
     overflow: hidden;
+    background-image: url('../../static/img/icon-student.png');
+    background-size: 1.573rem 1.573rem;
   }
 
   #detail .banner .author {
@@ -738,4 +741,18 @@
   .back span {
     margin-right: 0.12rem;
   }
+
+  .full-img {
+    width: 100%;
+    height: 100%;
+    background-color: #353535;
+    position: absolute;
+    top: 0;
+  }
+
+  .full-img img {
+    object-fit: contain;
+  }
+
+  /*img{ pointer-events: none; }*/
 </style>
