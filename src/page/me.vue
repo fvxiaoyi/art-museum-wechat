@@ -22,7 +22,7 @@
 		</div>
 		<div class="list-warp" @scroll="loadMore($event)" ref="selfWrap" >
 			<div class="art-wrap" v-for="(item, index) in list" :key="item.id">
-				<div class="art" @click="$router.push(`/art/${item.id}`)" >
+				<div class="art" @click.prevent="$router.push(`/art/${item.id}`)" >
 					<img :src="`${item.thumbnailUrl}?imageView2/1/w/696`">
 				</div>
 				<div class="info clear">
@@ -54,8 +54,6 @@
 
 <script>
 import { mapState } from 'vuex'
-import url from 'url'
-
 export default {
 	activated() {
     if(this.viewStudentId != this.$route.params.id) {
@@ -103,7 +101,7 @@ export default {
     	this.page = 1
     	this.loadMoreFinish = false
     	this.getData(() => {
-    		this.wxShare(`${this.student.name}的美学艺术馆`, '我在hi美学的作品全在这哦', window.location.href, '../../static/img/icon-student.png')
+    		this.wxShare(`${this.student.name}的美学艺术馆`, '我在hi美学的作品全在这哦', window.location.href, null)
     	})
     },
 		getData(shareCb) {
@@ -147,8 +145,7 @@ export default {
       }
     },
     handleShare(item) {
-      const myURL = url.parse(window.location.href)
-    	this.wxShare(item.name, item.remark, `${myURL.protocol}//${myURL.host}#/art/${item.id}`, `${item.thumbnailUrl}?imageView2/2/w/200`)
+    	this.wxShare(item.name, item.remark, `${this.$current_uri}/#/art/${item.id}`, `${item.thumbnailUrl}?imageView2/2/w/200`)
       this.guideVisible = true
     }
 	},

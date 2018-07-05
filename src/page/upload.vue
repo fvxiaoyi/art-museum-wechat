@@ -36,6 +36,7 @@
     </div>
     <textarea v-model="model.remark" class="content" placeholder="请输入作品描述,限140字"></textarea>
     <div class="title" v-if="userInfo.localName">收藏校区 : {{userInfo.localName}}</div>
+    <div v-if="errMsg" class="err-msg">*{{errMsg}}</div>
     <div class="submit-btn" @click="handleSubmit">确认发表</div>
     <div class="cancel-btn" @click="$router.go(-1)">取消发表</div>
   </div>
@@ -47,15 +48,19 @@ export default {
   name: 'upload',
   created() {
     let me = this
-    me.model.studentId = me.userInfo.studentId
-    me.post('/wx/student/getCourse', {
-      id: me.userInfo.studentId
-    }, (res) => {
-      me.courses = res.data
-      if(me.courses.length > 0) {
-        me.model.courseId = res.data[0].id
-      }
-    })
+    if(!me.userInfo.auth) {
+      this.$router.push('/')
+    } else {
+      me.model.studentId = me.userInfo.studentId
+      me.post('/wx/student/getCourse', {
+        id: me.userInfo.studentId
+      }, (res) => {
+        me.courses = res.data
+        if(me.courses.length > 0) {
+          me.model.courseId = res.data[0].id
+        }
+      })
+    }
   },
   data () {
     return {
@@ -64,7 +69,7 @@ export default {
         displayImg: '',
         courseId: null
       },
-      imgSrc: null
+      errMsg: null
     }
   },
   methods: {
@@ -88,7 +93,7 @@ export default {
           me.$store.commit('setReloadMe', true)
           me.$router.push(`/me/${me.userInfo.studentId}`)
         })
-      })
+      }, (err) => me.errMsg = err)
     }
   },
   computed: {
@@ -218,6 +223,11 @@ export default {
     width: 9.3rem;
     border: 0.02rem solid #FC7E7C;
     margin-bottom: 0.8666rem;
+  }
+
+  .err-msg {
+    text-align: center;
+    color: #FC7E7C;
   }
 
 </style>

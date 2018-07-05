@@ -75,7 +75,7 @@ export default {
       }
       res.data.forEach(b => me.banners.push(b))
     })
-    me.getData()
+    me.getData(() => this.wxShare('美学艺术馆', '', window.location.href, null))
   },
   data () {
     return {
@@ -92,7 +92,7 @@ export default {
     }
   },
   methods: {
-    getData() {
+    getData(cb) {
       let me = this,
         searchParam = {}
       if(this.subjectId) {
@@ -110,6 +110,7 @@ export default {
         })
         me.total = total
         me.loadMoreFinish = me.page * 10 >= total
+        cb && cb()
       })
     },
     loadMore(e) {
@@ -312,7 +313,7 @@ export default {
     margin-right: 0.16rem;
   }
 
-  #art-preview .item-wrap .link-coupon {
+  #art-preview .item-wrap img {
     box-shadow: 0 0.1rem 0.1rem #DBDBDB;
   }
 

@@ -138,7 +138,6 @@
 
 <script>
   import { mapState  } from 'vuex'
-  import url from 'url'
 	export default {
     beforeRouteUpdate(to, from, next) {
       this.$el.children.detail.scrollTop = 0
@@ -174,6 +173,7 @@
               })
             }
             me.model = res.data
+            this.wxShare(this.model.name, this.model.remark, `${this.$current_uri}/#/art/${this.model.id}`, `${this.model.thumbnailUrl}?imageView2/2/w/200`)
           })
         }
       },
@@ -209,8 +209,7 @@
         }
   		},
       handleShare() {
-        const myURL = url.parse(window.location.href)
-        this.wxShare(this.model.name, this.model.remark, `${myURL.protocol}//${myURL.host}#/art/${this.model.id}`, `${this.model.thumbnailUrl}?imageView2/2/w/200`)
+        this.wxShare(this.model.name, this.model.remark, `${this.$current_uri}/#/art/${this.model.id}`, `${this.model.thumbnailUrl}?imageView2/2/w/200`)
         this.guideVisible = true
       },
       showReplyInput(index) {

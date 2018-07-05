@@ -1,7 +1,7 @@
 <template>
   <div id="subject">
     <div class="subject-list" ref="subjectList" @scroll="loadMore($event)" >
-      <div class="subject-wrap" v-for="item in list" :key="item.id" @click.stop="handleSubjectClick(item.id)">
+      <div class="subject-wrap" v-for="item in list" :key="item.id" @click.prevent="handleSubjectClick(item.id)">
         <div class="img-wrap">
           <img :src="`${item.thumbnailUrl}?imageView2/2/w/204`" v-if="item.displayImg">
         </div>

@@ -1,6 +1,6 @@
 <template>
   <div id="subject-sumary">
-    <div class="banner" v-for="item in hot" @click.stop="handleSubjectClick(item.id)">
+    <div class="banner" v-for="item in hot" @click.prevent="handleSubjectClick(item.id)">
       <img :src="`${item.thumbnailUrl}?imageView2/2/w/204`">
     </div>
     <div class="title clear">
@@ -8,7 +8,7 @@
       <span style="margin: 0 0.16rem 0 0.24rem;">|</span>
       <span>最新专题</span>
     </div>
-    <div class="subject-wrap" v-for="item in list" :key="item.id" @click.stop="handleSubjectClick(item.id)">
+    <div class="subject-wrap" v-for="item in list" :key="item.id" @click.prevent="handleSubjectClick(item.id)">
       <div class="img-wrap">
         <img :src="`${item.thumbnailUrl}?imageView2/2/w/204`" v-if="item.displayImg">
       </div>

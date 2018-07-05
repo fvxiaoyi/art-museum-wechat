@@ -61,6 +61,7 @@ let post = function(url, param, cb, errCb) {
 }
 
 Vue.prototype.post = post
+Vue.prototype.$current_uri = current_uri
 
 Vue.prototype.getListData = function(url, page, params, cb, paramCb) {
   let me = this,
@@ -85,6 +86,7 @@ Vue.prototype.getListData = function(url, page, params, cb, paramCb) {
 }
 
 Vue.prototype.wxShare = function (title, desc, link, imgUrl) {
+  imgUrl = imgUrl || 'https://store-1256528427.cos.ap-guangzhou.myqcloud.com/logo.png'
   axios.post(`${server_uri}/wx/sign`, { url: current_url }).then(function (response) {
     wx.config({
       debug: false,
