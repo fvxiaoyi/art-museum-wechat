@@ -1,13 +1,13 @@
 <template>
   <div id="upload-art">
+    <div class="loading" v-if="loadingVisible">上传中...</div>
     <div class="title">
       <span>|</span>
       <span>预览图</span>
       <span>|</span>
     </div>
-    <div class="upload-warp center">
+    <div class="upload-warp center" @click="handleWxUpload">
       <img v-if="model.displayImg" :src="`${model.thumbnailUrl}?imageView2/1/w/696`">`
-      <input class="upload" type="file" accept="image/*" @change="fileChange" />
     </div>
     <div class="desc center">点击预览图更换当前图片</div>
     <div class="title center">
@@ -46,6 +46,10 @@
 import { mapState  } from 'vuex'
 export default {
   name: 'upload',
+  beforeRouteLeave (to, from, next) {
+    this.$store.commit('changeMaskVisible', { visible: false })
+    next()
+  },
   created() {
     let me = this
     if(!me.userInfo.auth) {
@@ -64,26 +68,35 @@ export default {
   },
   data () {
     return {
+      loadingVisible: false,
       courses: [],
       model: {
         displayImg: '',
+        originalUrl: '',
+        thumbnailUrl: '',
         courseId: null
       },
       errMsg: null
     }
   },
   methods: {
-    fileChange($event) {
-      let file = $event.target.files[0],
-        formData = new FormData(),
-        me = this
-      formData.append('file', file)
-      formData.append('type', 'article')
-      this.post('/wx/store/upload', formData, (response) => {
-        me.model.displayImg = response.data.fileName
-        me.model.originalUrl = response.data.original_url
-        me.model.thumbnailUrl = response.data.thumbnail_url
-      })
+    handleWxUpload() {
+      this.wxUpload((serverId) => {
+        if(serverId && serverId.length > 0) {
+          this.post('/wx/store/upload', {serverId, type: 'article'}, (response) => {
+            this.model.displayImg = response.data.fileName
+            this.model.originalUrl = response.data.original_url
+            this.model.thumbnailUrl = response.data.thumbnail_url
+            this.loadingVisible = false
+          }, (err) => {
+            this.loadingVisible = false
+            this.errMsg = err
+          })
+        } else {
+          this.loadingVisible = false
+          this.errMsg = '上传图片失败'
+        }
+      }, () => this.loadingVisible = true )
     },
     handleSubmit() {
       let me = this
@@ -97,13 +110,30 @@ export default {
     }
   },
   computed: {
-      ...mapState(['userInfo'])
+    ...mapState(['userInfo'])
+  },
+  watch: {
+    loadingVisible(val) {
+      this.$store.commit('changeMaskVisible', { visible: val })
+    }
   }
 }
 </script>
 
 
 <style scoped>
+
+  .loading {
+    position: absolute;
+    width: 2rem;
+    height: 0.6rem;
+    left: 4rem;
+    top: 4rem;
+    z-index: 11;
+    color: #2A808A;
+    text-align: center;
+    font-size: 0.4rem;
+  }
 
   .course {
     margin: 0 0.5333rem;

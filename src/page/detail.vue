@@ -32,7 +32,7 @@
         </div>
         <div class="count">
           <div class="icon-count"></div>
-          <span>1083浏览</span>
+          <span>{{model.viewCount}}浏览</span>
         </div>
       </div>
       <div class="size">
@@ -137,7 +137,7 @@
 </template>
 
 <script>
-  import { mapState  } from 'vuex'
+  import { mapState } from 'vuex'
 	export default {
     beforeRouteUpdate(to, from, next) {
       this.$el.children.detail.scrollTop = 0
@@ -175,6 +175,8 @@
             me.model = res.data
             this.wxShare(this.model.name, this.model.remark, `${this.$current_uri}/#/art/${this.model.id}`, `${this.model.thumbnailUrl}?imageView2/2/w/200`)
           })
+        } else {
+          this.$router.push('/')
         }
       },
   		back() {

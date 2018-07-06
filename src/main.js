@@ -16,8 +16,10 @@ Vue.use(require('vue-wechat-title'))
 const wx = require('weixin-js-sdk')
 const url = require('url'),
 	appid = 'wxaf22660af129589f',
-  current_uri= 'http://wx.blcow.cn',
-  server_uri = 'http://api.blcow.cn',
+  // current_uri= 'http://wx.blcow.cn',
+  // server_uri = 'http://api.blcow.cn',
+  current_uri= 'http://hiart.natapp1.cc',
+  server_uri = 'http://rrayuw.natappfree.cc',
 	redirect_uri = encodeURIComponent(`${server_uri}/wx/login`)
 
 Vue.use(Vuex)
@@ -114,6 +116,42 @@ Vue.prototype.wxShare = function (title, desc, link, imgUrl) {
     })
   })
 }
+
+Vue.prototype.wxUpload = function (cb, openLoaing) {
+  axios.post(`${server_uri}/wx/sign`, { url: current_url }).then(function (response) {
+    wx.config({
+      debug: false,
+      appId: appid,
+      timestamp: response.data.timestamp,
+      nonceStr: response.data.nonceStr,
+      signature: response.data.signature,
+      jsApiList: [
+        "chooseImage",
+        "uploadImage"
+      ]
+    })
+  })
+  wx.ready(() => {
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['original'], 
+      sourceType: ['album', 'camera'], 
+      success: function (res) {
+        let localIds = res.localIds.toString()
+        openLoaing && openLoaing()
+        wx.uploadImage({
+          localId: localIds,
+          isShowProgressTips: 0,
+          success: function (_res) {
+            let serverId = _res.serverId
+            cb(serverId)
+          }
+        })
+      }
+    })
+  })
+}
+
 
 if(localStorage.getItem('openid')) {
   post('/wx/getLoginInfo', { openid: localStorage.getItem('openid') }, (resp) => {

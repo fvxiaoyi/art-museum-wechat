@@ -3,7 +3,7 @@
     <div class="banner-wrap" v-if="subjectId == null">
       <mt-swipe :auto="4000">
         <mt-swipe-item v-for="item in banners" :key="item.id">
-          <div class="banner" @click="bannerClick(item.id)">
+          <div class="banner" @click.prevent="bannerClick(item.id)">
             <img :src="item.originalUrl">
           </div>
         </mt-swipe-item>
@@ -19,7 +19,7 @@
       <div class="art-list">
         <div class="item-wrap" v-for="(item, index) in list" @click.prevent="onItemClick(item, index)" >
             <div class="info-mask" v-if="item.click"></div>
-            <div class="info-wrap" v-if="item.click"  @click.stop="onItemCancelClick(item, index)">
+            <div class="info-wrap" v-if="item.click"  @click.prevent="onItemCancelClick(item, index)">
               <div class="photo">
                 <img src="../../static/img/icon-student.png">
               </div>
