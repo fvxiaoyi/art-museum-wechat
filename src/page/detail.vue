@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div id="detail">
-			<div class="art" @click.prevent="detailVisible = true">
+			<div class="art" @click.prevent="wxPreview(model.originalUrl)">
 				<img :src="`${model.thumbnailUrl}?imageView2/2/w/768`">
 			</div>
 			<div class="star-wrap">
@@ -156,6 +156,9 @@
   			comment: '',
         model: {
           starInfos: [],
+          displayImg: '',
+          originalUrl: '',
+          thumbnailUrl: '',
           comments: []
         }
   		}

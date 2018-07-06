@@ -150,6 +150,28 @@ Vue.prototype.wxUpload = function (cb, openLoaing) {
   })
 }
 
+Vue.prototype.wxPreview = function (imgUrl) {
+  axios.post(`${server_uri}/wx/sign`, { url: current_url }).then(function (response) {
+    wx.config({
+      debug: false,
+      appId: appid,
+      timestamp: response.data.timestamp,
+      nonceStr: response.data.nonceStr,
+      signature: response.data.signature,
+      jsApiList: [
+        "chooseImage",
+        "uploadImage"
+      ]
+    })
+  })
+  wx.ready(() => {
+    wx.previewImage({
+      current: imgUrl,
+      urls: [imgUrl]
+    })
+  })
+}
+
 
 if(localStorage.getItem('openid')) {
   post('/wx/getLoginInfo', { openid: localStorage.getItem('openid') }, (resp) => {
