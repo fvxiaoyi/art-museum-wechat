@@ -81,7 +81,7 @@
                 <div class="content">{{subItem.content}}</div>
               </div>
               <div class="photo">
-                <img src="../../static/img/comment-student.png" v-if="item.studentId" />
+                <img src="../../static/img/comment-student.png" v-if="subItem.studentId" />
                 <img src="../../static/img/comment-other.png" v-else />
               </div>
             </div>
@@ -364,6 +364,10 @@
     font-size: 0.64rem;
     font-weight: bold;
     color: #353535;
+    width: 5.6rem;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   #detail .title-wrap .icon-share, #detail .title-wrap .icon-no-fav, #detail .title-wrap .icon-fav {

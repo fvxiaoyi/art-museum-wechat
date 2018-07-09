@@ -15,7 +15,7 @@ import code from './components/code'
 Vue.use(require('vue-wechat-title'))
 const wx = require('weixin-js-sdk')
 const url = require('url'),
-	appid = 'wxaf22660af129589f',
+	appid = 'wx500ec50f770a445a',
   current_uri= 'http://wx.blcow.cn',
   server_uri = 'http://api.blcow.cn',
 	redirect_uri = encodeURIComponent(`${server_uri}/wx/login`)

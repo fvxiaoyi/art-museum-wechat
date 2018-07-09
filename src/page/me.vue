@@ -265,6 +265,10 @@ export default {
 		font-weight: bold;
 		margin-bottom: 0.2rem;
 		color: #353535;
+		width: 5rem;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 	}
 
 	#art-self .info .author {

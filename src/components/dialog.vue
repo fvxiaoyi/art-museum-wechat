@@ -2,7 +2,7 @@
 	<div v-if="visible" >
 		<transition name="fade">
 			<div class="pop" :style="{height: heightWithRem, width: widthWithRem, 
-				top: '50%', left: '50%', marginTop: marginTop, marginLeft: marginLeft}" >
+				top: '4rem', left: '50%', marginLeft: marginLeft}" >
 				<slot></slot>
 			</div>
 		</transition>
@@ -34,9 +34,6 @@ export default {
 	  },
 	  widthWithRem() {
 	    return this.cWidth + 'rem'
-	  },
-	  marginTop() {
-	  	return (this.cHeight / 1) * -1 + 'rem'
 	  },
 	  marginLeft() {
 	  	return (this.cWidth / 2) * -1 + 'rem'

@@ -9,7 +9,7 @@
     <div class="upload-warp center" @click="handleWxUpload">
       <img v-if="model.displayImg" :src="`${model.thumbnailUrl}?imageView2/1/w/696`">`
     </div>
-    <div class="desc center">点击预览图更换当前图片</div>
+    <div class="desc center">点击上方空白区域上传作品</div>
     <div class="title center">
       <span>|</span>
       <span>作品名称</span>
@@ -187,9 +187,11 @@ export default {
 
   .upload-warp {
     height: 6.8rem;
-    background-color: #EFEFEF;
     border-radius: 0.2rem;
     position: relative;
+    background-image: url('../../static/img/upload-bg.png');
+    background-size: 9.066rem 6.8rem;
+    background-repeat: no-repeat;
   }
 
   .upload {
