@@ -36,9 +36,7 @@ const store = new Vuex.Store(storeConfig)
 
 axios.interceptors.request.use(
   config => {
-    if(localStorage.getItem("openid")) {
-      config.headers.common['openid'] = localStorage.getItem("openid")
-    }
+    config.headers.common['openid'] = localStorage.getItem("openid")
     return config
   },
   err => {
