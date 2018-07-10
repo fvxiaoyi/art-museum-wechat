@@ -12,9 +12,9 @@ import code from './components/code'
 import wx from 'weixin-js-sdk'
 import wxTitle from 'vue-wechat-title'
 
-const appid = 'wxaf22660af129589f',
-  current_uri= 'http://hiart.natapp1.cc',
-  server_uri = 'http://6kvwia.natappfree.cc'
+const appid = 'wx500ec50f770a445a',
+  current_uri= 'http://wx.blcow.cn',
+  server_uri = 'http://api.blcow.cn'
 
 Vue.use(wxTitle)
 Vue.use(Vuex)

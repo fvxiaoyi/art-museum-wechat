@@ -1,9 +1,9 @@
 import axios from 'axios'
 
 const url = require('url'),
-  appid = 'wxaf22660af129589f',
-  current_uri= 'http://hiart.natapp1.cc',
-  server_uri = 'http://6kvwia.natappfree.cc',
+  appid = 'wx500ec50f770a445a',
+  current_uri= 'http://wx.blcow.cn',
+  server_uri = 'http://api.blcow.cn',
   redirect_uri = encodeURIComponent(`${server_uri}/wx/login`)
 
 let post = function(url, param, cb, errCb) {
