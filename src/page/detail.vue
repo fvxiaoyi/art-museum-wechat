@@ -172,7 +172,7 @@
               })
             }
             me.model = res.data
-            this.wxShare(this.model.name, this.model.remark, `${this.$current_uri}/#/art/${this.model.id}`, `${this.model.thumbnailUrl}?imageView2/2/w/200`)
+            this.wxShare(`${this.model.studentName}的美学艺术馆作品-${this.model.name}`, this.model.remark, `${this.$current_uri}/#/art/${this.model.id}`, `${this.model.thumbnailUrl}?imageView2/2/w/200`)
           })
         } else {
           this.$router.push('/')
@@ -210,7 +210,7 @@
         }
   		},
       handleShare() {
-        this.wxShare(this.model.name, this.model.remark, `${this.$current_uri}/#/art/${this.model.id}`, `${this.model.thumbnailUrl}?imageView2/2/w/200`)
+        this.wxShare(`${this.model.studentName}的美学艺术馆作品-${this.model.name}`, this.model.remark, `${this.$current_uri}/#/art/${this.model.id}`, `${this.model.thumbnailUrl}?imageView2/2/w/200`)
         this.guideVisible = true
       },
       showReplyInput(index) {

@@ -195,7 +195,7 @@ if(localStorage.getItem('openid')) {
   })
 } else {
   const myURL = url.parse(window.location.href)
-  if(myURL.query) {
+  if(myURL.query && myURL.query.indexOf('openid') != -1) {
     let queryParam = myURL.query.split('&'),
       openid = queryParam.filter(f => f.indexOf('openid') != -1),
       redirect_uri = queryParam.filter(f => f.indexOf('redirect') != -1)

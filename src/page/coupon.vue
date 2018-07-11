@@ -47,6 +47,9 @@
       this.$store.commit('changeMaskVisible', { visible: false })
       next()
     },
+    created() {
+      this.wxShare('领取hi美学免费课程', '', window.location.href, null)
+    },
     data() {
       return {
         confirmDialogVisible: false,
