@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<div id="detail">
-			<div class="art" @click.prevent="wxPreview(model.originalUrl)">
-				<img :src="`${model.thumbnailUrl}?imageView2/2/w/768`">
+			<div class="art" @click.prevent="wxPreview(`${model.thumbnailUrl}/detail`)">
+				<img :src="`${model.thumbnailUrl}/detail`">
 			</div>
 			<div class="star-wrap">
         <div class="star">
@@ -130,9 +130,6 @@
 
     <v-two-code :visible="codeDialogVisible"  @close="codeDialogVisible = false"></v-two-code>
     <v-guide :visible="guideVisible" @close="guideVisible = false"></v-guide>
-    <div class="full-img" v-if="detailVisible" @click.prevent="detailVisible = false">
-      <img :src="model.originalUrl">
-    </div>
 	</div>
 </template>
 
@@ -149,7 +146,6 @@
     },
   	data () {
   		return {
-        detailVisible: false,
         guideVisible: false,
         allNamesVisible: false,
         codeDialogVisible: false,

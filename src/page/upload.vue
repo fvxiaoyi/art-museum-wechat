@@ -6,7 +6,7 @@
       <span>预览图</span>
       <span>|</span>
     </div>
-    <div class="upload-warp center" @click="handleWxUpload">
+    <div class="upload-warp center" @click="handleWxUpload" :style="model.displayImg ? 'background-image:none;': ''">
       <img v-if="model.displayImg" :src="`${model.thumbnailUrl}?imageView2/1/w/696`">`
     </div>
     <div class="desc center">点击上方空白区域上传作品</div>
@@ -188,28 +188,15 @@ export default {
   .upload-warp {
     height: 6.8rem;
     border-radius: 0.2rem;
-    position: relative;
     background-image: url('../../static/img/upload-bg.png');
     background-size: 9.066rem 6.8rem;
     background-repeat: no-repeat;
   }
 
-  .upload {
-    opacity: 0;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    z-index: 2;
-  }
-
   .upload-warp img {
     width: 100%;
     height: 100%;
-    position: absolute;
-    left: 0;
     border-radius: 0.2rem;
-    z-index: 1;
   }
 
   #upload-art .art-name {

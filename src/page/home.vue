@@ -10,7 +10,7 @@
       </mt-swipe>
     </div>
     <div class="tab">
-      <div class="text-left active" @click="$store.commit('setSubjectId', null)">新作</div>
+      <div :class="['text-left', subjectId ? '' : 'active']" @click="$store.commit('setSubjectId', null)">新作</div>
       <div class="split">|</div>
       <div class="text-right" @click="handleLinkSubject">专题</div>
     </div>

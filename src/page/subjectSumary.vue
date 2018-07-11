@@ -1,7 +1,7 @@
 <template>
   <div id="subject-sumary">
     <div class="banner" v-for="item in hot" @click.prevent="handleSubjectClick(item.id)">
-      <img :src="`${item.thumbnailUrl}?imageView2/2/w/204`">
+      <img :src="item.originalUrl">
     </div>
     <div class="title clear">
       <i class="icon"></i>

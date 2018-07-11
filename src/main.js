@@ -11,16 +11,17 @@ import storeConfig from './store/index'
 import dialog from './components/dialog'
 import guide from './components/guide'
 import code from './components/code'
+import wx from 'weixin-js-sdk'
+import wxTitle from 'vue-wechat-title'
 
-Vue.use(require('vue-wechat-title'))
-const wx = require('weixin-js-sdk')
 const url = require('url'),
-	appid = 'wx500ec50f770a445a',
+  appid = 'wx500ec50f770a445a',
   current_uri= 'http://wx.blcow.cn',
   server_uri = 'http://api.blcow.cn',
 	redirect_uri = encodeURIComponent(`${server_uri}/wx/login`)
 
 Vue.use(Vuex)
+Vue.use(wxTitle)
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 Vue.prototype.$server_uri = server_uri
@@ -192,7 +193,7 @@ if(localStorage.getItem('openid')) {
     })
   }, (err) => {
     localStorage.removeItem('openid')
-    window.location.href = '/'
+    window.location.reload()
   })
 } else {
   const myURL = url.parse(window.location.href)
@@ -202,8 +203,8 @@ if(localStorage.getItem('openid')) {
       redirect_uri = queryParam.filter(f => f.indexOf('redirect') != -1)
     if(openid.length > 0) {
       openid = openid[0].split('=')[1]
-      localStorage.setItem('openid', openid)
-      post('/wx/getLoginInfo', { openid: localStorage.getItem('openid') }, (resp) => {
+      post('/wx/getLoginInfo', { openid }, (resp) => {
+        localStorage.setItem('openid', openid)
         store.commit('setUserInfo', resp.data)
         if(redirect_uri.length > 0) {
           redirect_uri = redirect_uri[0].split('=')[1]
@@ -215,7 +216,7 @@ if(localStorage.getItem('openid')) {
       })
     }
   } else {
-    let hash
+    let hash = '/'
     if(myURL.hash && myURL.hash.length > 1) {
       hash = myURL.hash.substring(1, myURL.hash.length)
     }
