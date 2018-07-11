@@ -43,6 +43,7 @@ axios.interceptors.request.use(
   err => {
     return Promise.reject(err)
 })
+
 let post = function(url, param, cb, errCb) {
   let me = this
   axios.post(`${server_uri}${url}`, param).then(function (response) {
@@ -56,7 +57,13 @@ let post = function(url, param, cb, errCb) {
       }
     }
   }).catch(function(error) {
-    console.error(error)
+    if (error.response) {
+      if(error.response.status === 401) {
+        window.location.reload()
+      }
+    } else {
+      alert(`${url} throw ex => ${error.message}`)
+    }
   })
 }
 
