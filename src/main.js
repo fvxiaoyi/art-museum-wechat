@@ -58,10 +58,8 @@ let post = function(url, param, cb, errCb) {
       }
     }
   }).catch(function(error) {
-    if (error.response) {
-      if(error.response.status === 401) {
-        window.location.reload()
-      }
+    if ((error.response && error.response.status === 401) || error.message === 'Network Error') {
+      window.location.reload()
     } else {
       alert(`${url} throw ex => ${error.message}`)
     }
