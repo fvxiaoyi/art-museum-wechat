@@ -1,5 +1,3 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
 import axios from 'axios'
@@ -18,7 +16,8 @@ const url = require('url'),
   appid = 'wx500ec50f770a445a',
   current_uri= 'http://wx.blcow.cn',
   server_uri = 'http://api.blcow.cn',
-	redirect_uri = encodeURIComponent(`${server_uri}/wx/login`)
+	redirect_uri = encodeURIComponent(`${server_uri}/wx/login`),
+  logo_uri = 'https://store-1256528427.cos.ap-guangzhou.myqcloud.com/logo.png'
 
 Vue.use(Vuex)
 Vue.use(wxTitle)
@@ -54,7 +53,7 @@ let post = function(url, param, cb, errCb) {
       if(errCb) {
         errCb(response.data.msg)
       } else {
-        console.log(response.data.msg)
+        alert(response.data.msg)
       }
     }
   }).catch(function(error) {
@@ -92,7 +91,7 @@ Vue.prototype.getListData = function(url, page, params, cb, paramCb) {
 }
 
 Vue.prototype.wxShare = function (title, desc, link, imgUrl) {
-  imgUrl = imgUrl || 'https://store-1256528427.cos.ap-guangzhou.myqcloud.com/logo.png'
+  imgUrl = imgUrl || logo_uri
   axios.post(`${server_uri}/wx/sign`, { url: current_url }).then(function (response) {
     wx.config({
       debug: false,
