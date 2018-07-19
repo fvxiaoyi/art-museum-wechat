@@ -23,7 +23,7 @@
 		<div class="list-warp" @scroll="loadMore($event)" ref="selfWrap" >
 			<div class="art-wrap" v-for="(item, index) in list" :key="item.id">
 				<div class="art" @click.prevent="$router.push(`/art/${item.id}`)" >
-					<img :src="`${item.thumbnailUrl}?imageView2/1/w/696`">
+					<img v-lazy="`${item.thumbnailUrl}?imageView2/1/w/696`">
 				</div>
 				<div class="info clear">
 					<div class="text-wrap left">

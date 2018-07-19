@@ -30,7 +30,7 @@
               </div>
               <div class="link" @click.prevent="view(item.id)">打开查看完整作品</div>
           </div>
-          <img :src="`${item.thumbnailUrl}?imageView2/1/w/347/h/347`" v-if="item.id" />
+          <img v-lazy="`${item.thumbnailUrl}?imageView2/1/w/347/h/347`" v-if="item.id" />
           <img src="https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/btn-home-inv.png" class="link-coupon" v-else />
         </div>
       </div>
@@ -38,7 +38,7 @@
       <div class="end" v-if="loadMoreFinish">没有更多了</div>
     </div>
 
-    <v-dialog :width="8" :height="5.6" :visible="loginDialogVisible" >
+    <v-dialog :width="8" :height="6" :visible="loginDialogVisible" >
       <div class="dialog-content">
         <input type="text" v-model="activePhone" placeholder="请输入手机号进行激活" />
         <div class="btn active" @click="active">激活</div>
@@ -340,35 +340,47 @@ export default {
   }
 
   #art-preview .dialog-content {
+    display: flex;
+    flex-direction: column;
     padding: 0.3rem 0.26rem 0.26rem 0.26rem;
   }
 
   #art-preview .dialog-content .btn {
-    height: 1rem;
-    line-height: 1rem;
+    flex: 1;
+    line-height: 1.0666rem;
+    height: 1.0666rem;
     margin-bottom: 0.26rem;
+    font-weight: bold;
+    font-size: 0.373rem;
+    text-align: center;
+    border: 0.02rem solid #FC7E7C;
   }
 
   #art-preview .dialog-content .active {
-    background-color: #67C23A;
+    background-color: #FC7E7C;
+    color: #fff;  
   }
 
   #art-preview .dialog-content .close {
-    background-color: #F56C6C;
+    background-color: #fff;
+    color: #FC7E7C;
   }
 
   #art-preview .dialog-content .errMsg {
+    flex: 1;
     text-align: center;
     color: #E6A23C;
     font-size: 0.3rem;
   }
 
   #art-preview .dialog-content input {
-    height: 1rem;
-    line-height: 1rem;
-    width: 95%;
-    margin-bottom: 0.26rem;
-    font-size: 0.3rem;
+    flex: 1;
+    margin: 0.26rem 0;
+    height: 0.96rem;
+    line-height: 0.96rem;
+    border-width: 0.05rem;
+    color: #919191;
+    font-size: 0.32rem;
   }
 
 </style>

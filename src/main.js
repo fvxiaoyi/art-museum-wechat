@@ -11,17 +11,23 @@ import guide from './components/guide'
 import code from './components/code'
 import wx from 'weixin-js-sdk'
 import wxTitle from 'vue-wechat-title'
+import VueLazyload from 'vue-lazyload'
 
 const url = require('url'),
-  // appid = 'wx500ec50f770a445a',
-  // current_uri= 'http://wx.blcow.cn',
-  // server_uri = 'http://api.blcow.cn',
-  appid = 'wxaf22660af129589f',
-  current_uri= 'http://hiart.natapp1.cc',
-  server_uri = 'http://pdafkc.natappfree.cc',
+  appid = 'wx500ec50f770a445a',
+  current_uri= 'http://wx.blcow.cn',
+  server_uri = 'http://api.blcow.cn',
+  // appid = 'wxaf22660af129589f',
+  // current_uri= 'http://hiart.natapp1.cc',
+  // server_uri = 'http://pdafkc.natappfree.cc',
 	redirect_uri = encodeURIComponent(`${server_uri}/wx/login`),
   logo_uri = 'https://store-1256528427.cos.ap-guangzhou.myqcloud.com/logo.png'
 
+
+
+Vue.use(VueLazyload, {
+  loading: 'https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/no-image.png'
+})
 Vue.use(Vuex)
 Vue.use(wxTitle)
 Vue.config.productionTip = false
