@@ -61,7 +61,6 @@ export default {
     } else {
     	if(this.reloadMe) {
     		this.reload()
-    		this.$store.commit('setReloadMe', false)
     	} else {
     		this.$refs.selfWrap.scrollTop = this.scrollTop
     	}
@@ -96,6 +95,7 @@ export default {
       })
     },
     reload() {
+    	this.$store.commit('setReloadMe', false)
     	this.$refs.selfWrap.scrollTop = 0
     	this.list = []
     	this.page = 1

@@ -101,6 +101,7 @@ export default {
     handleSubmit() {
       let me = this
       this.post('/wx/art/add', me.model, (response) => {
+        this.$store.commit('changeMaskVisible', { visible: true })
         me.getListData('/wx/art/list', 1, {}, (data, total) => {
           me.$store.commit('setReloadHome', true)
           me.$store.commit('setReloadMe', true)

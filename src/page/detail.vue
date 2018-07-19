@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<div id="detail">
-			<div class="art" @click.prevent="wxPreview(`${model.thumbnailUrl}/detail`)">
-				<img :src="`${model.thumbnailUrl}/detail`">
+			<div class="art" @click.prevent="wxPreview(`${model.originalUrl}`)">
+				<img :src="`${model.thumbnailUrl}?imageView2/2/w/768`">
 			</div>
 			<div class="star-wrap">
         <div class="star">

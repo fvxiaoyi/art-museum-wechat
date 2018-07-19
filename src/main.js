@@ -13,9 +13,12 @@ import wx from 'weixin-js-sdk'
 import wxTitle from 'vue-wechat-title'
 
 const url = require('url'),
-  appid = 'wx500ec50f770a445a',
-  current_uri= 'http://wx.blcow.cn',
-  server_uri = 'http://api.blcow.cn',
+  // appid = 'wx500ec50f770a445a',
+  // current_uri= 'http://wx.blcow.cn',
+  // server_uri = 'http://api.blcow.cn',
+  appid = 'wxaf22660af129589f',
+  current_uri= 'http://hiart.natapp1.cc',
+  server_uri = 'http://pdafkc.natappfree.cc',
 	redirect_uri = encodeURIComponent(`${server_uri}/wx/login`),
   logo_uri = 'https://store-1256528427.cos.ap-guangzhou.myqcloud.com/logo.png'
 
