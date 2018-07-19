@@ -50,7 +50,7 @@ export default {
     width: 0.426rem;
     height: 0.426rem;
     margin-top: 0.32rem;
-    background-image: url('../../static/img/close.png');
+    background-image: url('https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/close.png');
     background-size: 0.426rem 0.426rem;
   }
 
