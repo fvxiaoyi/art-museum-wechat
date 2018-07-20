@@ -1,6 +1,11 @@
 <template>
   <div>
     <div id="coupon">
+      <div class="back">
+        <span @click="$router.push('/')">去美学艺术馆逛逛</span>
+        <span style="margin: 0 0.2rem;">|</span>
+        <span @click="codeDialogVisible = true">关注我们</span>
+      </div>
       <div class="bg">
         <div class="title">|&nbsp;信息填写&nbsp;|</div>
         <input type="text" v-model="model.name" placeholder="宝贝姓名（选填）" /> 
@@ -23,11 +28,16 @@
         </div>
         <div class="btn" @click="handleConfirm">提交</div>
       </div>
-      <div class="back">
-        <span @click="$router.push('/')">去美学艺术馆逛逛</span>
-        <span style="margin: 0 0.2rem;">|</span>
-        <span @click="codeDialogVisible = true">关注我们</span>
+      <div class="bg1"></div>
+      <div class="bg2"></div>
+      <div class="bg3"></div>
+      <div class="bg4"></div>
+      <div class="bg5"></div>
+      <div class="bg6" @click.prevent="">
+        <img src="../../static/img/coupon-bg6.png">
       </div>
+
+
       <v-dialog :width="8" :height="3.6" :visible="confirmDialogVisible" >
         <div class="dialog-content">
           <div class="errMsg" v-if="errMsg">{{errMsg}}</div>
@@ -48,7 +58,7 @@
       next()
     },
     created() {
-      this.wxShare('领取hi美学免费课程', '', window.location.href, null)
+      this.wxShare('领取hi美学免费课程', '向您赠送一节美学精品课程', `${this.$current_uri}/#/coupon`, null)
     },
     data() {
       return {
@@ -96,7 +106,7 @@
   }
 
   #coupon .bg {
-    margin: 0.16rem auto 0 auto;
+    margin: 0 auto;
     width: 9.06rem;
     height: 8.837rem;
     background-image: url("https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/inv-bg.png");
@@ -187,8 +197,8 @@
   }
 
   #coupon .back {
-    height: 2.7733rem;
-    line-height: 2.7733rem;
+    height: 1.4rem;
+    line-height: 1.4rem;
     text-align: center;
     color: #227E8B;
     font-size: 0.32rem;
@@ -246,6 +256,46 @@
     margin-top: 0.32rem;
     background-image: url('https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/close.png');
     background-size: 0.426rem 0.426rem;
+  }
+
+  .bg1 {
+    background-image: url('../../static/img/coupon-bg1.png');
+    background-size: 10rem 10.24rem;
+    height: 10.24rem;
+    width: 10rem;
+  }
+
+  .bg2 {
+    background-image: url('../../static/img/coupon-bg2.png');
+    background-size: 10rem 8.48rem;
+    width: 10rem;
+    height: 8.48rem;
+  }
+
+  .bg3 {
+    background-image: url('../../static/img/coupon-bg3.png');
+    background-size: 10rem 7.4rem;
+    width: 10rem;
+    height: 7.4rem;
+  }
+
+  .bg4 {
+    background-image: url('../../static/img/coupon-bg4.png');
+    background-size: 10rem 9.48rem;
+    width: 10rem;
+    height: 9.48rem;
+  }
+
+  .bg5 {
+    background-image: url('../../static/img/coupon-bg5.png');
+    background-size: 10rem 8.56rem;
+    width: 10rem;
+    height: 8.56rem;
+  }
+
+  .bg6 {
+    width: 10rem;
+    height: 7.106667rem;
   }
 
 </style>

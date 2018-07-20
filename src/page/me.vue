@@ -101,7 +101,7 @@ export default {
     	this.page = 1
     	this.loadMoreFinish = false
     	this.getData(() => {
-    		this.wxShare(`${this.student.name}的美学艺术馆`, '我在hi美学的作品全在这哦', window.location.href, null)
+    		this.wxShare(`${this.student.name}的美学艺术馆`, '我在hi美学的作品全在这哦', `${this.$current_uri}/#/me/${this.student.id}`, null)
     	})
     },
 		getData(shareCb) {

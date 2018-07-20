@@ -14,14 +14,14 @@ import wxTitle from 'vue-wechat-title'
 import VueLazyload from 'vue-lazyload'
 
 const url = require('url'),
-  appid = 'wx500ec50f770a445a',
-  current_uri= 'http://wx.blcow.cn',
-  server_uri = 'http://api.blcow.cn',
-  // appid = 'wxaf22660af129589f',
-  // current_uri= 'http://hiart.natapp1.cc',
-  // server_uri = 'http://pdafkc.natappfree.cc',
+  // appid = 'wx500ec50f770a445a',
+  // current_uri= 'http://wx.blcow.cn',
+  // server_uri = 'http://api.blcow.cn',
+  appid = 'wxaf22660af129589f',
+  current_uri= 'http://hiart.natapp1.cc',
+  server_uri = 'http://zcbu3y.natappfree.cc',
 	redirect_uri = encodeURIComponent(`${server_uri}/wx/login`),
-  logo_uri = 'https://store-1256528427.cos.ap-guangzhou.myqcloud.com/logo.png'
+  logo_uri = 'https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/logo.png'
 
 
 
@@ -218,7 +218,7 @@ if(localStorage.getItem('openid')) {
         }
       }, (err) => {
         localStorage.removeItem('openid')
-        window.location.href = '/'
+        window.location.href = `${current_uri}/#${redirect_uri}`
       })
     }
   } else {
