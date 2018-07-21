@@ -101,7 +101,8 @@ export default {
     	this.page = 1
     	this.loadMoreFinish = false
     	this.getData(() => {
-    		this.wxShare(`${this.student.name}的美学艺术馆`, '我在hi美学的作品全在这哦', `${this.$current_uri}/#/me/${this.student.id}`, null)
+    		let linkUrl = `${this.$current_uri}/?link=me&id=${this.student.id}`
+    		this.wxShare(`${this.student.name}的美学艺术馆`, '我在hi美学的作品全在这哦', linkUrl, null)
     	})
     },
 		getData(shareCb) {
@@ -145,7 +146,8 @@ export default {
       }
     },
     handleShare(item) {
-    	this.wxShare(item.name, item.remark, `${this.$current_uri}/#/art/${item.id}`, `${item.thumbnailUrl}?imageView2/2/w/200`)
+    	let linkUrl = `${this.$current_uri}/?link=art&id=${item.id}`
+    	this.wxShare(`${item.studentName}的美学艺术馆作品-${item.name}`, item.remark, linkUrl, `${item.thumbnailUrl}?imageView2/2/w/200`)
       this.guideVisible = true
     }
 	},

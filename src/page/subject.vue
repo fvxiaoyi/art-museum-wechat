@@ -26,7 +26,11 @@ import { mapState  } from 'vuex'
 export default {
   name: 'subject',
   created() {
-    this.getData()
+    if(this.courseId) {
+      this.getData()
+    } else {
+      this.$router.push('/')
+    }   
   },
   data () {
     return {

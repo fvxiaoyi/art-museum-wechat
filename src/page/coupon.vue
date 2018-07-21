@@ -58,7 +58,7 @@
       next()
     },
     created() {
-      this.wxShare('领取hi美学免费课程', '向您赠送一节美学精品课程', `${this.$current_uri}/#/coupon`, null)
+      this.wxShare('领取hi美学免费课程', '向您赠送一节美学精品课程', `${this.$current_uri}/?link=coupon`, null)
     },
     data() {
       return {

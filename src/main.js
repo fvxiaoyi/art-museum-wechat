@@ -14,12 +14,12 @@ import wxTitle from 'vue-wechat-title'
 import VueLazyload from 'vue-lazyload'
 
 const url = require('url'),
-  // appid = 'wx500ec50f770a445a',
-  // current_uri= 'http://wx.blcow.cn',
-  // server_uri = 'http://api.blcow.cn',
-  appid = 'wxaf22660af129589f',
-  current_uri= 'http://hiart.natapp1.cc',
-  server_uri = 'http://zcbu3y.natappfree.cc',
+  appid = 'wx500ec50f770a445a',
+  current_uri= 'http://wx.blcow.cn',
+  server_uri = 'http://api.blcow.cn',
+  // appid = 'wxaf22660af129589f',
+  // current_uri= 'http://hiart.natapp1.cc',
+  // server_uri = 'http://zcbu3y.natappfree.cc',
 	redirect_uri = encodeURIComponent(`${server_uri}/wx/login`),
   logo_uri = 'https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/logo.png'
 
@@ -186,47 +186,61 @@ Vue.prototype.wxPreview = function (imgUrl) {
   })
 }
 
-
-if(localStorage.getItem('openid')) {
-  post('/wx/getLoginInfo', { openid: localStorage.getItem('openid') }, (resp) => {
-    store.commit('setUserInfo', resp.data)
-    new Vue({
-      el: '#app',
-      router,
-      store,
-      components: { App },
-      template: '<App/>'
-    })
-  }, (err) => {
-    localStorage.removeItem('openid')
-    window.location.reload()
-  })
-} else {
-  const myURL = url.parse(window.location.href)
-  if(myURL.query && myURL.query.indexOf('openid') != -1) {
-    let queryParam = myURL.query.split('&'),
-      openid = queryParam.filter(f => f.indexOf('openid') != -1),
-      redirect_uri = queryParam.filter(f => f.indexOf('redirect') != -1)
-    if(openid.length > 0) {
-      openid = openid[0].split('=')[1]
-      post('/wx/getLoginInfo', { openid }, (resp) => {
-        localStorage.setItem('openid', openid)
-        store.commit('setUserInfo', resp.data)
-        if(redirect_uri.length > 0) {
-          redirect_uri = redirect_uri[0].split('=')[1]
-          window.location.href = `${current_uri}/#${redirect_uri}`
-        }
-      }, (err) => {
-        localStorage.removeItem('openid')
-        window.location.href = `${current_uri}/#${redirect_uri}`
-      })
-    }
+const routerUrl = url.parse(window.location.href)
+//分享链接进入
+if(routerUrl.query && routerUrl.query.indexOf('link') != -1) {
+  let queryParam = routerUrl.query.split('&'),
+     link = queryParam.filter(f => f.indexOf('link') != -1),
+     linkUrl = link[0].split('=')[1]
+  if(linkUrl === 'art' || linkUrl === 'me') {
+    let idParam = queryParam.filter(f => f.indexOf('id') != -1),
+      id = idParam[0].split('=')[1]
+    window.location.href = `${current_uri}/#/${linkUrl}/${id}`
   } else {
-    let hash = '/'
-    if(myURL.hash && myURL.hash.length > 1) {
-      hash = myURL.hash.substring(1, myURL.hash.length)
+    window.location.href = `${current_uri}/#/${linkUrl}`
+  }
+} else {
+//页面正常跳转
+  if(localStorage.getItem('openid')) {
+    post('/wx/getLoginInfo', { openid: localStorage.getItem('openid') }, (resp) => {
+      store.commit('setUserInfo', resp.data)
+      new Vue({
+        el: '#app',
+        router,
+        store,
+        components: { App },
+        template: '<App/>'
+      })
+    }, (err) => {
+      localStorage.removeItem('openid')
+      window.location.reload()
+    })
+  } else {
+    if(routerUrl.query && routerUrl.query.indexOf('openid') != -1) {
+      let queryParam = routerUrl.query.split('&'),
+        openid = queryParam.filter(f => f.indexOf('openid') != -1),
+        redirect_uri = queryParam.filter(f => f.indexOf('redirect') != -1)
+      if(openid.length > 0) {
+        openid = openid[0].split('=')[1]
+        post('/wx/getLoginInfo', { openid }, (resp) => {
+          localStorage.setItem('openid', openid)
+          store.commit('setUserInfo', resp.data)
+          if(redirect_uri.length > 0) {
+            redirect_uri = redirect_uri[0].split('=')[1]
+            window.location.href = `${current_uri}/#${redirect_uri}`
+          }
+        }, (err) => {
+          localStorage.removeItem('openid')
+          window.location.href = `${current_uri}/#${redirect_uri}`
+        })
+      }
+    } else {
+      let hash = '/'
+      if(routerUrl.hash && routerUrl.hash.length > 1) {
+        hash = routerUrl.hash.substring(1, routerUrl.hash.length)
+      }
+      let codeUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_userinfo&state=${hash}&connect_redirect=1#wechat_redirect`
+      window.location.href = codeUrl
     }
-    let codeUrl = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${redirect_uri}&response_type=code&scope=snsapi_userinfo&state=${hash}&connect_redirect=1#wechat_redirect`
-    window.location.href = codeUrl
   }
 }
