@@ -134,7 +134,7 @@ export default {
   .title i {
     width: 0.9066rem;
     height: 0.9066rem;
-    background-image: url('https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon-arttopic.png');
+    background-image: url('https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon-arttopic.png');
     background-size: 0.9066rem 0.9066rem;
     float: left;
   }

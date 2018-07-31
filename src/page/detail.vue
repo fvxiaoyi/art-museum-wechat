@@ -61,8 +61,8 @@
         <div class="comment-wrap" v-for="(item, index) in model.comments" :key="item.id">
           <div class="comment" :style="index === 0 ? 'border-top: 0.026rem solid #DCDFE6;' : '', item.subComments.length == 0 ? 'border-bottom: 0.026rem solid #DCDFE6;' : ''">
             <div class="photo">
-              <img src="https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/comment-student.png" v-if="item.studentId" />
-              <img src="https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/comment-other.png" v-else />
+              <img src="https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/comment-student.png" v-if="item.studentId" />
+              <img src="https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/comment-other.png" v-else />
             </div>
             <div class="content-wrap">
               <div class="name">{{item.name}}</div>
@@ -81,8 +81,8 @@
                 <div class="content">{{subItem.content}}</div>
               </div>
               <div class="photo">
-                <img src="https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/comment-student.png" v-if="subItem.studentId" />
-                <img src="https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/comment-other.png" v-else />
+                <img src="https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/comment-student.png" v-if="subItem.studentId" />
+                <img src="https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/comment-other.png" v-else />
               </div>
             </div>
           </div>
@@ -168,7 +168,7 @@
             while(res.data.same.length < 2) {
               res.data.same.push({
                 id: null,
-                displayImg: 'https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/no-image.png'
+                displayImg: 'https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/no-image.png'
               })
             }
             me.model = res.data
@@ -316,11 +316,11 @@
   }
 
   #detail .star .icon-like {
-    background-image: url("https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon-more-like.png");
+    background-image: url("https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon-more-like.png");
   }
 
   #detail .star .icon-more {
-    background-image: url("https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon-more.png");
+    background-image: url("https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon-more.png");
   }
 
 	#detail .star .names {
@@ -378,17 +378,17 @@
   }
 
   #detail .title-wrap .icon-share {
-    background-image: url("https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon_share.png");
+    background-image: url("https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon_share.png");
     margin-right: 0.2735rem;
   }
 
   #detail .title-wrap .icon-no-fav {
-    background-image: url("https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon-like1.png");
+    background-image: url("https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon-like1.png");
     margin-left: 0.2735rem;
   }
 
   #detail .title-wrap .icon-fav {
-    background-image: url("https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon-like2.png");
+    background-image: url("https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon-like2.png");
     margin-left: 0.2735rem;
   }
 
@@ -397,7 +397,7 @@
     height: 1.3rem;
     width: 3.226rem;
     border-radius: 0.2rem;
-    background-image: url("https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/board-like.png");
+    background-image: url("https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/board-like.png");
     background-size: 3.226rem 1.3rem ;
     overflow: hidden;
   }
@@ -430,11 +430,11 @@
   }
 
   #detail .author-wrap .icon-local {
-    background-image: url("https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon-like-local.png");
+    background-image: url("https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon-like-local.png");
   }
 
   #detail .author-wrap .icon-count {
-    background-image: url("https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon-like-liulan.png");
+    background-image: url("https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon-like-liulan.png");
   }
 
   #detail .size {
@@ -472,7 +472,7 @@
     height: 1.573rem;
     border-radius: 50%;
     overflow: hidden;
-    background-image: url('https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon-student.png');
+    background-image: url('https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon-student.png');
     background-size: 1.573rem 1.573rem;
   }
 
@@ -555,7 +555,7 @@
     width: 0.426rem;
     height: 0.426rem;
     display: block;
-    background-image: url("https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon-reply.png");
+    background-image: url("https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon-reply.png");
     background-size: 0.426rem 0.426rem;
     margin-right: 0.05rem;
   }
@@ -608,7 +608,7 @@
     height: 0.3rem;
     line-height: 0.3rem;
     width: 8.3333rem;
-    background-image: url("https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/reply-input-bg.png");
+    background-image: url("https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/reply-input-bg.png");
     background-size: 9.3333rem 1.4rem;
     background-repeat: no-repeat;
     padding: 0.65rem 0.5rem;
@@ -675,7 +675,7 @@
 	#detail .more .link-type .icon {
 		width: 0.906rem;
 		height: 0.906rem;
-		background-image: url("https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon-arttopic.png");
+		background-image: url("https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon-arttopic.png");
 		background-size: 0.906rem 0.906rem;
 		background-repeat: no-repeat;
 	}
@@ -732,7 +732,7 @@
 
 	#detail .ad {
 		height: 2.32rem;
-		background-image: url("https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/ad-link.png");
+		background-image: url("https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/ad-link.png");
 		background-size: 10rem 2.32rem;
 		background-repeat: no-repeat;
 	}

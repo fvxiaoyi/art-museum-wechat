@@ -21,7 +21,7 @@
             <div class="info-mask" v-if="item.click"></div>
             <div class="info-wrap" v-if="item.click"  @click.prevent="onItemCancelClick(item, index)">
               <div class="photo">
-                <img src="https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon-student.png">
+                <img src="https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon-student.png">
               </div>
               <div class="author">
                 <span>{{item.studentName}}</span>
@@ -31,7 +31,7 @@
               <div class="link" @click.prevent="view(item.id)">打开查看完整作品</div>
           </div>
           <img v-lazy="`${item.thumbnailUrl}?imageView2/1/w/347/h/347`" v-if="item.id" />
-          <img src="https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/btn-home-inv.png" class="link-coupon" v-else />
+          <img src="https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/btn-home-inv.png" class="link-coupon" v-else />
         </div>
       </div>
       
@@ -70,7 +70,7 @@ export default {
       if(!me.userInfo.auth) {
         me.banners.push({
           id: 0,
-          originalUrl: 'https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/home-Banner-1.png'
+          originalUrl: 'https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/home-Banner-1.png'
         })
       }
       res.data.forEach(b => me.banners.push(b))

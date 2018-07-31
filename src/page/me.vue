@@ -2,7 +2,7 @@
 	<div id="art-self">
 		<div class="top-bar clear">
 			<div class="photo left">
-				<img src="https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon-student.png">
+				<img src="https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon-student.png">
 			</div>
 			<div class="text left">
 				<span>{{student.name}}</span>
@@ -35,7 +35,7 @@
 						</div>
 						<div class="star">
 							<div class="icon-wrap left">
-								<img src="https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon-like-s.png" />
+								<img src="https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon-like-s.png" />
 							</div>
 							<div class="left">{{item.totalArticleStar}}人喜欢此作品</div>
 						</div>
@@ -299,7 +299,7 @@ export default {
     height: 1.3rem;
     width: 3.226rem;
     border-radius: 0.2rem;
-    background-image: url("https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/board-like.png");
+    background-image: url("https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/board-like.png");
     background-size: 3.226rem 1.3rem ;
     overflow: hidden;
 	}
@@ -313,17 +313,17 @@ export default {
   }
 
   #art-self .info .btn-wrap .icon-share {
-    background-image: url("https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon_share.png");
+    background-image: url("https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon_share.png");
     margin-right: 0.2735rem;
   }
 
 	#art-self .info .btn-wrap .icon-no-fav {
-    background-image: url("https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon-like1.png");
+    background-image: url("https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon-like1.png");
     margin-left: 0.2735rem;
   }
 
   #art-self .info .btn-wrap .icon-fav {
-    background-image: url("https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon-like2.png");
+    background-image: url("https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon-like2.png");
     margin-left: 0.2735rem;
   }
 

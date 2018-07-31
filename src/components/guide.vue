@@ -2,7 +2,7 @@
   <div  v-if="visible" @click="close">
     <div class="mask"></div>
     <div class="guide">
-      点击右上角即可分享至好友或朋友圈,快快分享鼓励宝贝,为宝贝作品集赞吧。集齐500赞的小画家可以凭此页面,到线下校区兑换大礼噢~!
+      点击右上角即可分享至好友活朋友圈，快快分享鼓励宝贝，为宝贝作品集赞吧！当月可根据积赞数量到线下校区兑换不同面值的购物卡，数量越多面值越大，详情可到线下校区咨询顾问老师。
     </div>
   </div>
 </template>
@@ -44,7 +44,7 @@ export default {
     right: 0.24rem;
     z-index: 11;
     padding: 0.5rem 0.25rem 0 0.25rem;
-    font-size: 0.38rem; 
+    font-size: 0.3rem; 
     color: #FD7D7C;
   }
   

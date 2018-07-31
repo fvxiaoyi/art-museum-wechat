@@ -12,18 +12,18 @@
       <div id="nav-bottom" v-if="userInfo.auth">
         <div class="nav-btn" @click="linkHome">
           <div class="icon-wrap">
-            <img src="https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon-home-a.png" v-if="path === '/'" />
-            <img src="https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon-home-b.png" v-else />
+            <img src="https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon-home-a.png" v-if="path === '/'" />
+            <img src="https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon-home-b.png" v-else />
           </div>
           <span :class="['nav-text', path === '/' ? 'active' : '' ]">首页</span>
         </div>
         <div class="middle-btn" @click="onUploadFile">
-          <img src="https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon-upload.png">
+          <img src="https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon-upload.png">
         </div>
         <div class="nav-btn" @click="linkMe">
           <div class="icon-wrap">
-            <img src="https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon-me-a.png" v-if="path.indexOf('/me')!=-1 && userInfo.studentId == viewStudentId" />
-            <img src="https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/icon-me-b.png" v-else />
+            <img src="https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon-me-a.png" v-if="path.indexOf('/me')!=-1 && userInfo.studentId == viewStudentId" />
+            <img src="https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/icon-me-b.png" v-else />
           </div>
           <span :class="['nav-text', path.indexOf('/me')!=-1 && userInfo.studentId == viewStudentId ? 'active' : '' ]" >我</span>
         </div>

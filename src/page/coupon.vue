@@ -109,7 +109,7 @@
     margin: 0 auto;
     width: 9.06rem;
     height: 8.837rem;
-    background-image: url("https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/inv-bg.png");
+    background-image: url("https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/inv-bg.png");
     background-size: 9.06rem 14.73rem;
     background-repeat: no-repeat;
     padding-top: 5.893rem;
@@ -254,7 +254,7 @@
     width: 0.426rem;
     height: 0.426rem;
     margin-top: 0.32rem;
-    background-image: url('https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/close.png');
+    background-image: url('https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/close.png');
     background-size: 0.426rem 0.426rem;
   }
 
