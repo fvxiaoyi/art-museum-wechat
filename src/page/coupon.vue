@@ -9,7 +9,7 @@
       <div class="bg">
         <div class="title">|&nbsp;信息填写&nbsp;|</div>
         <input type="text" v-model="model.name" placeholder="宝贝姓名（选填）" /> 
-        <input type="number" v-model="model.age" placeholder="宝贝年龄" /> 
+        <input type="text" v-model="model.age" placeholder="宝贝年龄" /> 
         <input type="number" v-model="model.phone" placeholder="家长手机号" style="margin-bottom:0;" />
         <div class="label">方便接听时段 :</div>
         <div class="time-wrap">
@@ -58,7 +58,7 @@
       next()
     },
     created() {
-      this.wxShare('领取hi美学免费课程', '向您赠送一节美学精品课程', `${this.$current_uri}/?link=coupon`, null)
+      this.wxShare('领取Hi美学少儿艺术实验室免费课程', 'Hi美学', `${this.$current_uri}/?link=coupon`, null)
     },
     data() {
       return {

@@ -35,11 +35,7 @@
           <span>{{model.viewCount}}浏览</span>
         </div>
       </div>
-      <div class="size">
-        <span>综合材料</span>
-        <span>|</span>
-        <span>{{year}}</span>
-      </div>
+      <div class="size">{{year}}</div>
       <div class="remark" v-if="model.remark">作品描述: {{model.remark}}</div>
       <div class="banner-wrap">
         <div class="banner clear">
@@ -261,7 +257,7 @@
       ...mapState(['userInfo']),
       year() {
         if(this.model.createTime) {
-          return this.model.createTime.split('-')[0] 
+          return this.model.createTime.split('T')[0] 
         } else{
           return ''
         }
@@ -349,7 +345,7 @@
 
   /** 标题 **/
 
-  #detail .title-wrap, #detail .author-wrap, #detail .size, #detail .remark {
+  #detail .title-wrap, #detail .author-wrap, #detail .remark {
     background-color: #FAFAFA;
     padding: 0 0.346rem;
   }
@@ -438,6 +434,7 @@
   }
 
   #detail .size {
+    background-color: #FAFAFA;
     font-size: 0.4rem;
     color: #353535;
     height: 1.413rem;

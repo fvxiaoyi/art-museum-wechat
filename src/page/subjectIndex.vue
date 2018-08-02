@@ -3,7 +3,7 @@
     <div class="tab">
       <div class="text-left" @click="back">新作</div>
       <div class="split">|</div>
-      <div class="text-right active">专题</div>
+      <div class="text-right active">实验室</div>
     </div>
     <div class="course clear">
       <div v-for="(item, index) in courses"
@@ -16,7 +16,7 @@
     <div class="title clear">
       <i class="icon"></i>
       <span style="margin: 0 0.16rem 0 0.24rem;">|</span>
-      <span v-if="courseId">所有{{courseName}}专题</span>
+      <span v-if="courseId">所有{{courseName}}实验室专题</span>
       <span v-else>推荐专题</span>
     </div>
     <div class="content">

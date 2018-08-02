@@ -12,7 +12,7 @@
     <div class="tab">
       <div :class="['text-left', subjectId ? '' : 'active']" @click="$store.commit('setSubjectId', null)">新作</div>
       <div class="split">|</div>
-      <div class="text-right" @click="handleLinkSubject">专题</div>
+      <div class="text-right" @click="handleLinkSubject">实验室</div>
     </div>
 
     <div class="art-wrap" @scroll="loadMore($event)" ref="previewWrap">
