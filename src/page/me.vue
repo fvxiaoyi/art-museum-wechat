@@ -63,7 +63,8 @@ export default {
     		this.reload()
     	} else {
     		this.$refs.selfWrap.scrollTop = this.scrollTop
-    		this.wxShare(`${this.student.name}的美学艺术馆`, '我在Hi美学的作品全在这哦', linkUrl, null)
+    		let linkUrl = `${this.$current_uri}/?link=me&id=${this.student.id}`
+    		this.wxShare(`${this.student.name}的美学艺术馆`, '我在hi美学的作品全在这哦', linkUrl, null)
     	}
     }
 	},
