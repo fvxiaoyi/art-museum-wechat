@@ -14,10 +14,10 @@ import wxTitle from 'vue-wechat-title'
 import VueLazyload from 'vue-lazyload'
 
 const url = require('url'),
-  appid = 'wx500ec50f770a445a',
+  // appid = 'wx500ec50f770a445a',
   current_uri= 'http://wx.blcow.cn',
   server_uri = 'http://api.blcow.cn',
-  // appid = 'wxaf22660af129589f',
+  appid = 'wxaf22660af129589f',
   // current_uri= 'http://hiart.natapp1.cc',
   // server_uri = 'http://zcbu3y.natappfree.cc',
 	redirect_uri = encodeURIComponent(`${server_uri}/wx/login`),
