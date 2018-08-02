@@ -63,6 +63,7 @@ export default {
     		this.reload()
     	} else {
     		this.$refs.selfWrap.scrollTop = this.scrollTop
+    		this.wxShare(`${this.student.name}的美学艺术馆`, '我在Hi美学的作品全在这哦', linkUrl, null)
     	}
     }
 	},

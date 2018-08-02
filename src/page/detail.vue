@@ -345,7 +345,7 @@
 
   /** 标题 **/
 
-  #detail .title-wrap, #detail .author-wrap, #detail .remark {
+  #detail .title-wrap, #detail .author-wrap, #detail .size, #detail .remark {
     background-color: #FAFAFA;
     padding: 0 0.346rem;
   }
@@ -434,7 +434,6 @@
   }
 
   #detail .size {
-    background-color: #FAFAFA;
     font-size: 0.4rem;
     color: #353535;
     height: 1.413rem;
