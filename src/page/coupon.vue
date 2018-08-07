@@ -58,7 +58,7 @@
       next()
     },
     created() {
-      this.wxShare('领取Hi美学少儿艺术实验室免费课程', 'Hi美学', `${this.$current_uri}/?link=coupon`, null)
+      this.wxShare('领取Hi美学少儿艺术实验室免费课程', 'Hi美学', `${this.$current_uri}/?link=coupon`, 'https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/share-logo.jpg')
     },
     data() {
       return {
