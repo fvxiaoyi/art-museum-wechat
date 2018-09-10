@@ -1,10 +1,5 @@
-import Vue from 'vue'
 import App from './App'
-import axios from 'axios'
 import router from './router'
-import Vuex from 'vuex'
-import { Swipe, SwipeItem, Actionsheet } from 'mint-ui'
-import 'mint-ui/lib/style.css'
 import storeConfig from './store/index'
 import dialog from './components/dialog'
 import guide from './components/guide'
@@ -24,10 +19,10 @@ const url = require('url'),
   logo_uri = 'https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/logo.png'
 
 
-
 Vue.use(VueLazyload, {
   loading: 'https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/no-image.png'
 })
+
 Vue.use(Vuex)
 Vue.use(wxTitle)
 Vue.config.productionTip = false
@@ -36,8 +31,6 @@ Vue.prototype.$server_uri = server_uri
 Vue.component('v-dialog', dialog)
 Vue.component('v-guide', guide)
 Vue.component('v-two-code', code)
-Vue.component(Swipe.name, Swipe)
-Vue.component(SwipeItem.name, SwipeItem)
 
 let current_url = window.location.href.split('#')[0]
 const store = new Vuex.Store(storeConfig)

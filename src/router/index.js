@@ -1,6 +1,3 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-
 const index = () => import('@/page/index')
 const home = () => import('@/page/home')
 const me = () => import('@/page/me')
@@ -12,9 +9,9 @@ const subject = () => import('@/page/subject')
 const subjectSumary = () => import('@/page/subjectSumary')
 
 
-Vue.use(Router)
+Vue.use(VueRouter)
 
-export default new Router({
+export default new VueRouter({
   // mode: 'history',
   routes: [{
       path: '/',
