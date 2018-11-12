@@ -34,7 +34,7 @@
       <div class="bg4"></div>
       <div class="bg5"></div>
       <div class="bg6" @click.prevent="">
-        <img src="../../static/img/coupon-bg6.png">
+        <img src="https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/coupon-bg6.png">
       </div>
 
 
@@ -109,7 +109,7 @@
     margin: 0 auto;
     width: 9.06rem;
     height: 8.837rem;
-    background-image: url("https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/inv-bg.png");
+    background-image: url("https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/inv-bg.png");
     background-size: 9.06rem 14.73rem;
     background-repeat: no-repeat;
     padding-top: 5.893rem;
@@ -254,40 +254,40 @@
     width: 0.426rem;
     height: 0.426rem;
     margin-top: 0.32rem;
-    background-image: url('https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/close.png');
+    background-image: url('https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/close.png');
     background-size: 0.426rem 0.426rem;
   }
 
   .bg1 {
-    background-image: url('../../static/img/coupon-bg1.png');
+    background-image: url('https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/coupon-bg1.png');
     background-size: 10rem 10.24rem;
     height: 10.24rem;
     width: 10rem;
   }
 
   .bg2 {
-    background-image: url('../../static/img/coupon-bg2.png');
+    background-image: url('https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/coupon-bg2.png');
     background-size: 10rem 8.48rem;
     width: 10rem;
     height: 8.48rem;
   }
 
   .bg3 {
-    background-image: url('../../static/img/coupon-bg3.png');
+    background-image: url('https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/coupon-bg3.png');
     background-size: 10rem 7.4rem;
     width: 10rem;
     height: 7.4rem;
   }
 
   .bg4 {
-    background-image: url('../../static/img/coupon-bg4.png');
+    background-image: url('https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/coupon-bg4.png');
     background-size: 10rem 9.48rem;
     width: 10rem;
     height: 9.48rem;
   }
 
   .bg5 {
-    background-image: url('../../static/img/coupon-bg5.png');
+    background-image: url('https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/coupon-bg5.png');
     background-size: 10rem 8.56rem;
     width: 10rem;
     height: 8.56rem;

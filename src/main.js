@@ -9,18 +9,14 @@ import wxTitle from 'vue-wechat-title'
 import VueLazyload from 'vue-lazyload'
 
 const url = require('url'),
-  // appid = 'wx500ec50f770a445a',
-  current_uri= 'http://wx.blcow.cn',
-  server_uri = 'http://api.blcow.cn',
-  appid = 'wxaf22660af129589f',
-  // current_uri= 'http://hiart.natapp1.cc',
-  // server_uri = 'http://zcbu3y.natappfree.cc',
-	redirect_uri = encodeURIComponent(`${server_uri}/wx/login`),
-  logo_uri = 'https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/logo.png'
-
+  appid = 'wx500ec50f770a445a',
+  current_uri= 'http://wx.himeixue.com',
+  server_uri = 'http://api.himeixue.com',
+  redirect_uri = encodeURIComponent(`${server_uri}/wx/login`),
+  logo_uri = 'https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/logo.png'
 
 Vue.use(VueLazyload, {
-  loading: 'https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/no-image.png'
+  loading: 'https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/no-image.png'
 })
 
 Vue.use(Vuex)

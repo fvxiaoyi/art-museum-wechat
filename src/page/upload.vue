@@ -189,7 +189,7 @@ export default {
   .upload-warp {
     height: 6.8rem;
     border-radius: 0.2rem;
-    background-image: url('https://store-1256528427.cos.ap-guangzhou.myqcloud.com/wx/img/upload-bg.png');
+    background-image: url('https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/upload-bg.png');
     background-size: 9.066rem 6.8rem;
     background-repeat: no-repeat;
   }
