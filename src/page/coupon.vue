@@ -10,7 +10,8 @@
         <div class="title">|&nbsp;信息填写&nbsp;|</div>
         <input type="text" v-model="model.name" placeholder="宝贝姓名（选填）" /> 
         <input type="number" v-model="model.age" placeholder="宝贝年龄" /> 
-        <input type="number" v-model="model.phone" placeholder="家长手机号" style="margin-bottom:0;" />
+        <input type="number" v-model="model.phone" placeholder="家长手机号" />
+        <input type="number" v-model="model.introducer" placeholder="推荐人(选填)" style="margin-bottom:0;" />
         <div class="label">方便接听时段 :</div>
         <div class="time-wrap">
           <div :class="['time', model.timePoint === 'MORNING' ? 'active' : '']" @click="handleTimePointClick('MORNING')">
@@ -108,11 +109,11 @@
   #coupon .bg {
     margin: 0 auto;
     width: 9.06rem;
-    height: 8.837rem;
+    height: 11rem;
     background-image: url("https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/inv-bg.png");
-    background-size: 9.06rem 14.73rem;
+    background-size: 9.06rem 16.4rem;
     background-repeat: no-repeat;
-    padding-top: 5.893rem;
+    padding-top: 5.653rem;
   }
 
   #coupon .title {
