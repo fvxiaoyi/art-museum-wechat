@@ -8,10 +8,11 @@
       </div>
       <div class="bg">
         <div class="title">|&nbsp;信息填写&nbsp;|</div>
-        <input type="text" v-model="model.name" placeholder="宝贝姓名（选填）" /> 
+        <input type="text" v-model="model.name" placeholder="宝贝姓名（必填）" /> 
         <input type="number" v-model="model.age" placeholder="宝贝年龄" /> 
         <input type="number" v-model="model.phone" placeholder="家长手机号" />
-        <input type="number" v-model="model.introducer" placeholder="推荐人(选填)" style="margin-bottom:0;" />
+        <input type="text" v-model="model.area" placeholder="所在地区 （例：厦门市思明区）" />
+        <input type="text" v-model="model.introducer" placeholder="推荐人（选填）" style="margin-bottom:0;" />
         <div class="label">方便接听时段 :</div>
         <div class="time-wrap">
           <div :class="['time', model.timePoint === 'MORNING' ? 'active' : '']" @click="handleTimePointClick('MORNING')">
@@ -27,6 +28,7 @@
             <div class="bottom">18:00~21:30</div>
           </div>
         </div>
+        <div class="title">下拉了解品牌内容</div>
         <div class="btn" @click="handleConfirm">提交</div>
       </div>
       <div class="bg1"></div>
@@ -34,9 +36,12 @@
       <div class="bg3"></div>
       <div class="bg4"></div>
       <div class="bg5"></div>
-      <div class="bg6" @click.prevent="">
+      <div class="bg6"></div>
+      <div class="bg7"></div>
+      <div class="bg8"></div>
+      <!-- <div class="bg6" @click.prevent="">
         <img src="https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/coupon-bg6.png">
-      </div>
+      </div> -->
 
 
       <v-dialog :width="8" :height="3.6" :visible="confirmDialogVisible" >
@@ -75,11 +80,15 @@
     methods: {
       handleConfirm() {
         let me = this
-        console.log(me.model)
-        this.post('/wx/coupon/add', me.model, (res) => me.openDialog(), (err) => {
-          me.errMsg = err 
+        if(!me.model && me.model.trim().length === 0) {
+          me.errMsg = '宝贝姓名还未填写' 
           me.openDialog()
-        })
+        } else {
+          this.post('/wx/coupon/add', me.model, (res) => me.openDialog(), (err) => {
+            me.errMsg = err 
+            me.openDialog()
+          })
+        }
       },
       handleTimePointClick(timePoint) {
         this.model.timePoint = timePoint
@@ -109,11 +118,11 @@
   #coupon .bg {
     margin: 0 auto;
     width: 9.06rem;
-    height: 11rem;
+    height: 13rem;
     background-image: url("https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/inv-bg.png");
-    background-size: 9.06rem 16.4rem;
+    background-size: 9.06rem 18.6rem;
     background-repeat: no-repeat;
-    padding-top: 5.653rem;
+    padding-top: 5.853rem;
   }
 
   #coupon .title {
@@ -261,42 +270,58 @@
 
   .bg1 {
     background-image: url('https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/coupon-bg1.png');
-    background-size: 10rem 10.24rem;
-    height: 10.24rem;
+    background-size: 10rem 37.24rem;
     width: 10rem;
+    height: 37.24rem;
   }
 
   .bg2 {
     background-image: url('https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/coupon-bg2.png');
-    background-size: 10rem 8.48rem;
+    background-size: 10rem 37.24rem;
     width: 10rem;
-    height: 8.48rem;
+    height: 37.24rem;
   }
 
   .bg3 {
     background-image: url('https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/coupon-bg3.png');
-    background-size: 10rem 7.4rem;
+    background-size: 10rem 20.24rem;
     width: 10rem;
-    height: 7.4rem;
+    height: 20.24rem;
   }
 
   .bg4 {
     background-image: url('https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/coupon-bg4.png');
-    background-size: 10rem 9.48rem;
+    background-size: 10rem 13.24rem;
     width: 10rem;
-    height: 9.48rem;
+    height: 13.24rem;
   }
 
   .bg5 {
     background-image: url('https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/coupon-bg5.png');
-    background-size: 10rem 8.56rem;
+    background-size: 10rem 13.24rem;
     width: 10rem;
-    height: 8.56rem;
+    height: 13.24rem;
   }
 
   .bg6 {
+    background-image: url('https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/coupon-bg6.png');
+    background-size: 10rem 13.24rem;
     width: 10rem;
-    height: 7.106667rem;
+    height: 13.24rem;
+  }
+
+  .bg7 {
+    background-image: url('https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/coupon-bg7.png');
+    background-size: 10rem 13.24rem;
+    width: 10rem;
+    height: 13.24rem;
+  }
+
+  .bg8 {
+    background-image: url('https://hiart-1257069300.cos.ap-guangzhou.myqcloud.com/wx/img/coupon-bg8.png');
+    background-size: 10rem 15.24rem;
+    width: 10rem;
+    height: 15.24rem;
   }
 
 </style>
